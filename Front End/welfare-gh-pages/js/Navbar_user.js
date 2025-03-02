@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const avatar = document.querySelector(".avatar-img"); // Ảnh đại diện
+  const avatar = document.getElementById("profileDropdown");
   const dropdownMenu = document.querySelector(".dropdown-menu"); // Menu dropdown
 
   // Khi nhấn vào avatar, bật/tắt dropdown

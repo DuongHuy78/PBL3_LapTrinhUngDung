@@ -38,6 +38,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link rel="stylesheet" href="css/Footer.css" />
   </head>
   <body>
     <!-- navbar -->
@@ -90,14 +91,30 @@
           </ul>
           <!-- nav-icons-container -->
           <div class="nav-icons-container d-flex align-items-center">
+            <!-- Nút mở search -->
+
             <a
-              class="icon d-flex align-items-center justify-content-center"
+              class="icon d-flex align-items-center justify-content-center search-icon"
+              id="search-btn"
               href="#"
               data-bs-toggle="offcanvas"
               data-bs-target="#offcanvas-search"
             >
               <i class="fa fa-search"></i>
             </a>
+            <!-- Màn hình tìm kiếm -->
+            <div id="search-overlay" style="display: none">
+              <div class="search-box">
+                <h2>Search by keyword</h2>
+                <div class="search-input">
+                  <input type="text" placeholder="keywords" />
+                  <button class="search-button">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <button id="close-search">&times;</button>
+            </div>
 
             <a
               class="icon d-flex align-items-center justify-content-center"
@@ -137,8 +154,8 @@
                   />
                 </div>
                 <div>
-                  <a class="h6" href="#">Lê Xuân Thân</a>
-                  <p class="small m-0">than.lx@hcmute.edu.vn</p>
+                  <a class="h6" href="#">Trần Quốc Đạt</a>
+                  <p class="small m-0">quocdat19991712@gmail.com</p>
                 </div>
               </div>
               <hr />
@@ -146,18 +163,8 @@
             <!-- Links -->
             <li>
               <a class="dropdown-item" href="/setting">
-                <i class="fa-solid fa-user"></i>
-                <i class="bi bi-person fa-fw me-2"></i>Setting</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="/admin.php"
-                ><i class="bi bi-gear fa-fw me-2"></i>Admin CP</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#"
-                ><i class="bi bi-info-circle fa-fw me-2"></i>Help</a
+                <i class="fa-solid fa-gear" style="margin-right: 10px"></i>
+                <i class="bi bi-person fa-fw me-2"></i>Cài đặt</a
               >
             </li>
             <li>
@@ -165,7 +172,11 @@
                 class="dropdown-item bg-danger-soft-hover"
                 href="/logout.php?v=login"
               >
-                <i class="bi bi-power fa-fw me-2"></i>Sign Out
+                <i
+                  class="fa-solid fa-arrow-right-from-bracket"
+                  style="margin-right: 10px"
+                ></i>
+                <i class="bi bi-power fa-fw me-2"></i>Đăng xuất
               </a>
             </li>
           </ul>
@@ -967,20 +978,31 @@
             <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Về chúng tôi</h2>
               <p>
-                Far far away, behind the word mountains, far from the countries
-                Vokalia and Consonantia, there live the blind texts.
+                Dự án Website tổ chức phi lợi nhuận nhằm mục đích học tập không
+                chỉ là nơi cập nhật thông tin về các hoạt động từ thiện mà còn
+                là nền tảng giúp mọi người dễ dàng tham gia, đóng góp và theo
+                dõi tác động của từng hành động nhỏ bé nhưng đầy ý nghĩa.
               </p>
               <ul
                 class="ftco-footer-social list-unstyled float-md-left float-lft mt-5"
               >
                 <li class="ftco-animate">
-                  <a href="#"><span class="icon-twitter"></span></a>
+                  <a href="#"
+                    ><span class="icon-twitter">
+                      <i class="fa-brands fa-github"></i> </span
+                  ></a>
                 </li>
                 <li class="ftco-animate">
-                  <a href="#"><span class="icon-facebook"></span></a>
+                  <a href="#"
+                    ><span class="icon-facebook">
+                      <i class="fa-brands fa-facebook"></i> </span
+                  ></a>
                 </li>
                 <li class="ftco-animate">
-                  <a href="#"><span class="icon-instagram"></span></a>
+                  <a href="#"
+                    ><span class="icon-instagram">
+                      <i class="fa-brands fa-instagram"></i> </span
+                  ></a>
                 </li>
               </ul>
             </div>
@@ -1059,25 +1081,22 @@
             <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Đặt câu hỏi cho chúng tôi?</h2>
               <div class="block-23 mb-3">
-                <ul>
+                <ul class="contact-list">
                   <li>
-                    <span class="icon icon-map-marker"></span
-                    ><span class="text"
-                      >203 Fake St. Mountain View, San Francisco, California,
-                      USA</span
-                    >
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span class="text">Đại học bách khoa đại học đà nẵng</span>
                   </li>
                   <li>
-                    <a href="#"
-                      ><span class="icon icon-phone"></span
-                      ><span class="text">+2 392 3929 210</span></a
-                    >
+                    <a href="#">
+                      <i class="fa-solid fa-phone"></i>
+                      <span class="text">+2 392 3929 210</span>
+                    </a>
                   </li>
                   <li>
-                    <a href="#"
-                      ><span class="icon icon-envelope"></span
-                      ><span class="text">info@yourdomain.com</span></a
-                    >
+                    <a href="#">
+                      <i class="fa-solid fa-envelope"></i>
+                      <span class="text">info@yourdomain.com</span>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -1111,6 +1130,7 @@
         />
       </svg>
     </div>
+    <script src="js/Search.js"></script>
     <script src="js/Navbar_user.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -1126,8 +1146,6 @@
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

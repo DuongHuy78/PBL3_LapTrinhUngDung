@@ -12197,6 +12197,7 @@ textarea.form-control {
   height: 40px;
   cursor: pointer;
   border-radius: 50%;
+  margin-right: 10px;
 }
 /* Định dạng container chứa avatar */
 .avatar-container {
@@ -12255,4 +12256,72 @@ textarea.form-control {
   .ftco-navbar-light .navbar-toggler {
     margin-right: 60px;
   }
+}
+/*  */
+/* Ẩn màn hình search ban đầu */
+#search-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5); /* Giảm opacity để trong suốt hơn */
+  backdrop-filter: blur(8px); /* Làm mờ nền mạnh hơn */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+/* Ô chứa input */
+.search-box {
+  text-align: center;
+  width: 50%;
+}
+
+.search-box h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Ô nhập tìm kiếm */
+.search-input {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-input input {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.search-button {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #666;
+}
+
+/* Nút đóng */
+#close-search {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
 }
