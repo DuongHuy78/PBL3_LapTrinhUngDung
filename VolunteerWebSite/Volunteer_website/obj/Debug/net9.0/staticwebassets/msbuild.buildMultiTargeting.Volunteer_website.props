@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Volunteer_website.props" />
+</Project>

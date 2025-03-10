@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Welfare - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="css/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="css/magnific-popup.css" />
+
+    <link rel="stylesheet" href="css/aos.css" />
+
+    <link rel="stylesheet" href="css/ionicons.min.css" />
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="css/jquery.timepicker.css" />
+
+    <link rel="stylesheet" href="css/flaticon.css" />
+    <link rel="stylesheet" href="css/icomoon.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/Footer.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/Cause.css" />
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+      id="ftco-navbar"
+    >
+      <div class="container">
+        <div class="logo-container">
+          <img
+            src="./images/VolunteerIcon.png"
+            alt="Logo"
+            class="navbar-logo"
+          />
+          <a class="navbar-brand" href="index.html">DUTERS</a>
+        </div>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#ftco-nav"
+          aria-controls="ftco-nav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="event.html" class="nav-link">Events</a>
+            </li>
+            <li class="nav-item">
+              <a href="causes.html" class="nav-link">Fundraising</a>
+            </li>
+            <li class="nav-item">
+              <a href="donate.html" class="nav-link">Volunteers</a>
+            </li>
+            <li class="nav-item">
+              <a href="blog.html" class="nav-link">News</a>
+            </li>
+            <li class="nav-item">
+              <a href="about.html" class="nav-link">About Us</a>
+            </li>
+          </ul>
+          <!-- nav-icons-container -->
+          <div class="nav-icons-container d-flex align-items-center">
+            <!-- Search button -->
+
+            <a
+              class="icon d-flex align-items-center justify-content-center search-icon"
+              id="search-btn"
+              href="#"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvas-search"
+            >
+              <i class="fa fa-search"></i>
+            </a>
+            <!-- Search screen -->
+            <div id="search-overlay" style="display: none">
+              <div class="search-box">
+                <h2>Search by keyword</h2>
+                <div class="search-input">
+                  <input type="text" placeholder="keywords" />
+                  <button class="search-button">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <button id="close-search">&times;</button>
+            </div>
+
+            <a
+              class="icon d-flex align-items-center justify-content-center"
+              href="#"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvas-search"
+            >
+              <i class="fa-solid fa-hands-holding-child"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- dropdown -->
+        <div class="dropdown" style="margin-left: 20px">
+          <div class="avatar-container">
+            <img
+              class="avatar-img rounded-circle"
+              src="./images/person_4.jpg"
+              alt="avatar"
+              id="profileDropdown"
+            />
+          </div>
+
+          <ul
+            class="dropdown-menu dropdown-animation shadow pt-3"
+            aria-labelledby="profileDropdown"
+          >
+            <!-- Profile info -->
+            <li class="px-3">
+              <div class="d-flex align-items-center">
+                <!-- Avatar -->
+                <div class="avatar me-3">
+                  <img
+                    class="avatar-img rounded-circle shadow"
+                    src="./images/person_4.jpg"
+                    alt="avatar"
+                  />
+                </div>
+                <div>
+                  <a class="h6" href="#">Trần Quốc Đạt</a>
+                  <p class="small m-0">quocdat19991712@gmail.com</p>
+                </div>
+              </div>
+              <hr />
+            </li>
+            <!-- Links -->
+            <li>
+              <a class="dropdown-item" href="/setting">
+                <i class="fa-solid fa-user" style="margin-right: 10px"></i>
+                <i class="bi bi-person fa-fw me-2"></i>View Profile</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="/setting">
+                <i class="fa-solid fa-gear" style="margin-right: 10px"></i>
+                <i class="bi bi-person fa-fw me-2"></i>Edit Information</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item bg-danger-soft-hover"
+                href="/logout.php?v=login"
+              >
+                <i
+                  class="fa-solid fa-arrow-right-from-bracket"
+                  style="margin-right: 10px"
+                ></i>
+                <i class="bi bi-power fa-fw me-2"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+
+    <div
+      class="hero-wrap"
+      style="background-image: url('images/Banner.jpg')"
+      data-stellar-background-ratio="0.5"
+    >
+      <div class="overlay"></div>
+      <div class="container">
+        <div
+          class="row no-gutters slider-text align-items-center justify-content-center"
+          data-scrollax-parent="true"
+        >
+          <div
+            class="col-md-7 ftco-animate text-center"
+            data-scrollax=" properties: { translateY: '70%' }"
+          >
+            <p
+              class="breadcrumbs"
+              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
+            >
+              <span class="mr-2"><a href="index.html">Trang chủ</a></span>
+              <span>Gây quỹ</span>
+            </p>
+            <h1
+              class="mb-3 bread"
+              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
+            >
+              Gây quỹ
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 ftco-animate mb-4">
+            <div class="card">
+              <img src="images/cause-1.jpg" alt="Clean Water" />
+              <div class="card-content">
+                <span class="card-title">Join Hands for Clean Water</span>
+                <div class="org-info">
+                  <span>Dong Nai Youth Union</span>
+                  <span
+                    style="
+                      background: #ffcc99;
+                      padding: 5px 10px;
+                      border-radius: 5px;
+                    "
+                    >5 Days Left</span
+                  >
+                </div>
+                <div class="progress-container">
+                  <div class="progress-bar" style="width: 40%"></div>
+                </div>
+                <span class="fund-raised">$12,000 / $30,000</span>
+                <span class="donation-group">
+                  <span class="donation-count">
+                    <div>Donations</div>
+                    <div class="count">2,500</div>
+                  </span>
+                  <a href="./Causes_Detail.html" class="donate-btn">Donate</a>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 ftco-animate">
+            <div class="card">
+              <img src="images/cause-1.jpg" alt="Clean Water" />
+              <div class="card-content">
+                <span class="card-title">Join Hands for Clean Water</span>
+                <div class="org-info">
+                  <span>Dong Nai Youth Union</span>
+                  <span
+                    style="
+                      background: #ffcc99;
+                      padding: 5px 10px;
+                      border-radius: 5px;
+                    "
+                    >5 Days Left</span
+                  >
+                </div>
+                <div class="progress-container">
+                  <div class="progress-bar" style="width: 40%"></div>
+                </div>
+                <span class="fund-raised">$12,000 / $30,000</span>
+                <span class="donation-group">
+                  <span class="donation-count">
+                    <div>Donations</div>
+                    <div class="count">2,500</div>
+                  </span>
+                  <a href="#" class="donate-btn">Donate</a>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 ftco-animate">
+            <div class="card">
+              <img src="images/cause-1.jpg" alt="Clean Water" />
+              <div class="card-content">
+                <span class="card-title">Join Hands for Clean Water</span>
+                <div class="org-info">
+                  <span>Dong Nai Youth Union</span>
+                  <span
+                    style="
+                      background: #ffcc99;
+                      padding: 5px 10px;
+                      border-radius: 5px;
+                    "
+                    >5 Days Left</span
+                  >
+                </div>
+                <div class="progress-container">
+                  <div class="progress-bar" style="width: 40%"></div>
+                </div>
+                <span class="fund-raised">$12,000 / $30,000</span>
+                <span class="donation-group">
+                  <span class="donation-count">
+                    <div>Donations</div>
+                    <div class="count">2,500</div>
+                  </span>
+                  <a href="#" class="donate-btn">Donate</a>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 ftco-animate">
+            <div class="card">
+              <img src="images/cause-1.jpg" alt="Clean Water" />
+              <div class="card-content">
+                <span class="card-title">Join Hands for Clean Water</span>
+                <div class="org-info">
+                  <span>Dong Nai Youth Union</span>
+                  <span
+                    style="
+                      background: #ffcc99;
+                      padding: 5px 10px;
+                      border-radius: 5px;
+                    "
+                    >5 Days Left</span
+                  >
+                </div>
+                <div class="progress-container">
+                  <div class="progress-bar" style="width: 40%"></div>
+                </div>
+                <span class="fund-raised">$12,000 / $30,000</span>
+                <span class="donation-group">
+                  <span class="donation-count">
+                    <div>Donations</div>
+                    <div class="count">2,500</div>
+                  </span>
+                  <a href="#" class="donate-btn">Donate</a>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 ftco-animate">
+            <div class="card">
+              <img src="images/cause-1.jpg" alt="Clean Water" />
+              <div class="card-content">
+                <span class="card-title">Join Hands for Clean Water</span>
+                <div class="org-info">
+                  <span>Dong Nai Youth Union</span>
+                  <span
+                    style="
+                      background: #ffcc99;
+                      padding: 5px 10px;
+                      border-radius: 5px;
+                    "
+                    >5 Days Left</span
+                  >
+                </div>
+                <div class="progress-container">
+                  <div class="progress-bar" style="width: 40%"></div>
+                </div>
+                <span class="fund-raised">$12,000 / $30,000</span>
+                <span class="donation-group">
+                  <span class="donation-count">
+                    <div>Donations</div>
+                    <div class="count">2,500</div>
+                  </span>
+                  <a href="#" class="donate-btn">Donate</a>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 ftco-animate">
+            <div class="card">
+              <img src="images/cause-1.jpg" alt="Clean Water" />
+              <div class="card-content">
+                <span class="card-title">Join Hands for Clean Water</span>
+                <div class="org-info">
+                  <span>Dong Nai Youth Union</span>
+                  <span
+                    style="
+                      background: #ffcc99;
+                      padding: 5px 10px;
+                      border-radius: 5px;
+                    "
+                    >5 Days Left</span
+                  >
+                </div>
+                <div class="progress-container">
+                  <div class="progress-bar" style="width: 40%"></div>
+                </div>
+                <span class="fund-raised">$12,000 / $30,000</span>
+                <span class="donation-group">
+                  <span class="donation-count">
+                    <div>Donations</div>
+                    <div class="count">2,500</div>
+                  </span>
+                  <a href="#" class="donate-btn">Donate</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <div class="col text-center">
+            <div class="block-27">
+              <ul>
+                <li><a href="#">&lt;</a></li>
+                <li class="active"><span>1</span></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&gt;</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="ftco-section-3 img"
+      style="background-image: url(images/bg_3.jpg)"
+    >
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row d-md-flex">
+          <div class="col-md-6 d-flex ftco-animate">
+            <div
+              class="img img-2 align-self-stretch"
+              style="background-image: url(images/bg_4.jpg)"
+            ></div>
+          </div>
+          <div class="col-md-6 volunteer pl-md-5 ftco-animate">
+            <h3 class="mb-3">Be a volunteer</h3>
+            <form action="#" class="volunter-form">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Your Name"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Your Email"
+                />
+              </div>
+              <div class="form-group">
+                <textarea
+                  name=""
+                  id=""
+                  cols="30"
+                  rows="3"
+                  class="form-control"
+                  placeholder="Message"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <input
+                  type="submit"
+                  value="Send Message"
+                  class="btn btn-white py-3 px-5"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-section img">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-3">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Về chúng tôi</h2>
+              <p>
+                Dự án Website tổ chức phi lợi nhuận nhằm mục đích học tập không
+                chỉ là nơi cập nhật thông tin về các hoạt động từ thiện mà còn
+                là nền tảng giúp mọi người dễ dàng tham gia, đóng góp và theo
+                dõi tác động của từng hành động nhỏ bé nhưng đầy ý nghĩa.
+              </p>
+              <ul
+                class="ftco-footer-social list-unstyled float-md-left float-lft mt-5"
+              >
+                <li class="ftco-animate">
+                  <a href="#"
+                    ><span class="icon-twitter">
+                      <i class="fa-brands fa-github"></i> </span
+                  ></a>
+                </li>
+                <li class="ftco-animate">
+                  <a href="#"
+                    ><span class="icon-facebook">
+                      <i class="fa-brands fa-facebook"></i> </span
+                  ></a>
+                </li>
+                <li class="ftco-animate">
+                  <a href="#"
+                    ><span class="icon-instagram">
+                      <i class="fa-brands fa-instagram"></i> </span
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Tin tức gần đây</h2>
+              <div class="block-21 mb-4 d-flex">
+                <a
+                  class="blog-img mr-4"
+                  style="background-image: url(images/image_1.jpg)"
+                ></a>
+                <div class="text">
+                  <h3 class="heading">
+                    <a href="#"
+                      >Even the all-powerful Pointing has no control about</a
+                    >
+                  </h3>
+                  <div class="meta">
+                    <div>
+                      <a href="#"
+                        ><span class="icon-calendar"></span> July 12, 2018</a
+                      >
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-person"></span> Admin</a>
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-chat"></span> 19</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="block-21 mb-4 d-flex">
+                <a
+                  class="blog-img mr-4"
+                  style="background-image: url(images/image_2.jpg)"
+                ></a>
+                <div class="text">
+                  <h3 class="heading">
+                    <a href="#"
+                      >Even the all-powerful Pointing has no control about</a
+                    >
+                  </h3>
+                  <div class="meta">
+                    <div>
+                      <a href="#"
+                        ><span class="icon-calendar"></span> July 12, 2018</a
+                      >
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-person"></span> Admin</a>
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-chat"></span> 19</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="ftco-footer-widget mb-4 ml-md-4">
+              <h2 class="ftco-heading-2">Liên kết</h2>
+              <ul class="list-unstyled">
+                <li><a href="#" class="py-2 d-block">Trang chủ</a></li>
+                <li><a href="#" class="py-2 d-block">Sự kiện</a></li>
+                <li><a href="#" class="py-2 d-block">Gây quỹ</a></li>
+                <li><a href="#" class="py-2 d-block">Tình nguyện viên</a></li>
+                <li><a href="#" class="py-2 d-block">Tin tức</a></li>
+                <li><a href="#" class="py-2 d-block">Về chúng tôi</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Đặt câu hỏi cho chúng tôi?</h2>
+              <div class="block-23 mb-3">
+                <ul class="contact-list">
+                  <li>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span class="text">Đại học bách khoa đại học đà nẵng</span>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa-solid fa-phone"></i>
+                      <span class="text">+2 392 3929 210</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa-solid fa-envelope"></i>
+                      <span class="text">info@yourdomain.com</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen">
+      <svg class="circular" width="48px" height="48px">
+        <circle
+          class="path-bg"
+          cx="24"
+          cy="24"
+          r="22"
+          fill="none"
+          stroke-width="4"
+          stroke="#eeeeee"
+        />
+        <circle
+          class="path"
+          cx="24"
+          cy="24"
+          r="22"
+          fill="none"
+          stroke-width="4"
+          stroke-miterlimit="10"
+          stroke="#F96D00"
+        />
+      </svg>
+    </div>
+    <script src="js/Navbar_user.js"></script>
+    <script src="js/Search.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/jquery.timepicker.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="js/google-map.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

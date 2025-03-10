@@ -1,0 +1,310 @@
+h4 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fd7e14;
+  margin-bottom: 25px;
+}
+.carousel-item img {
+  width: 100px; /* Điều chỉnh kích thước nhỏ lại */
+  height: 100px; /* Giữ ảnh vuông */
+  object-fit: cover; /* Cắt ảnh để vừa khung vuông */
+  border-radius: 10px; /* Bo góc nhẹ */
+  margin: auto; /* Căn giữa ảnh */
+}
+
+.banner-img {
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.carousel-control-prev,
+.carousel-control-next {
+  filter: invert(1) brightness(0.8);
+}
+
+.content-card,
+.org-card,
+.donation-card {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.content-card:hover,
+.org-card:hover,
+.donation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.donation-card h5 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fd7e14;
+  margin-bottom: 15px;
+}
+
+.donation-card .d-flex img {
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 50px;
+  height: 50px;
+}
+
+.donation-card .d-flex span {
+  font-weight: 600;
+  color: #fd7e14;
+}
+
+.progress {
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #e9ecef;
+  margin: 10px 0;
+}
+
+.progress-bar {
+  background-color: #fd7e14;
+  transition: width 0.6s ease;
+}
+
+.input-group {
+  margin: 15px 0;
+}
+
+.input-group-text {
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+}
+
+.form-control {
+  border-radius: 0 5px 5px 0;
+  border-left: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.btn-donate {
+  background-color: #fd7e14;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-donate:hover {
+  background-color: #b02a37;
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background-color: #fd7e14;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #fd7e14;
+  transform: translateY(-2px);
+}
+
+.nav-tabs {
+  border-bottom: 2px solid #dee2e6;
+  margin-bottom: 20px;
+}
+
+.nav-tabs .nav-link {
+  color: #495057;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  margin-right: 5px;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #fd7e14;
+  color: #fff;
+  border-bottom: 2px solid #fd7e14;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  padding: 8px 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s;
+}
+
+.search-bar:focus {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-color: #fd7e14;
+}
+
+.donor-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.donor-table th {
+  background-color: #fd7e14;
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.donor-table td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #dee2e6;
+  vertical-align: middle;
+  color: #495057;
+}
+
+.donor-table tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.3s;
+}
+
+.donor-table tr:last-child td {
+  border-bottom: none;
+}
+
+.pagination {
+  margin-top: 20px;
+}
+
+.page-item.active .page-link {
+  background-color: #fd7e14;
+  border-color: #fd7e14;
+  color: #fff;
+  font-weight: 500;
+}
+
+.page-link {
+  color: #fd7e14;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.page-link:hover {
+  background-color: #e9ecef;
+  color: #fd7e14;
+}
+.org-info {
+  text-align: left;
+}
+
+.org-logo img {
+  width: 80px; /* Điều chỉnh kích thước logo */
+  height: 80px; /* Điều chỉnh kích thước logo */
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.org-name {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.org-description {
+  color: var(--muted-text);
+  margin-bottom: 15px;
+}
+
+.org-contact a,
+.org-contact p {
+  display: flex;
+  align-items: center;
+  color: var(--muted-text);
+  margin-bottom: 5px;
+}
+
+.org-contact i {
+  margin-right: 10px;
+  color: var(--secondary-color); /* Màu biểu tượng */
+}
+.modal-content {
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  padding: 16px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.modal-title {
+  color: #dc3545;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.btn-close {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  opacity: 0.7;
+}
+
+.btn-close:hover {
+  opacity: 1;
+}
+
+.modal-body {
+  padding: 20px;
+  font-size: 14px;
+}
+
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+}
+
+input[type="checkbox"] {
+  accent-color: #dc3545;
+}
+
+.btn-primary {
+  background-color: #dc3545;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #c82333;
+}

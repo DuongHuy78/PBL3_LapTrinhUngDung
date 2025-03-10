@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quyên góp</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 350px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background: white;
+        padding: 15px;
+        text-align: center;
+        transition: transform 0.3s;
+      }
+      .card-title {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      .org-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        margin: 10px 0;
+        font-weight: bold;
+      }
+
+      .progress-container {
+        width: 100%;
+        background: #eee;
+        border-radius: 5px;
+        height: 8px;
+        margin: 10px 0;
+      }
+
+      .progress-bar {
+        height: 8px;
+        background: #007bff;
+        border-radius: 5px;
+      }
+
+      .fund-raised {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .donate-btn {
+        background: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      .donate-btn:hover {
+        background: #0056b3;
+      }
+
+      .donation-count {
+        font-size: 14px;
+        color: #333;
+        margin-top: 5px;
+      }
+      .donation-group {
+        display: flex;
+        justify-content: space-between;
+      }
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <img src="images/cause-1.jpg" alt="Nước sạch" />
+        <div class="card-content">
+          <span class="card-title">Chung tay vì nước sạch</span>
+          <div class="org-info">
+            <span>Tỉnh Đoàn Đồng Nai</span>
+            <span
+              style="background: #ffcc99; padding: 5px 10px; border-radius: 5px"
+              >Còn 5 Ngày</span
+            >
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 40%"></div>
+          </div>
+          <span class="fund-raised">12.000 / 30.000</span>
+          <span class="donation-group">
+            <span class="donation-count">
+              <p>Lượt quyên góp</p>
+              <p>2.500</p>
+            </span>
+            <a href="#" class="donate-btn">Quyên góp</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

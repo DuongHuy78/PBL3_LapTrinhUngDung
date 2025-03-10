@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ủng hộ - Rừng Xanh Lên 2025</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="css/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="css/magnific-popup.css" />
+
+    <link rel="stylesheet" href="css/aos.css" />
+
+    <link rel="stylesheet" href="css/ionicons.min.css" />
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="css/jquery.timepicker.css" />
+
+    <link rel="stylesheet" href="css/flaticon.css" />
+    <link rel="stylesheet" href="css/icomoon.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/Footer.css" />
+    <link rel="stylesheet" href="css/Cause_Detail.css" />
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+      id="ftco-navbar"
+    >
+      <div class="container">
+        <div class="logo-container">
+          <img
+            src="./images/VolunteerIcon.png"
+            alt="Logo"
+            class="navbar-logo"
+          />
+          <a class="navbar-brand" href="index.html">DUTERS</a>
+        </div>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#ftco-nav"
+          aria-controls="ftco-nav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="event.html" class="nav-link">Events</a>
+            </li>
+            <li class="nav-item">
+              <a href="causes.html" class="nav-link">Fundraising</a>
+            </li>
+            <li class="nav-item">
+              <a href="donate.html" class="nav-link">Volunteers</a>
+            </li>
+            <li class="nav-item">
+              <a href="blog.html" class="nav-link">News</a>
+            </li>
+            <li class="nav-item">
+              <a href="about.html" class="nav-link">About Us</a>
+            </li>
+          </ul>
+          <!-- nav-icons-container -->
+          <div class="nav-icons-container d-flex align-items-center">
+            <!-- Search button -->
+
+            <a
+              class="icon d-flex align-items-center justify-content-center search-icon"
+              id="search-btn"
+              href="#"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvas-search"
+            >
+              <i class="fa fa-search"></i>
+            </a>
+            <!-- Search screen -->
+            <div id="search-overlay" style="display: none">
+              <div class="search-box">
+                <h2>Search by keyword</h2>
+                <div class="search-input">
+                  <input type="text" placeholder="keywords" />
+                  <button class="search-button">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <button id="close-search">&times;</button>
+            </div>
+
+            <a
+              class="icon d-flex align-items-center justify-content-center"
+              href="#"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvas-search"
+            >
+              <i class="fa-solid fa-hands-holding-child"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- dropdown -->
+        <div class="dropdown" style="margin-left: 20px">
+          <div class="avatar-container">
+            <img
+              class="avatar-img rounded-circle"
+              src="./images/person_4.jpg"
+              alt="avatar"
+              id="profileDropdown"
+            />
+          </div>
+
+          <ul
+            class="dropdown-menu dropdown-animation shadow pt-3"
+            aria-labelledby="profileDropdown"
+          >
+            <!-- Profile info -->
+            <li class="px-3">
+              <div class="d-flex align-items-center">
+                <!-- Avatar -->
+                <div class="avatar me-3">
+                  <img
+                    class="avatar-img rounded-circle shadow"
+                    src="./images/person_4.jpg"
+                    alt="avatar"
+                  />
+                </div>
+                <div>
+                  <a class="h6" href="#">Trần Quốc Đạt</a>
+                  <p class="small m-0">quocdat19991712@gmail.com</p>
+                </div>
+              </div>
+              <hr />
+            </li>
+            <!-- Links -->
+            <li>
+              <a class="dropdown-item" href="/setting">
+                <i class="fa-solid fa-user" style="margin-right: 10px"></i>
+                <i class="bi bi-person fa-fw me-2"></i>View Profile</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="/setting">
+                <i class="fa-solid fa-gear" style="margin-right: 10px"></i>
+                <i class="bi bi-person fa-fw me-2"></i>Edit Information</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item bg-danger-soft-hover"
+                href="/logout.php?v=login"
+              >
+                <i
+                  class="fa-solid fa-arrow-right-from-bracket"
+                  style="margin-right: 10px"
+                ></i>
+                <i class="bi bi-power fa-fw me-2"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+
+    <div
+      class="hero-wrap"
+      style="background-image: url('images/bg_7.jpg')"
+      data-stellar-background-ratio="0.5"
+    >
+      <div class="overlay"></div>
+      <div class="container">
+        <div
+          class="row no-gutters slider-text align-items-center justify-content-center"
+          data-scrollax-parent="true"
+        >
+          <div
+            class="col-md-7 ftco-animate text-center"
+            data-scrollax=" properties: { translateY: '70%' }"
+          >
+            <h1
+              class="mb-4"
+              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
+            >
+              Giving to Receive
+            </h1>
+            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+              <a
+                href="https://vimeo.com/45830194"
+                class="btn btn-white btn-outline-white px-4 py-3 mt-4 popup-vimeo"
+                ><span class="icon-play mr-2"></span>Watch Video</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section">
+      <div class="container">
+        <!-- Tiêu đề không có nền trắng -->
+
+        <!-- Hai cột riêng biệt: Hình ảnh và Phần ủng hộ -->
+        <div class="row">
+          <div class="col-md-6">
+            <img
+              src="./images/Banner.jpg"
+              alt="Sự kiện gây quỹ"
+              class="banner-img"
+            />
+            <div
+              id="carouselExample"
+              class="carousel slide mt-3"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img
+                    src="./images/cause-1.jpg"
+                    class="d-block"
+                    alt="Image 1"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="./images/cause-2.jpg"
+                    class="d-block"
+                    alt="Image 2"
+                  />
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExample"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExample"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="donation-card">
+              <h4 class="text-center text-danger mb-3">RỪNG XANH LÊN 2025</h4>
+              <div class="d-flex align-items-center mb-3">
+                <img
+                  src="./images/person_7.jpg"
+                  alt="Quỹ Từ tâm Đắk Lắk"
+                  width="40"
+                  class="me-2"
+                />
+                <span class="text-danger fw-bold">Quỹ Từ tâm Đắk Lắk</span>
+              </div>
+              <p class="mb-2">
+                Mục tiêu:
+                <span class="fw-bold text-dark float-end">20.000.000đ</span>
+              </p>
+              <div class="progress">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 13.75%"
+                  aria-valuenow="2.75"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+              <p class="mt-2 mb-3">
+                Đã đạt:
+                <span class="fw-bold text-danger float-end">2.750.000đ</span>
+              </p>
+              <p class="mb-2">
+                <i class="fa-solid fa-user"></i>
+                <span class="fw-bold text-dark float-end">15 lượt ủng hộ</span>
+              </p>
+              <div class="input-group my-3">
+                <span class="input-group-text">VND</span>
+                <input type="text" class="form-control" value="20.000" />
+              </div>
+              <button class="btn btn-primary w-100">Ủng hộ ngay</button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="modal fade"
+          id="donationModal"
+          tabindex="-1"
+          aria-labelledby="donationModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="donationModalLabel">
+                  Thông tin ủng hộ
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <div class="modal-body">
+                <form action="/wp-json/payment/v1/vnppay/create" method="post">
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="name" class="form-label"
+                        >Họ tên người ủng hộ
+                        <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        placeholder="Tên người ủng hộ"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="phone" class="form-label"
+                        >Số điện thoại</label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        name="phone"
+                        placeholder="Số điện thoại"
+                      />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="address" class="form-label">Địa chỉ</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="address"
+                        placeholder="Địa chỉ"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="email" class="form-label"
+                        >Email <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="email"
+                        class="form-control"
+                        name="email"
+                        placeholder="Email"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3 form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      name="mark_name_anonymous"
+                      id="mark_name_anonymous"
+                    />
+                    <label class="form-check-label" for="mark_name_anonymous"
+                      >Tôi muốn ủng hộ ẩn danh</label
+                    >
+                  </div>
+                  <div class="mb-3">
+                    <label for="total_money" class="form-label"
+                      >Số tiền ủng hộ</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="total_money"
+                      placeholder="50.000"
+                      value="50000"
+                      required
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-danger w-100">
+                    Ủng hộ
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="nav nav-tabs mt-4">
+          <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#content"
+              >Nội dung</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#donors"
+              >Danh sách ủng hộ</a
+            >
+          </li>
+        </ul>
+
+        <div class="tab-content p-0">
+          <div id="content" class="tab-pane fade show active">
+            <!-- Hai cột trên cùng một hàng: Nội dung và Thông tin tổ chức -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="content-card">
+                  <h5>Nội dung</h5>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Officia nihil vel esse natus ratione fugit dolor labore,
+                    dolorum, ipsum beatae rerum eos similique asperiores
+                    reprehenderit quisquam velit perferendis, distinctio
+                    facilis! Molestias aut ducimus blanditiis, nam velit id illo
+                    suscipit architecto, expedita aliquid nihil eligendi
+                    inventore esse recusandae! Officia voluptatum corporis
+                    rerum, asperiores cum, placeat, minus maiores explicabo
+                    vitae porro cupiditate! Sunt perferendis vitae, optio magnam
+                    quae delectus debitis libero quidem non quo, commodi
+                    excepturi soluta accusamus. At numquam, neque ea
+                    exercitationem quasi non voluptates iste mollitia. Itaque
+                    magnam quod eligendi? Ea sunt ut quod. Aliquid doloremque
+                    enim iste repellendus nihil itaque praesentium vel soluta!
+                    Necessitatibus, nihil! Nesciunt voluptatibus ipsa placeat
+                    quo temporibus eligendi quaerat, nobis, voluptatem, corrupti
+                    molestias nemo corporis. Modi quas eaque voluptatibus optio.
+                    Aliquid autem ut veniam doloremque vitae magnam repellendus
+                    voluptatibus, iste ex dolores excepturi quas. Est voluptas
+                    atque iusto quaerat? Facilis tempora qui maiores asperiores
+                    eveniet.
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="org-card">
+                  <h6 class="text-muted">Thông tin tổ chức gây quỹ</h6>
+                  <div class="row align-items-center">
+                    <div class="col-md-3 text-center">
+                      <img
+                        src="./images/person_7.jpg"
+                        alt="Quỹ Từ tâm Đắk Lắk"
+                        width="60"
+                        class="rounded-circle"
+                      />
+                    </div>
+                    <div class="col-md-9">
+                      <h5 class="text-danger">Quỹ Từ tâm Đắk Lắk</h5>
+                      <p class="text-muted">
+                        “Quỹ Từ tâm Đắk Lắk hỗ trợ các nạn nhân bị thiên tai,
+                        hỏa hoạn và các đối tượng khó khăn. Lorem ipsum dolor
+                        sit, amet consectetur adipisicing elit. Fugiat,
+                        voluptates a. Nostrum molestiae ab consectetur odio illo
+                        omnis cupiditate dolor eos sint culpa distinctio
+                        blanditiis, doloribus animi suscipit. Veniam, ratione.
+                        Officiis perferendis excepturi sit aperiam possimus, id
+                        repudiandae unde tenetur ducimus nulla fugit laborum, ex
+                        ipsam, neque debitis illum non error in nostrum. Officia
+                        harum suscipit deserunt nobis magnam sunt? Nesciunt cum,
+                        voluptate a dicta suscipit recusandae veniam aspernatur
+                        odit distinctio laudantium tempore animi? Dolorum
+                        dolores fugiat ullam laborum asperiores illum nisi,
+                        ducimus minima. Dolores architecto corporis tempora
+                        fugiat esse? Nesciunt sit quo cum excepturi facilis vel
+                        vitae necessitatibus similique, ab animi iure, quia
+                        consequatur illo porro odio dolores quis enim, deleniti
+                        saepe! Ipsum omnis nesciunt voluptatibus amet molestiae
+                        accusamus.”
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="donors" class="tab-pane fade">
+            <h5>Danh sách ủng hộ</h5>
+            <input
+              type="text"
+              class="form-control search-bar"
+              placeholder="Nhập tên người ủng hộ"
+            />
+            <table class="table donor-table">
+              <thead>
+                <tr>
+                  <th>Người ủng hộ</th>
+                  <th>Số tiền</th>
+                  <th>Thời gian</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Nguyễn Văn A</td>
+                  <td>100.000đ</td>
+                  <td>10:30 - 05/03/2025</td>
+                </tr>
+                <tr>
+                  <td>Trần Thị B</td>
+                  <td>200.000đ</td>
+                  <td>11:45 - 04/03/2025</td>
+                </tr>
+                <tr>
+                  <td>Lê Văn C</td>
+                  <td>50.000đ</td>
+                  <td>14:20 - 03/03/2025</td>
+                </tr>
+                <tr>
+                  <td>Nguyễn Thị D</td>
+                  <td>500.000đ</td>
+                  <td>09:15 - 03/03/2025</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="row mt-5">
+              <div class="col text-center">
+                <div class="block-27">
+                  <ul>
+                    <li><a href="#">&lt;</a></li>
+                    <li class="active"><span>1</span></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">&gt;</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="ftco-footer ftco-section img">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-3">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Về chúng tôi</h2>
+              <p>
+                Dự án Website tổ chức phi lợi nhuận nhằm mục đích học tập không
+                chỉ là nơi cập nhật thông tin về các hoạt động từ thiện mà còn
+                là nền tảng giúp mọi người dễ dàng tham gia, đóng góp và theo
+                dõi tác động của từng hành động nhỏ bé nhưng đầy ý nghĩa.
+              </p>
+              <ul
+                class="ftco-footer-social list-unstyled float-md-left float-lft mt-5"
+              >
+                <li class="ftco-animate">
+                  <a href="#"
+                    ><span class="icon-twitter">
+                      <i class="fa-brands fa-github"></i> </span
+                  ></a>
+                </li>
+                <li class="ftco-animate">
+                  <a href="#"
+                    ><span class="icon-facebook">
+                      <i class="fa-brands fa-facebook"></i> </span
+                  ></a>
+                </li>
+                <li class="ftco-animate">
+                  <a href="#"
+                    ><span class="icon-instagram">
+                      <i class="fa-brands fa-instagram"></i> </span
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Tin tức gần đây</h2>
+              <div class="block-21 mb-4 d-flex">
+                <a
+                  class="blog-img mr-4"
+                  style="background-image: url(images/image_1.jpg)"
+                ></a>
+                <div class="text">
+                  <h3 class="heading">
+                    <a href="#"
+                      >Even the all-powerful Pointing has no control about</a
+                    >
+                  </h3>
+                  <div class="meta">
+                    <div>
+                      <a href="#"
+                        ><span class="icon-calendar"></span> July 12, 2018</a
+                      >
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-person"></span> Admin</a>
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-chat"></span> 19</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="block-21 mb-4 d-flex">
+                <a
+                  class="blog-img mr-4"
+                  style="background-image: url(images/image_2.jpg)"
+                ></a>
+                <div class="text">
+                  <h3 class="heading">
+                    <a href="#"
+                      >Even the all-powerful Pointing has no control about</a
+                    >
+                  </h3>
+                  <div class="meta">
+                    <div>
+                      <a href="#"
+                        ><span class="icon-calendar"></span> July 12, 2018</a
+                      >
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-person"></span> Admin</a>
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-chat"></span> 19</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="ftco-footer-widget mb-4 ml-md-4">
+              <h2 class="ftco-heading-2">Liên kết</h2>
+              <ul class="list-unstyled">
+                <li><a href="#" class="py-2 d-block">Trang chủ</a></li>
+                <li><a href="#" class="py-2 d-block">Sự kiện</a></li>
+                <li><a href="#" class="py-2 d-block">Gây quỹ</a></li>
+                <li><a href="#" class="py-2 d-block">Tình nguyện viên</a></li>
+                <li><a href="#" class="py-2 d-block">Tin tức</a></li>
+                <li><a href="#" class="py-2 d-block">Về chúng tôi</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Đặt câu hỏi cho chúng tôi?</h2>
+              <div class="block-23 mb-3">
+                <ul class="contact-list">
+                  <li>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span class="text">Đại học bách khoa đại học đà nẵng</span>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa-solid fa-phone"></i>
+                      <span class="text">+2 392 3929 210</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa-solid fa-envelope"></i>
+                      <span class="text">info@yourdomain.com</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const donateButton = document.querySelector(".btn-primary.w-100");
+      const donationModal = new bootstrap.Modal(
+        document.getElementById("donationModal")
+      );
+
+      donateButton.addEventListener("click", function () {
+        donationModal.show();
+      });
+    });
+  </script>
+  <script src="js/imageSwitcher.js"></script>
+  <script src="js/Navbar_user.js"></script>
+  <script src="js/Search.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</html>

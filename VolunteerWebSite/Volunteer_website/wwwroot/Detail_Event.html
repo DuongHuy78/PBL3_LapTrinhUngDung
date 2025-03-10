@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Welfare - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="css/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="css/magnific-popup.css" />
+
+    <link rel="stylesheet" href="css/aos.css" />
+
+    <link rel="stylesheet" href="css/ionicons.min.css" />
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="css/jquery.timepicker.css" />
+
+    <link rel="stylesheet" href="css/flaticon.css" />
+    <link rel="stylesheet" href="css/icomoon.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/Footer.css" />
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+      id="ftco-navbar"
+    >
+      <div class="container">
+        <div class="logo-container">
+          <img
+            src="./images/VolunteerIcon.png"
+            alt="Logo"
+            class="navbar-logo"
+          />
+          <a class="navbar-brand" href="index.html">DUTERS</a>
+        </div>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#ftco-nav"
+          aria-controls="ftco-nav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="event.html" class="nav-link">Events</a>
+            </li>
+            <li class="nav-item">
+              <a href="causes.html" class="nav-link">Fundraising</a>
+            </li>
+            <li class="nav-item">
+              <a href="donate.html" class="nav-link">Volunteers</a>
+            </li>
+            <li class="nav-item">
+              <a href="blog.html" class="nav-link">News</a>
+            </li>
+            <li class="nav-item">
+              <a href="about.html" class="nav-link">About Us</a>
+            </li>
+          </ul>
+          <!-- nav-icons-container -->
+          <div class="nav-icons-container d-flex align-items-center">
+            <!-- Search button -->
+
+            <a
+              class="icon d-flex align-items-center justify-content-center search-icon"
+              id="search-btn"
+              href="#"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvas-search"
+            >
+              <i class="fa fa-search"></i>
+            </a>
+            <!-- Search screen -->
+            <div id="search-overlay" style="display: none">
+              <div class="search-box">
+                <h2>Search by keyword</h2>
+                <div class="search-input">
+                  <input type="text" placeholder="keywords" />
+                  <button class="search-button">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+              <button id="close-search">&times;</button>
+            </div>
+
+            <a
+              class="icon d-flex align-items-center justify-content-center"
+              href="#"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvas-search"
+            >
+              <i class="fa-solid fa-hands-holding-child"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- dropdown -->
+        <div class="dropdown" style="margin-left: 20px">
+          <div class="avatar-container">
+            <img
+              class="avatar-img rounded-circle"
+              src="./images/person_4.jpg"
+              alt="avatar"
+              id="profileDropdown"
+            />
+          </div>
+
+          <ul
+            class="dropdown-menu dropdown-animation shadow pt-3"
+            aria-labelledby="profileDropdown"
+          >
+            <!-- Profile info -->
+            <li class="px-3">
+              <div class="d-flex align-items-center">
+                <!-- Avatar -->
+                <div class="avatar me-3">
+                  <img
+                    class="avatar-img rounded-circle shadow"
+                    src="./images/person_4.jpg"
+                    alt="avatar"
+                  />
+                </div>
+                <div>
+                  <a class="h6" href="#">Trần Quốc Đạt</a>
+                  <p class="small m-0">quocdat19991712@gmail.com</p>
+                </div>
+              </div>
+              <hr />
+            </li>
+            <!-- Links -->
+            <li>
+              <a class="dropdown-item" href="/setting">
+                <i class="fa-solid fa-user" style="margin-right: 10px"></i>
+                <i class="bi bi-person fa-fw me-2"></i>View Profile</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="/setting">
+                <i class="fa-solid fa-gear" style="margin-right: 10px"></i>
+                <i class="bi bi-person fa-fw me-2"></i>Edit Information</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item bg-danger-soft-hover"
+                href="/logout.php?v=login"
+              >
+                <i
+                  class="fa-solid fa-arrow-right-from-bracket"
+                  style="margin-right: 10px"
+                ></i>
+                <i class="bi bi-power fa-fw me-2"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+    <div
+      class="hero-wrap"
+      style="background-image: url('images/bg_1.jpg')"
+      data-stellar-background-ratio="0.5"
+    >
+      <div class="overlay"></div>
+      <div class="container">
+        <div
+          class="row no-gutters slider-text align-items-center justify-content-center"
+          data-scrollax-parent="true"
+        >
+          <div
+            class="col-md-7 ftco-animate text-center"
+            data-scrollax=" properties: { translateY: '70%' }"
+          >
+            <p
+              class="breadcrumbs"
+              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
+            >
+              <span class="mr-2"><a href="index.html">Home</a></span>
+              <span>Details Event</span>
+            </p>
+            <h1
+              class="mb-3 bread"
+              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
+            >
+              Detail Events
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- main -->
+    <main class="main-content single-event">
+      <div class="container" bis_skin_checked="1">
+        <div class="row" bis_skin_checked="1">
+          <div class="col-lg-8 col-sm-12" bis_skin_checked="1">
+            <article class="event-article">
+              <figure class="event-figure">
+                <img src="./images/7.jpg" alt="" />
+                <figcaption><strong>13</strong> June</figcaption>
+                <div class="event-countown syotimer timer" bis_skin_checked="1">
+                  <div class="timer-head-block" bis_skin_checked="1"></div>
+                  <div class="timer-body-block" bis_skin_checked="1">
+                    <p style="font-size: 1.2em">The countdown is finished!</p>
+                  </div>
+                  <div class="timer-foot-block" bis_skin_checked="1"></div>
+                </div>
+              </figure>
+              <div class="event-details pt-4" bis_skin_checked="1">
+                <h2 class="article-title mb-4">
+                  We are ready to organise a fruitfull event rerum doloribus
+                  deleniti tempora.
+                </h2>
+
+                <p>
+                  We are ipsum dolor sit amet, consectetur adipisicing elit.
+                  Commodi rem quisquam dignissimos, dolorum consequatur nihil,
+                  illo, adipisci tenetur id rerum doloribus deleniti tempora
+                  dolore vero! Quisquam nulla harum sunt tenetur velit natus,
+                  molestias quibusdam maiores facere illum porro culpa, ipsum
+                  accusamus aliquam animi esse placeat repellat. Voluptatum eos
+                  laudantium at.
+                </p>
+                <p>
+                  Ipsum dolor sit amet consectetur adipisicing elit. Eum omnis,
+                  autem enim mollitia voluptatibus voluptate exercitationem vero
+                  ab dicta fugit reprehenderit neque ducimus at aspernatur
+                  impedit natus ad, a corrupti? Porro eum exercitationem maxime!
+                </p>
+                <div
+                  class="d-lg-flex overflow-hidden g-4 justify-content-between my-4"
+                  bis_skin_checked="1"
+                >
+                  <div class="div me-3" bis_skin_checked="1">
+                    <img class="img-fluid" src="images/events/ev1.jpg" alt="" />
+                  </div>
+                  <div class="div" bis_skin_checked="1">
+                    <img class="img-fluid" src="images/events/ev2.jpg" alt="" />
+                  </div>
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
+                tenetur quaerat itaque eveniet? Sequi a accusantium quae iure
+                porro minus fugit dolorem, esse reiciendis ipsum necessitatibus
+                deleniti voluptatibus quos incidunt!
+                <div
+                  class="event-schedule d-flex justify-content-between my-4"
+                  bis_skin_checked="1"
+                >
+                  <div class="schedule-item shadow" bis_skin_checked="1">
+                    <span><i class="fa-solid fa-location-dot"></i></span>
+                    <p class="badge bg-dark">Sidney, Australia</p>
+                  </div>
+                  <div class="schedule-item shadow" bis_skin_checked="1">
+                    <span><i class="fa-regular fa-clock"></i></span>
+                    <p class="badge bg-dark">14 June 2024</p>
+                  </div>
+                  <div class="schedule-item shadow" bis_skin_checked="1">
+                    <h4>Get Register</h4>
+                    <a href="#" class="custom-btn">Register</a>
+                  </div>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Culpa similique illum, inventore amet aliquam quaerat? Facilis
+                  eaque ipsam, explicabo optio.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Asperiores tempora facilis velit commodi maiores nemo id.
+                  Harum, repellendus veniam voluptate totam necessitatibus
+                  blanditiis, minima ea vero, pariatur voluptatibus vel, labore
+                  nulla aliquid maxime provident esse!
+                </p>
+
+                <div
+                  class="event-accordion mt-5 border-top pt-5"
+                  bis_skin_checked="1"
+                >
+                  <h3 class="accord-title h2">Frequently Ask Question</h3>
+                  <div
+                    class="accordion"
+                    id="accordionExample"
+                    bis_skin_checked="1"
+                  >
+                    <div class="accordion-item" bis_skin_checked="1">
+                      <h2 class="accordion-header" id="headingOne">
+                        <button
+                          class="accordion-button"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseOne"
+                          aria-expanded="true"
+                          aria-controls="collapseOne"
+                        >
+                          What kind of event will organished?
+                        </button>
+                      </h2>
+                      <div
+                        id="collapseOne"
+                        class="accordion-collapse collapse show"
+                        aria-labelledby="headingOne"
+                        data-bs-parent="#accordionExample"
+                        bis_skin_checked="1"
+                      >
+                        <div class="accordion-body" bis_skin_checked="1">
+                          We organise <strong>Highly</strong> Lorem ipsum, dolor
+                          sit amet consectetur adipisicing elit. Rem maiores
+                          quod numquam inventore possimus qui, veritatis sed,
+                          minus dolores perferendis nostrum ad animi nam ratione
+                          dolore accusamus obcaecati omnis! Non.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item" bis_skin_checked="1">
+                      <h2 class="accordion-header" id="headingTwo">
+                        <button
+                          class="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseTwo"
+                          aria-expanded="false"
+                          aria-controls="collapseTwo"
+                        >
+                          Which area will be fixed for most?
+                        </button>
+                      </h2>
+                      <div
+                        id="collapseTwo"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionExample"
+                        bis_skin_checked="1"
+                      >
+                        <div class="accordion-body" bis_skin_checked="1">
+                          Lorem, ipsum dolor sit amet
+                          <strong>consectetur</strong> adipisicing elit. Ex
+                          ducimus corrupti modi numquam qui magni magnam
+                          recusandae consequatur nobis odit quo quasi,
+                          laboriosam accusamus harum perspiciatis quod eos animi
+                          perferendis.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item" bis_skin_checked="1">
+                      <h2 class="accordion-header" id="headingThree">
+                        <button
+                          class="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseThree"
+                          aria-expanded="false"
+                          aria-controls="collapseThree"
+                        >
+                          What is the importance of the event?
+                        </button>
+                      </h2>
+                      <div
+                        id="collapseThree"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingThree"
+                        data-bs-parent="#accordionExample"
+                        bis_skin_checked="1"
+                      >
+                        <div class="accordion-body" bis_skin_checked="1">
+                          <strong>Our Event always</strong> It is hidden by
+                          default, until the collapse plugin adds the
+                          appropriate classes that we use to style each element.
+                          These classes control the overall appearance, as well
+                          as the showing and hiding via CSS transitions. You can
+                          modify any of this with custom CSS or overriding our
+                          default variables. It's also worth noting that just
+                          about any HTML can go within
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Event Accordion End -->
+                <div
+                  id="google-map"
+                  class="mt-5 shadow p-4"
+                  bis_skin_checked="1"
+                ></div>
+              </div>
+            </article>
+          </div>
+          <!-- Event Article End -->
+
+          <!-- Sidebar Start -->
+          <div class="col-lg-4 col-sm-12" bis_skin_checked="1">
+            <aside class="sidebar">
+              <!-- Search Widget -->
+              <div class="widget" bis_skin_checked="1">
+                <h3 class="widget-title">Search For</h3>
+                <form class="search-form2" action="#">
+                  <input type="text" placeholder="Search" />
+                  <button><i class="fa fa-search"></i></button>
+                </form>
+              </div>
+              <!-- Category Widget -->
+              <div class="widget" bis_skin_checked="1">
+                <h3 class="widget-title">categories</h3>
+                <ul>
+                  <li><a href="#">Clean Water</a><span>(32)</span></li>
+                  <li><a href="#">Environment</a><span>(12)</span></li>
+                  <li><a href="#">Child Protection</a><span>(35)</span></li>
+                  <li><a href="#">Education</a><span>(32)</span></li>
+                  <li><a href="#">Poverty</a><span>(32)</span></li>
+                </ul>
+              </div>
+
+              <!-- Instagram Widget -->
+              <div class="widget instagram-widget" bis_skin_checked="1">
+                <h3 class="widget-title">Instagram</h3>
+                <ul>
+                  <li>
+                    <a href="#" target="_blank"
+                      ><img src="images/blog/insta.jpg" alt=""
+                    /></a>
+                  </li>
+                  <li>
+                    <a href="#" target="_blank"
+                      ><img src="images/blog/ins1.jpg" alt=""
+                    /></a>
+                  </li>
+                  <li>
+                    <a href="#" target="_blank"
+                      ><img src="images/blog/ins2.jpg" alt=""
+                    /></a>
+                  </li>
+                  <li>
+                    <a href="#" target="_blank"
+                      ><img src="images/blog/pp4.jpg" alt=""
+                    /></a>
+                  </li>
+                  <li>
+                    <a href="#" target="_blank"
+                      ><img src="images/blog/ins4.jpg" alt=""
+                    /></a>
+                  </li>
+                  <li>
+                    <a href="#" target="_blank"
+                      ><img src="images/blog/ins5.jpg" alt=""
+                    /></a>
+                  </li>
+                </ul>
+              </div>
+              <!-- Newsletter Widget -->
+              <div class="widget" bis_skin_checked="1">
+                <h3 class="widget-title">newsletter</h3>
+                <div class="newsletter-entry" bis_skin_checked="1">
+                  <p>
+                    Hi we are waiting for your submission any quaries. Lorem
+                    ipsum dolor sit amet.
+                  </p>
+                  <form action="#">
+                    <div class="form-group" bis_skin_checked="1">
+                      <input type="text" placeholder="Name" />
+                    </div>
+                    <div class="form-group" bis_skin_checked="1">
+                      <input type="text" placeholder="Email" />
+                    </div>
+                    <button class="submit custom-btn">submit</button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Tag Widget -->
+              <div class="widget" bis_skin_checked="1">
+                <h3 class="widget-title">Popular Tags</h3>
+                <div class="tagcloud" bis_skin_checked="1">
+                  <a href="#">charity</a>
+                  <a href="#">humanity</a>
+                  <a href="#">helpless</a>
+                  <a href="#">link</a>
+                  <a href="#">children</a>
+                  <a href="#">poverty</a>
+                  <a href="#">education</a>
+                  <a href="#">love</a>
+                  <a href="#">charity</a>
+                </div>
+              </div>
+              <!-- Tag End -->
+            </aside>
+          </div>
+          <!-- Sidebar End -->
+        </div>
+      </div>
+    </main>
+    <!-- main -->
+    <footer class="ftco-footer ftco-section img">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-3">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Về chúng tôi</h2>
+              <p>
+                Dự án Website tổ chức phi lợi nhuận nhằm mục đích học tập không
+                chỉ là nơi cập nhật thông tin về các hoạt động từ thiện mà còn
+                là nền tảng giúp mọi người dễ dàng tham gia, đóng góp và theo
+                dõi tác động của từng hành động nhỏ bé nhưng đầy ý nghĩa.
+              </p>
+              <ul
+                class="ftco-footer-social list-unstyled float-md-left float-lft mt-5"
+              >
+                <li class="ftco-animate">
+                  <a href="#"
+                    ><span class="icon-twitter">
+                      <i class="fa-brands fa-github"></i> </span
+                  ></a>
+                </li>
+                <li class="ftco-animate">
+                  <a href="#"
+                    ><span class="icon-facebook">
+                      <i class="fa-brands fa-facebook"></i> </span
+                  ></a>
+                </li>
+                <li class="ftco-animate">
+                  <a href="#"
+                    ><span class="icon-instagram">
+                      <i class="fa-brands fa-instagram"></i> </span
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Tin tức gần đây</h2>
+              <div class="block-21 mb-4 d-flex">
+                <a
+                  class="blog-img mr-4"
+                  style="background-image: url(images/image_1.jpg)"
+                ></a>
+                <div class="text">
+                  <h3 class="heading">
+                    <a href="#"
+                      >Even the all-powerful Pointing has no control about</a
+                    >
+                  </h3>
+                  <div class="meta">
+                    <div>
+                      <a href="#"
+                        ><span class="icon-calendar"></span> July 12, 2018</a
+                      >
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-person"></span> Admin</a>
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-chat"></span> 19</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="block-21 mb-4 d-flex">
+                <a
+                  class="blog-img mr-4"
+                  style="background-image: url(images/image_2.jpg)"
+                ></a>
+                <div class="text">
+                  <h3 class="heading">
+                    <a href="#"
+                      >Even the all-powerful Pointing has no control about</a
+                    >
+                  </h3>
+                  <div class="meta">
+                    <div>
+                      <a href="#"
+                        ><span class="icon-calendar"></span> July 12, 2018</a
+                      >
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-person"></span> Admin</a>
+                    </div>
+                    <div>
+                      <a href="#"><span class="icon-chat"></span> 19</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="ftco-footer-widget mb-4 ml-md-4">
+              <h2 class="ftco-heading-2">Liên kết</h2>
+              <ul class="list-unstyled">
+                <li><a href="#" class="py-2 d-block">Trang chủ</a></li>
+                <li><a href="#" class="py-2 d-block">Sự kiện</a></li>
+                <li><a href="#" class="py-2 d-block">Gây quỹ</a></li>
+                <li><a href="#" class="py-2 d-block">Tình nguyện viên</a></li>
+                <li><a href="#" class="py-2 d-block">Tin tức</a></li>
+                <li><a href="#" class="py-2 d-block">Về chúng tôi</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Đặt câu hỏi cho chúng tôi?</h2>
+              <div class="block-23 mb-3">
+                <ul class="contact-list">
+                  <li>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span class="text">Đại học bách khoa đại học đà nẵng</span>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa-solid fa-phone"></i>
+                      <span class="text">+2 392 3929 210</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa-solid fa-envelope"></i>
+                      <span class="text">info@yourdomain.com</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen">
+      <svg class="circular" width="48px" height="48px">
+        <circle
+          class="path-bg"
+          cx="24"
+          cy="24"
+          r="22"
+          fill="none"
+          stroke-width="4"
+          stroke="#eeeeee"
+        />
+        <circle
+          class="path"
+          cx="24"
+          cy="24"
+          r="22"
+          fill="none"
+          stroke-width="4"
+          stroke-miterlimit="10"
+          stroke="#F96D00"
+        />
+      </svg>
+    </div>
+    <script src="js/Navbar_user.js"></script>
+    <script src="js/Search.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/jquery.timepicker.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="js/google-map.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

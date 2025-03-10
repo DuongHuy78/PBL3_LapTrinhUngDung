@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Overpass", Arial, sans-serif;
+}
+
+body {
+  background-image: url("../images/image_3.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.wrapper {
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.SignUpContainer {
+  position: relative;
+  width: 450px;
+  backdrop-filter: blur(15px); /*tạo hiệu ứng mờ cho background*/
+  border: 2px solid var(#cdcdcd);
+  border-radius: 15px;
+  padding: 7.5em 2.5em 4em 2.5em;
+  /* color: #ffffff; */
+  box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.2);
+}
+
+.SignUpContainer h1 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex; /*để có thể sử dụng align-items và justify-content*/
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: translateX(
+    -50%
+  ); /*đưa text về giữa, kết hợp với left: 50% và absolute*/
+  background-color: #d4d4d4;
+  width: 140px;
+  height: 60px;
+  border-radius: 0 0 20px 20px;
+}
+
+.inputBox {
+  position: relative;
+  display: flex;
+  flex-direction: column; /*để các phần tử con nằm dọc*/
+  margin: 30px 0; /*khoảng cách giữa các input*/
+}
+
+.inputLabel {
+  font-size: 16px;
+  position: absolute; /*để text không bị đè lên input khi nhập */
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+  color: #c6c3c3;
+  pointer-events: none; /*loại bỏ sự kiện click vào text*/
+  transition: 0.3s ease all; /*hiệu ứng chuyển động khi focus vào input*/
+}
+
+.inputField:focus ~ .inputLabel,
+.inputField:valid ~ .inputLabel {
+  top: -10px;
+  left: 20px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.inputField {
+  width: 100%;
+  height: 55px;
+  padding-top: 5px; /*khoảng cách giữa chữ và viền*/
+  background: transparent; /*nền trong suốt*/
+  border: 2px solid #c6c3c3; /* solid: đường viền đậm, #c6c3c3: màu xám nhạt*/
+  border-radius: 15px;
+  color: #ffffff; /*màu chữ trắng */
+  font-size: 16px;
+  padding-inline: 20px; /*khoảng cách giữa chữ và viền*/
+  outline: none; /*loại bỏ viền khi click vào input*/
+}
+
+.genderBox {
+  font-size: 16px;
+  color: #c6c3c3;
+}
+
+.genderBox input {
+  margin-left: 10px; /* Khoảng cách giữa các input */
+}
+
+form div a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+form div button {
+  width: 100%;
+  height: 50px;
+  border-radius: 15px;
+  background: #ececec;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+form div button:hover {
+  background: #ffffff;
+}
+
+form div a,
+form div button {
+  display: block;
+  margin-top: 10px;
+  align-items: center;
+  text-align: center;
+}

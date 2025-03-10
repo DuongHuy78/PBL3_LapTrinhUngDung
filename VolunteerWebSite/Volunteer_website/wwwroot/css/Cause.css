@@ -1,0 +1,112 @@
+.card {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: white;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s;
+  min-height: auto !important;
+}
+
+.card-title {
+  margin: 10px 0 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: black; /* Màu cam */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.org-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin: 10px 0;
+  font-weight: bold;
+  color: #ff6600; /* Màu cam */
+}
+
+.progress-container {
+  width: 100%;
+  background: #eee;
+  border-radius: 5px;
+  height: 8px;
+  margin: 10px 0;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #ff6600; /* Màu cam */
+  border-radius: 5px;
+}
+
+.fund-raised {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: block;
+  color: black; /* Màu cam */
+}
+
+.donate-btn {
+  background: #ff6600; /* Màu cam */
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.donate-btn:hover {
+  background: white;
+  color: #b64900;
+  border: 2px solid #b64900;
+}
+
+.donation-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.donation-count {
+  font-size: 14px;
+  color: black; /* Màu cam */
+  margin-top: 5px;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.card-title {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.donation-count .count {
+  font-weight: bold; /* In đậm */
+  font-size: 14px;
+}

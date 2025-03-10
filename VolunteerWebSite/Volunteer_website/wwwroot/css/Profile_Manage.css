@@ -1,0 +1,279 @@
+:root {
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: #78d5ef;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: "Work Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5 {
+  line-height: 1.4;
+  color: #000;
+  font-family: "Dosis", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+  margin-right: 1rem;
+  font-size: 20px;
+  white-space: nowrap;
+}
+body {
+  background-color: #f8f9fa;
+}
+.stats-card {
+  background-color: #fefbf4;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+}
+
+.stats-card i {
+  font-size: 40px;
+  color: #f5a623;
+  margin-bottom: 10px;
+}
+
+.stats-card h2 {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stats-card p {
+  color: #2c3e50;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+/* Navbar */
+.navbar {
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 10px 20px;
+}
+.navbar .container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-dropdown {
+  position: relative;
+}
+.navbar-dropdown img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.navbar-dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  min-width: 210px;
+  padding: 5px 0;
+  z-index: 1000;
+}
+.navbar-dropdown:hover .navbar-dropdown-menu {
+  display: block;
+}
+.navbar-dropdown-menu a {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  gap: 10px;
+}
+.navbar-dropdown-menu a:hover {
+  background-color: #e9ecef;
+}
+.navbar-brand {
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1;
+  display: inline-block;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+  margin-right: 1rem;
+  font-size: 20px;
+  white-space: nowrap;
+}
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Sidebar */
+.sidebar {
+  width: 100px;
+  height: 100vh;
+  background-color: #fff;
+  position: fixed;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+.sidebar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+.sidebar a:hover {
+  background-color: #e9ecef;
+  border-radius: 8px;
+}
+
+/* Sidebar Dropdown */
+.sidebar-dropdown {
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+.sidebar-dropdown-menu {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: white;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  min-width: 180px;
+  padding: 15px 0;
+}
+.sidebar-dropdown:hover .sidebar-dropdown-menu {
+  display: block;
+}
+.sidebar-dropdown-menu a {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  gap: 10px;
+  flex-direction: row;
+}
+.sidebar-dropdown-menu a:hover {
+  background-color: #e9ecef;
+}
+
+/* Avatar */
+.avatar-container {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+.container {
+  position: absolute;
+  top: 60px; /* Điều chỉnh khoảng cách từ menu dropdown xuống */
+  right: 20px; /* Điều chỉnh vị trí để căn chỉnh với avatar */
+  z-index: -1; /* Đưa phần này ra phía sau */
+}
+
+.dropdown-menu {
+  z-index: 10; /* Đảm bảo menu dropdown nằm trên */
+}
+.navbar-logo {
+  width: 50px; /* Điều chỉnh kích thước logo */
+  height: auto;
+  max-height: 50px; /* Giới hạn chiều cao */
+  padding-bottom: 10px;
+  /* filter: brightness(0) invert(1); */
+}
+#profile-avatar {
+  width: 100px; /* Điều chỉnh kích thước mong muốn */
+  height: 100px;
+  object-fit: cover; /* Giữ hình tròn đẹp */
+}
+.avatar-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.avatar-container img {
+  width: 100px; /* Kích thước ảnh */
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: 0.3s ease-in-out;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Nền đen mờ */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.avatar-container:hover .overlay {
+  opacity: 1;
+}
+
+.avatar-container:hover img {
+  filter: brightness(0.7); /* Làm tối ảnh khi hover */
+}
