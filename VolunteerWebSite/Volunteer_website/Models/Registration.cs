@@ -11,7 +11,7 @@ public partial class Registration
 
     public string? EventId { get; set; }
 
-    public bool? Status { get; set; }
+    public string? Status { get; set; }
 
     public DateOnly? RegisterAt { get; set; }
 

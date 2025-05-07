@@ -1,4 +1,4 @@
-namespace Volunteer_website.Models
+namespace Volunteer_website.ViewModels
 {
     public class ErrorViewModel
     {

@@ -1,0 +1,51 @@
+﻿@model Volunteer_website.ViewModels.SignInModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/Login.css" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="loginContainer">
+            <div class="LoginHeader">
+                <h1>Login</h1>
+            </div>
+
+            @using (Html.BeginForm("SignIn", "Account2", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="inputBox">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "inputField", placeholder = " " })
+                    @Html.LabelFor(m => m.UserName, new { @class = "inputLabel" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+
+                <div class="inputBox">
+                    @Html.PasswordFor(m => m.Password, new { @class = "inputField", placeholder = " " })
+                    @Html.LabelFor(m => m.Password, new { @class = "inputLabel" })
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+
+                <div>
+                    <a href="#">Forgot password?</a>
+                    <button type="submit">Login</button>
+                    <a href="~/Account2/Sign_Up">Don't have an account?</a>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

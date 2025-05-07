@@ -110,12 +110,42 @@
   font-weight: bold; /* In đậm */
   font-size: 14px;
 }
-.btn-custom {
-  border-radius: 25px;
-  padding: 8px 20px;
-  transition: all 0.3s ease;
-  font-weight: bold;
+.event-filter-tabs {
+    display: flex;
+    gap: 20px;
+    margin: 0 auto 20px auto;
+    margin-bottom:10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 15px;
+    max-width: 1140px;
+    background-color: #f9f9f9;
+    justify-content: center;
 }
-.btn-custom:hover {
-  transform: scale(1.05);
+
+
+
+.tab-btn {
+    background: none;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    color: #666;
+    padding: 8px 12px;
+    border-bottom: 3px solid transparent;
+    border-radius: 999px; /* Bo tròn hoàn toàn */
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
+
+
+    .tab-btn.active {
+        color: orangered;
+        border-color: #8000ff;
+        background-color: #eee;
+    }
+/* Style cho thanh tìm kiếm */
+    .tab-btn:hover {
+        background-color: #f0f0f0;
+        color: #000;
+    }

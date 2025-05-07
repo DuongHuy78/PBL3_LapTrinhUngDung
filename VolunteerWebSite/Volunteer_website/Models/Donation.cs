@@ -15,7 +15,7 @@ public partial class Donation
 
     public string? Message { get; set; }
 
-    public DateOnly? DonationDate { get; set; }
+    public DateTime? DonationDate { get; set; }
 
     public virtual Event? Event { get; set; }
 

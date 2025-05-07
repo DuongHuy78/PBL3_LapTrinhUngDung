@@ -2,9 +2,15 @@
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
+@{
+    var role = Context.Session.GetInt32("UserRole");
+    Layout = role == 1 ? "~/Views/Shared/_AdminLayout.cshtml" :
+             role == 0 ? "~/Views/Shared/User_Layout.cshtml" :
+             "~/Views/Shared/_Layout.cshtml"; 
+}
 
 <div class="hero-wrap"
-     style="background-image: url('@Url.Content("~/images/bg_7.jpg")')"
+     style="background-image: url('images/index1.jpg')"
      data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">

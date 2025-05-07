@@ -31,12 +31,15 @@ public partial class VolunteerManagementContext : DbContext
 
     public virtual DbSet<Volunteer> Volunteers { get; set; }
 
+//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+//        => optionsBuilder.UseSqlServer("Data Source=CHIBAO;Initial Catalog=VolunteerDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Admin>(entity =>
         {
-            entity.HasKey(e => e.AdminId).HasName("PK__Admin__43AA414114095B57");
+            entity.HasKey(e => e.AdminId).HasName("PK__Admin__43AA41413BE1844B");
 
             entity.ToTable("Admin");
 
@@ -57,7 +60,7 @@ public partial class VolunteerManagementContext : DbContext
 
         modelBuilder.Entity<Donation>(entity =>
         {
-            entity.HasKey(e => e.DonationId).HasName("PK__Donation__296B91DCFEC00132");
+            entity.HasKey(e => e.DonationId).HasName("PK__Donation__296B91DC6EA62E67");
 
             entity.ToTable("Donation");
 
@@ -68,7 +71,9 @@ public partial class VolunteerManagementContext : DbContext
             entity.Property(e => e.Amount)
                 .HasColumnType("money")
                 .HasColumnName("amount");
-            entity.Property(e => e.DonationDate).HasColumnName("donation_date");
+            entity.Property(e => e.DonationDate)
+                .HasColumnType("datetime")
+                .HasColumnName("donation_date");
             entity.Property(e => e.EventId)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -83,16 +88,16 @@ public partial class VolunteerManagementContext : DbContext
 
             entity.HasOne(d => d.Event).WithMany(p => p.Donations)
                 .HasForeignKey(d => d.EventId)
-                .HasConstraintName("FK__Donation__event___5629CD9C");
+                .HasConstraintName("FK__Donation__event___5535A963");
 
             entity.HasOne(d => d.Volunteer).WithMany(p => p.Donations)
                 .HasForeignKey(d => d.VolunteerId)
-                .HasConstraintName("FK__Donation__volunt__5535A963");
+                .HasConstraintName("FK__Donation__volunt__5441852A");
         });
 
         modelBuilder.Entity<Evaluation>(entity =>
         {
-            entity.HasKey(e => e.EvaluationId).HasName("PK__Evaluati__36AE68F3553373A3");
+            entity.HasKey(e => e.EvaluationId).HasName("PK__Evaluati__36AE68F37590C2C3");
 
             entity.Property(e => e.EvaluationId)
                 .HasMaxLength(36)
@@ -113,7 +118,7 @@ public partial class VolunteerManagementContext : DbContext
 
         modelBuilder.Entity<Event>(entity =>
         {
-            entity.HasKey(e => e.EventId).HasName("PK__Events__2370F727D63CDE58");
+            entity.HasKey(e => e.EventId).HasName("PK__Events__2370F72730443B4B");
 
             entity.Property(e => e.EventId)
                 .HasMaxLength(50)
@@ -152,12 +157,12 @@ public partial class VolunteerManagementContext : DbContext
 
             entity.HasOne(d => d.Org).WithMany(p => p.Events)
                 .HasForeignKey(d => d.OrgId)
-                .HasConstraintName("FK__Events__org_id__4E88ABD4");
+                .HasConstraintName("FK__Events__org_id__47DBAE45");
         });
 
         modelBuilder.Entity<Organization>(entity =>
         {
-            entity.HasKey(e => e.OrgId).HasName("PK__Organiza__F6AD8012CEEE1CFC");
+            entity.HasKey(e => e.OrgId).HasName("PK__Organiza__F6AD80122B2F786B");
 
             entity.ToTable("Organization");
 
@@ -189,7 +194,7 @@ public partial class VolunteerManagementContext : DbContext
 
         modelBuilder.Entity<Registration>(entity =>
         {
-            entity.HasKey(e => e.RegId).HasName("PK__Registra__74038772D4A1B9A0");
+            entity.HasKey(e => e.RegId).HasName("PK__Registra__74038772CF42390A");
 
             entity.Property(e => e.RegId)
                 .HasMaxLength(50)
@@ -199,7 +204,9 @@ public partial class VolunteerManagementContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("event_id");
-            entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .HasColumnName("status");
             entity.Property(e => e.VolunteerId)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -207,16 +214,16 @@ public partial class VolunteerManagementContext : DbContext
 
             entity.HasOne(d => d.Event).WithMany(p => p.Registrations)
                 .HasForeignKey(d => d.EventId)
-                .HasConstraintName("FK__Registrat__event__52593CB8");
+                .HasConstraintName("FK__Registrat__event__4CA06362");
 
             entity.HasOne(d => d.Volunteer).WithMany(p => p.Registrations)
                 .HasForeignKey(d => d.VolunteerId)
-                .HasConstraintName("FK__Registrat__volun__5165187F");
+                .HasConstraintName("FK__Registrat__volun__4BAC3F29");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370FE8CBE2DF");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370F238B2648");
 
             entity.Property(e => e.UserId)
                 .HasMaxLength(50)
@@ -239,7 +246,7 @@ public partial class VolunteerManagementContext : DbContext
 
         modelBuilder.Entity<Volunteer>(entity =>
         {
-            entity.HasKey(e => e.VolunteerId).HasName("PK__Voluntee__0FE766B188AB9535");
+            entity.HasKey(e => e.VolunteerId).HasName("PK__Voluntee__0FE766B15290ACBB");
 
             entity.Property(e => e.VolunteerId)
                 .HasMaxLength(50)

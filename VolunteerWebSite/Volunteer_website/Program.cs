@@ -1,19 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using System.Globalization;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Volunteer_website.Helpers;
+﻿using Microsoft.EntityFrameworkCore;
 using Volunteer_website.Models;
-
+using Volunteer_website.ViewModels;
+using Volunteer_website.Services;
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -71,12 +62,18 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedUICultures = supportedCultures;
 });
 
-// Configure Cookie Policy
-builder.Services.Configure<CookiePolicyOptions>(options =>
+builder.Services.AddSession(options =>
 {
-    options.MinimumSameSitePolicy = SameSiteMode.Strict;
-    options.HttpOnly = HttpOnlyPolicy.Always;
-    options.Secure = CookieSecurePolicy.Always;
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Thời gian session tồn tại
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+//Connect Vnpay
+builder.Services.AddScoped<IVnPayService, VnPayService>();
+
+builder.Services.AddDbContext<VolunteerManagementContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyDatabase"));
 });
 
 var app = builder.Build();
@@ -89,12 +86,13 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(); // Đảm bảo phục vụ các tệp tĩnh từ wwwroot
+
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCookiePolicy();
 
 app.MapControllerRoute(
     name: "areas",
@@ -102,9 +100,7 @@ app.MapControllerRoute(
 );
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
-);
-app.MapRazorPages();
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 // Debugging Route Info
 app.Use(async (context, next) =>
