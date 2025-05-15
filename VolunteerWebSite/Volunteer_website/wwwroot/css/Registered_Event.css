@@ -1,0 +1,140 @@
+﻿/* Main color scheme */
+:root {
+    --primary-color: #fd7e14; /* Orange */
+    --primary-hover: #e66a00;
+    --secondary-color: #f8f9fa;
+    --light-orange: #ffe5d0;
+    --dark-orange: #d46a10;
+}
+
+/* Card header */
+.bg-orange {
+    background-color: var(--primary-color) !important;
+}
+
+/* Buttons */
+.btn-details {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+    .btn-details:hover {
+        background-color: var(--primary-hover);
+        color: white;
+    }
+
+.btn-cancel {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+    .btn-cancel:hover {
+        background-color: #bb2d3b;
+        color: white;
+    }
+
+/* Table styling */
+.table {
+    margin-bottom: 0;
+    border: 1px solid var(--primary-color);
+    border-radius: 8px; /* Bo góc bảng */
+}
+
+    .table thead th {
+        background-color: var(--light-orange);
+        border-bottom: 2px solid var(--primary-color);
+    }
+
+    .table tbody td {
+        border-top: 1px solid var(--primary-color); /* Thêm khung cho các ô trong bảng */
+    }
+
+/* Hover effect for table rows */
+.table-hover tbody tr:hover {
+    background-color: rgba(253, 126, 20, 0.1);
+}
+
+/* Badges */
+.badge {
+    padding: 0.5em 0.75em;
+    font-weight: 500;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+/* Alert */
+.alert-info {
+    background-color: var(--light-orange);
+    border-color: var(--primary-color);
+    color: var(--dark-orange);
+}
+
+.container {
+    margin-left: 350px !important;
+    padding: 20px !important;
+    transition: margin-left 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0px !important; 
+        padding: 10px !important;
+        transition: margin-left 0.3s ease;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 1000;
+        height: 100vh;
+    }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+    .table-responsive {
+        margin-left: 0;
+        overflow-x: auto;
+    }
+}
+
+/* Custom Toast Notification */
+.swal2-popup {
+    font-family: 'Dosis', sans-serif;
+    border-radius: 8px !important;
+}
+
+.swal2-success {
+    color: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
+.swal2-error {
+    color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+.swal2-info {
+    color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+}
+
+.swal2-warning {
+    color: #fd7e14 !important;
+    border-color: #fd7e14 !important;
+}
+
+.swal2-confirm {
+    background-color: #fd7e14 !important;
+    border: none !important;
+}
+
+    .swal2-confirm:hover {
+        background-color: #e66a00 !important;
+    }

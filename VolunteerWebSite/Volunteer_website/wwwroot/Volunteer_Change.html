@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa thông tin</title>
+    <link rel="stylesheet" href="css\Volunteer_change.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Chỉnh sửa thông tin</h2>
+        <form id="infoForm">
+            <label for="name">Họ và tên:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="address">Địa chỉ:</label>
+            <input type="text" id="address" name="address" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Số điện thoại:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="avatar">Ảnh đại diện:</label>
+            <input type="file" id="avatar" accept="image/*">
+
+            <button type="button" onclick="saveInfo()">Lưu Thông Tin</button>
+        </form>
+
+        <div id="preview" class="hidden">
+            <h3>Thông tin đã nhập:</h3>
+            <p><strong>Họ và tên:</strong> <span id="previewName"></span></p>
+            <p><strong>Địa chỉ:</strong> <span id="previewAddress"></span></p>
+            <p><strong>Email:</strong> <span id="previewEmail"></span></p>
+            <p><strong>Số điện thoại:</strong> <span id="previewPhone"></span></p>
+            <img id="previewAvatar" src="" alt="Ảnh đại diện">
+        </div>
+    </div>
+
+    <script>
+        function saveInfo() {
+            document.getElementById('previewName').textContent = document.getElementById('name').value;
+            document.getElementById('previewAddress').textContent = document.getElementById('address').value;
+            document.getElementById('previewEmail').textContent = document.getElementById('email').value;
+            document.getElementById('previewPhone').textContent = document.getElementById('phone').value;
+            
+            const avatarInput = document.getElementById('avatar');
+            const previewAvatar = document.getElementById('previewAvatar');
+            if (avatarInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewAvatar.src = e.target.result;
+                };
+                reader.readAsDataURL(avatarInput.files[0]);
+            } else {
+                previewAvatar.src = "";
+            }
+
+            document.getElementById('preview').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

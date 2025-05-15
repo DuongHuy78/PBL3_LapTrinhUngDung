@@ -1,0 +1,115 @@
+[33mf252986[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mChibao[m[33m)[m HEAD@{0}: commit (merge): Merge
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{1}: reset: moving to HEAD
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{2}: checkout: moving from Chibao to Chibao
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{3}: reset: moving to 44bcc7c
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{4}: checkout: moving from Chibao to Chibao
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{5}: reset: moving to 44bcc7cd76ca4dfd526d6b2fc861ea9410e02467
+[33m867665f[m HEAD@{6}: commit: .
+[33m6b0f5be[m HEAD@{7}: checkout: moving from 8ba973cd7f596d2935d9b7f8511b25156aaefa8c to Chibao
+[33m8ba973c[m HEAD@{8}: commit: .
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{9}: checkout: moving from Chibao to 44bcc7cd76ca4dfd526d6b2fc861ea9410e02467
+[33m6b0f5be[m HEAD@{10}: reset: moving to HEAD
+[33m6b0f5be[m HEAD@{11}: checkout: moving from d4c51237a507a3b012289baa847059eabfc57a8e to Chibao
+[33md4c5123[m HEAD@{12}: commit: .
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{13}: checkout: moving from Chibao to 44bcc7cd76ca4dfd526d6b2fc861ea9410e02467
+[33m6b0f5be[m HEAD@{14}: reset: moving to HEAD
+[33m6b0f5be[m HEAD@{15}: reset: moving to HEAD
+[33m6b0f5be[m HEAD@{16}: checkout: moving from Chibao to Chibao
+[33m6b0f5be[m HEAD@{17}: checkout: moving from ddf2468d610b252fdc1765975559b97a84076494 to Chibao
+[33mddf2468[m HEAD@{18}: commit: .
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{19}: checkout: moving from 993c068a1de4f5f56d32f4d0b14cd0ffa8690563 to 44bcc7cd76ca4dfd526d6b2fc861ea9410e02467
+[33m993c068[m HEAD@{20}: commit: Khoiphuc
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{21}: checkout: moving from Chibao to 44bcc7cd76ca4dfd526d6b2fc861ea9410e02467
+[33m6b0f5be[m HEAD@{22}: reset: moving to HEAD
+[33m6b0f5be[m HEAD@{23}: checkout: moving from main to Chibao
+[33m99a1691[m[33m ([m[1;32mmain[m[33m)[m HEAD@{24}: reset: moving to HEAD
+[33m99a1691[m[33m ([m[1;32mmain[m[33m)[m HEAD@{25}: commit: .
+[33m3d22e32[m[33m ([m[1;31mupstream/main[m[33m)[m HEAD@{26}: merge upstream/main: Fast-forward
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{27}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{28}: checkout: moving from Chibao to main
+[33m6b0f5be[m HEAD@{29}: reset: moving to HEAD
+[33m6b0f5be[m HEAD@{30}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{31}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{32}: checkout: moving from Chibao to main
+[33m6b0f5be[m HEAD@{33}: reset: moving to HEAD
+[33m6b0f5be[m HEAD@{34}: checkout: moving from Chibao to Chibao
+[33m6b0f5be[m HEAD@{35}: checkout: moving from Chibao to Chibao
+[33m6b0f5be[m HEAD@{36}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{37}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{38}: checkout: moving from Chibao to main
+[33m6b0f5be[m HEAD@{39}: reset: moving to HEAD
+[33m6b0f5be[m HEAD@{40}: checkout: moving from Khoiphuc to Chibao
+[33md554198[m[33m ([m[1;32mKhoiphuc[m[33m)[m HEAD@{41}: checkout: moving from d554198046b9d2d5fbed9594a9c59212904c60e7 to Khoiphuc
+[33md554198[m[33m ([m[1;32mKhoiphuc[m[33m)[m HEAD@{42}: commit: ...
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{43}: checkout: moving from Chibao to 44bcc7cd76ca4dfd526d6b2fc861ea9410e02467
+[33m6b0f5be[m HEAD@{44}: reset: moving to HEAD
+[33m6b0f5be[m HEAD@{45}: checkout: moving from 44bcc7cd76ca4dfd526d6b2fc861ea9410e02467 to Chibao
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{46}: checkout: moving from Chibao to 44bcc7cd76ca4dfd526d6b2fc861ea9410e02467
+[33m6b0f5be[m HEAD@{47}: reset: moving to HEAD
+[33m6b0f5be[m HEAD@{48}: commit (merge): Merge chibao
+[33md1b0d9b[m HEAD@{49}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{50}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{51}: checkout: moving from Chibao to main
+[33md1b0d9b[m HEAD@{52}: reset: moving to HEAD
+[33md1b0d9b[m HEAD@{53}: commit: Commit thui
+[33m4373e6b[m HEAD@{54}: commit: Pull code về
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{55}: reset: moving to HEAD
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{56}: checkout: moving from Chibao to Chibao
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{57}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{58}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{59}: checkout: moving from Chibao to main
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{60}: reset: moving to HEAD
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{61}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{62}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{63}: checkout: moving from Chibao to main
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{64}: reset: moving to HEAD
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{65}: checkout: moving from Chibao to Chibao
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{66}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{67}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{68}: checkout: moving from Chibao to main
+[33m44bcc7c[m[33m ([m[1;31morigin/Chibao[m[33m)[m HEAD@{69}: commit: push tạm
+[33m663097c[m HEAD@{70}: checkout: moving from 663097c846dce49d3d55b8999c2e973694657ae6 to Chibao
+[33m663097c[m HEAD@{71}: checkout: moving from Chibao to 663097c846dce49d3d55b8999c2e973694657ae6
+[33m663097c[m HEAD@{72}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{73}: checkout: moving from Chibao to main
+[33m663097c[m HEAD@{74}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{75}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{76}: checkout: moving from Chibao to main
+[33m663097c[m HEAD@{77}: reset: moving to HEAD
+[33m663097c[m HEAD@{78}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{79}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{80}: checkout: moving from Chibao to main
+[33m663097c[m HEAD@{81}: reset: moving to HEAD
+[33m663097c[m HEAD@{82}: commit: Cái ni nè Huuy
+[33m5af2bef[m HEAD@{83}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{84}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{85}: checkout: moving from Chibao to main
+[33m5af2bef[m HEAD@{86}: reset: moving to HEAD
+[33m5af2bef[m HEAD@{87}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{88}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{89}: checkout: moving from Chibao to main
+[33m5af2bef[m HEAD@{90}: reset: moving to HEAD
+[33m5af2bef[m HEAD@{91}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{92}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{93}: checkout: moving from Chibao to main
+[33m5af2bef[m HEAD@{94}: reset: moving to HEAD
+[33m5af2bef[m HEAD@{95}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{96}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{97}: checkout: moving from Chibao to main
+[33m5af2bef[m HEAD@{98}: reset: moving to HEAD
+[33m5af2bef[m HEAD@{99}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{100}: checkout: moving from Chibao to main
+[33m5af2bef[m HEAD@{101}: reset: moving to 5af2bef17b5d9d42d416e6927e097344f510d048
+[33m5af2bef[m HEAD@{102}: reset: moving to HEAD
+[33m5af2bef[m HEAD@{103}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{104}: reset: moving to HEAD
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{105}: checkout: moving from Chibao to main
+[33m5af2bef[m HEAD@{106}: reset: moving to HEAD
+[33m5af2bef[m HEAD@{107}: checkout: moving from Chibao to Chibao
+[33m5af2bef[m HEAD@{108}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{109}: checkout: moving from Chibao to main
+[33m5af2bef[m HEAD@{110}: reset: moving to HEAD
+[33m5af2bef[m HEAD@{111}: commit: Change Event, ...
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{112}: checkout: moving from main to Chibao
+[33mdb3819f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{113}: commit: Event & About thay đổi
+[33mc9a9eed[m HEAD@{114}: clone: from https://github.com/ChibaoCodeLord/PBL3_LapTrinhUngDung.git

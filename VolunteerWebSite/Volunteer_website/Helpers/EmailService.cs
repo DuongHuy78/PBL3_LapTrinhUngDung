@@ -29,7 +29,7 @@ namespace Volunteer_website.Helpers
                     client.Send(message);
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 Console.WriteLine("ERROR: " + ex);
                 return false;

@@ -404,3 +404,13 @@ wwwroot/OrgLayout/.history/
  ../../DataBase/
 
 Helpers/ConstantHelper.cs
+Dependencies/
+Properties/
+obj/
+root/
+Areas/
+Models/
+Helpers/
+ViewModel/
+View/Account/
+View/Organization/
