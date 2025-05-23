@@ -1,0 +1,218 @@
+﻿@{
+     Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bản đồ sự kiện với Nominatim & Google Maps</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body, html {
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9fafb;
+        }
+
+
+
+        #event-list {
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px;
+            border-right: 3px solid #dc3545;
+            background-color: white;
+            box-shadow: 3px 0 10px rgba(220, 53, 69, 0.1);
+        }
+
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+
+        .event-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+            .event-item:hover {
+                background-color: #dc3545;
+                color: white;
+                border-radius: 8px;
+            }
+
+        .event-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1rem;
+            color: #b71c1c;
+            margin-bottom: 4px;
+        }
+
+        .event-address {
+            font-size: 0.875rem;
+            color: #555;
+        }
+
+        #search-box {
+            margin-bottom: 20px;
+            border: 2px solid #dc3545;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container-fluid h-100 ">
+        <div class="row h-100">
+            <!-- Cột trái: tìm kiếm + danh sách -->
+            <div id="event-list" class="col-md-4 col-12">
+                <h4 class="mb-3" style="color:#dc3545; font-weight: 700;">Danh sách sự kiện</h4>
+                <input type="text"
+                       id="search-box"
+                       placeholder="Tìm kiếm sự kiện..."
+                       oninput="filterEvents()" />
+                <div id="events-container">
+                    <p>Đang tải danh sách sự kiện...</p>
+                </div>
+            </div>
+
+            <!-- Cột phải: bản đồ -->
+            <div class="col-8 p-0">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function initMap() {
+            const defaultLocation = { lat: 21.0285, lng: 105.8542 }; // Trung tâm tạm Hà Nội
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 6,
+                center: defaultLocation,
+            });
+
+            // Gọi API backend để lấy danh sách sự kiện (giả sử trả về JSON [{name, address}, ...])
+            fetch("/Map/GetEvents")
+                .then(response => response.json())
+                .then(events => {
+                    const container = document.getElementById("events-container");
+                    container.innerHTML = ""; // Xóa text đang tải
+
+                    events.forEach(event => {
+                        // Tạo phần tử hiển thị tên và địa chỉ bên trái
+                        const eventDiv = document.createElement("div");
+                        eventDiv.classList.add("event-item");
+
+                        const title = document.createElement("div");
+                        title.classList.add("event-title");
+                        title.textContent = event.name;
+
+                        const address = document.createElement("div");
+                        address.classList.add("event-address");
+                        address.textContent = event.address;
+
+                        eventDiv.appendChild(title);
+                        eventDiv.appendChild(address);
+                        container.appendChild(eventDiv);
+
+                        // Gọi Nominatim API để lấy tọa độ
+                        const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(event.address)}&format=json&limit=1`;
+
+                        fetch(url)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data && data.length > 0) {
+                                const lat = parseFloat(data[0].lat);
+                                const lon = parseFloat(data[0].lon);
+
+                                // Tạo marker trên bản đồ
+                                new google.maps.Marker({
+                                    position: { lat: lat, lng: lon },
+                                    map: map,
+                                    title: event.name
+                                });
+                            } else {
+                                console.warn("Không tìm thấy tọa độ cho địa chỉ:", event.address);
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Lỗi khi gọi Nominatim API:", err);
+                        });
+                    });
+                })
+                .catch(err => {
+                    console.error("Lỗi khi lấy danh sách sự kiện:", err);
+                    document.getElementById("events-container").innerHTML = "<p>Không thể tải danh sách sự kiện.</p>";
+                });
+        }
+            let allEvents = []; // Danh sách tất cả sự kiện để phục vụ filter
+        let markers = [];   // Nếu dùng marker thì vẫn giữ lại
+
+        function filterEvents() {
+            const query = document.getElementById("search-box").value.toLowerCase();
+            const filtered = allEvents.filter(e =>
+                e.name.toLowerCase().includes(query) || e.address.toLowerCase().includes(query)
+            );
+            renderEventList(filtered);
+        }
+
+        function renderEventList(events) {
+            const container = document.getElementById("events-container");
+            container.innerHTML = "";
+
+            if (events.length === 0) {
+                container.innerHTML = "<p>Không tìm thấy sự kiện nào.</p>";
+                return;
+            }
+
+            events.forEach(event => {
+                const eventDiv = document.createElement("div");
+                eventDiv.classList.add("event-item");
+
+                const title = document.createElement("div");
+                title.classList.add("event-title");
+                title.textContent = event.name;
+
+                const address = document.createElement("div");
+                address.classList.add("event-address");
+                address.textContent = event.address;
+
+                eventDiv.appendChild(title);
+                eventDiv.appendChild(address);
+                container.appendChild(eventDiv);
+            });
+        }
+
+        // Gọi khi trang load xong
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("/Map/GetEvents")
+                .then(response => response.json())
+                .then(events => {
+                    allEvents = events; // Lưu để filter
+                    renderEventList(events); // Hiển thị ban đầu
+                })
+                .catch(err => {
+                    console.error("Lỗi khi lấy danh sách sự kiện:", err);
+                    document.getElementById("events-container").innerHTML = "<p>Không thể tải danh sách sự kiện.</p>";
+                });
+        });
+
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhouNsHILTOBnoHIaIRaoshOXGC6D5pYM&callback=initMap">
+    </script>
+</body>
+</html>
