@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Volunteer_website.ViewModel
+namespace Volunteer_website.ViewModels
 {
     public class ForgotPasswordVM
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Volunteer_website.Models;
-using Volunteer_website.ViewModel;
+using Volunteer_website.ViewModels;
 
 namespace Volunteer_website.Helpers
 {

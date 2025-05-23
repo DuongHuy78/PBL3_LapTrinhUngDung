@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Volunteer_website.ViewModel;
 using Volunteer_website.Models;
 using AutoMapper;
 using Volunteer_website.Helpers;
@@ -12,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
+using Volunteer_website.ViewModels;
 
 namespace Volunteer_website.Controllers
 {

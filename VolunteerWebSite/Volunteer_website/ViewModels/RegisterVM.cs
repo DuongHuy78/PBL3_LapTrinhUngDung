@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-namespace Volunteer_website.ViewModel
+namespace Volunteer_website.ViewModels
 {
     public class RegisterVM
     {

@@ -61,7 +61,7 @@ namespace Volunteer_website.Controllers
                     targetfund = e.TargetFunds.HasValue ? (int)e.TargetFunds.Value : 0,
                     currentmember = e.Registrations.Count(ev => ev.Status == "Được duyệt"),
                     currentfund = e.Donations != null ? (int)e.Donations.Sum(d => d.Amount ?? 0) : 0,
-                    type = e.TypeEventName ?? "N/A"
+                    type = e.TypeEvent != null ? e.TypeEvent.TypeEventId : "N/A"
                 })
                 .ToList();
 
