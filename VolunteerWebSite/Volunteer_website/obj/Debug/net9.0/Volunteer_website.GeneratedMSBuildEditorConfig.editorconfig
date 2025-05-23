@@ -32,16 +32,8 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/EventManager/EditEvent.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRXZlbnRNYW5hZ2VyXEVkaXRFdmVudC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/EventManager/Event.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRXZlbnRNYW5hZ2VyXEV2ZW50LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/HomeAdmin/GetDonatedVolunteer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXEdldERvbmF0ZWRWb2x1bnRlZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/HomeAdmin/Index.cshtml]
@@ -56,40 +48,40 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JnTWFuYWdlclxBcHByb3ZhbE9yZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/OrgManager/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JnTWFuYWdlclxEZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/OrgManager/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JnTWFuYWdlclxEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/OrgManager/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JnTWFuYWdlclxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/OrgManager/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JnTWFuYWdlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/Volunteers/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVm9sdW50ZWVyc1xDcmVhdGUuY3NodG1s
+[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/OrgManager/ListEvent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcT3JnTWFuYWdlclxMaXN0RXZlbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/Volunteers/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVm9sdW50ZWVyc1xEZWxldGUuY3NodG1s
+[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/Users/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/Users/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/Volunteers/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVm9sdW50ZWVyc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/Volunteers/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVm9sdW50ZWVyc1xFZGl0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/Volunteers/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVm9sdW50ZWVyc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Admin/Views/Volunteers/ListEventReg.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVm9sdW50ZWVyc1xMaXN0RXZlbnRSZWcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Organization/Views/Calendar/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcT3JnYW5pemF0aW9uXFZpZXdzXENhbGVuZGFyXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ASUS/Documents/PBL3/main/PBL3_LapTrinhUngDung/VolunteerWebSite/Volunteer_website/Areas/Organization/Views/DonationManager/Index.cshtml]
