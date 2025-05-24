@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Volunteer_website.ViewModel;
 using Volunteer_website.Models;
 using AutoMapper;
 using Volunteer_website.Helpers;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Volunteer_website.ViewModels;
 
 namespace Volunteer_website.Controllers
 {

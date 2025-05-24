@@ -1,0 +1,69 @@
+﻿@using Volunteer_website.ViewModels
+@model LoginVM
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Login";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/Login.css" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="loginContainer">
+            <div class="LoginHeader">
+                <h1>Login</h1>
+            </div>
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fa-solid fa-circle-check me-2"></i> @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fa-solid fa-circle-exclamation me-2"></i> @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            <form asp-action="SignIn" asp-controller="Profile" method="post" asp-route-returnurl="@(ViewBag.ReturnUrl ?? string.Empty)">
+                <div class="inputBox">
+                    <label asp-for="UserName" class="inputLabel"></label>
+                    <input type="text" asp-for="UserName" class="inputField" placeholder=" " required />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="inputBox">
+                    <label asp-for="Password" class="inputLabel"></label>
+                    <input type="password" asp-for="Password" class="inputField" placeholder=" " required />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="custom-container justify-content-center">
+                    <a asp-action="ForgotPassword" asp-controller="Account" class="forget_password">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn-login">
+                    Login
+                </button>
+
+                <div class="register-link" style="
+                display: block;
+                margin-top: 10px;
+                align-items: center;
+                text-align: center;
+              ">
+                    <a asp-action="Sign_Up" asp-controller="Profile">Don't have an account?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

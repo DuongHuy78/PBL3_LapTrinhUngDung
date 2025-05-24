@@ -1,0 +1,332 @@
+﻿@{
+    var name = Context.Session.GetString("Name");
+    var email = Context.Session.GetString("Email");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DUTERS</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Volunteer_website.styles.css" asp-append-version="true" />
+
+    <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/css/open-iconic-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" />
+    <link rel="stylesheet" href="~/css/aos.css" />
+    <link rel="stylesheet" href="~/css/ionicons.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="~/css/jquery.timepicker.css" />
+    <link rel="stylesheet" href="~/css/flaticon.css" />
+    <link rel="stylesheet" href="~/css/icomoon.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/Footer.css" />
+</head>
+<body>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+            <div class="container">
+                <div class="logo-container">
+                    <img src="~/images/VolunteerIcon.png" alt="Logo" class="navbar-logo" />
+                    <a class="navbar-brand" asp-controller="Home" asp-action="IndexUser">DUTERS</a>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="oi oi-menu"></span> Menu
+                </button>
+
+                <div class="collapse navbar-collapse" id="ftco-nav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a asp-controller="Home" asp-action="IndexUser" class="nav-link">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Home" asp-action="Events" class="nav-link">Sự kiện</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Home" asp-action="Fundraising" class="nav-link">Gây quỹ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Home" asp-action="Volunteers" class="nav-link">Tình nguyện viên</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Home" asp-action="News" class="nav-link">Tin tức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Home" asp-action="AboutUs" class="nav-link">Về chúng tôi</a>
+                        </li>
+                    </ul>
+                    <!-- Nav icons container -->
+                    <div class="nav-icons-container d-flex align-items-center">
+                        <!-- Search button -->
+                        <a class="icon d-flex align-items-center justify-content-center search-icon" id="search-btn" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-search">
+                            <i class="fa fa-search"></i>
+                        </a>
+                        <!-- Search screen -->
+                        <div id="search-overlay" style="display: none">
+                            <div class="search-box">
+                                <h2>Tìm kiếm theo từ khóa</h2>
+                                <div class="search-input">
+                                    <input type="text" placeholder="Từ khóa" />
+                                    <button class="search-button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button id="close-search">×</button>
+                        </div>
+
+                        <a class="icon d-flex align-items-center justify-content-center position-relative" href="/RegisteredEvents" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-search">
+                            <i class="fa-solid fa-hands-holding-child"></i>
+                            <span class="badge-notify">3</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Dropdown -->
+                <div class="dropdown" style="margin-left: 20px">
+                    <div class="avatar-container">
+                        <img class="avatar-img rounded-circle" src="~/images/person_4.jpg" alt="avatar" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" />
+                    </div>
+
+                    <ul class="dropdown-menu dropdown-animation shadow pt-3" aria-labelledby="profileDropdown">
+                        <!-- Profile info -->
+                        <li class="px-3">
+                            <div class="d-flex align-items-center">
+                                <!-- Avatar -->
+                                <div class="avatar me-3">
+                                    <img class="avatar-img rounded-circle shadow" src="~/images/person_4.jpg" alt="avatar" />
+                                </div>
+                                <div>
+                                    <a class="h6" href="#">@(name)</a>
+                                    <p class="small m-0">@(email)</p>
+
+                                </div>
+                            </div>
+                            <hr />
+                        </li>
+                        <!-- Links -->
+                        <li>
+                            <a class="dropdown-item" asp-controller="Account2" asp-action="Update_Infor">
+                                <i class="fa-solid fa-user" style="margin-right: 10px"></i>Xem hồ sơ
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" asp-controller="Account2" asp-action="Contact_Infor">
+                                <i class="fa-solid fa-gear" style="margin-right: 10px"></i>Chỉnh sửa thông tin
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-controller="Manage" asp-action="Registered_Event">
+                                <i class="fa-solid fa-calendar-days" style="margin-right: 10px"></i>Sự kiện của tôi
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item bg-danger-soft-hover" asp-controller="Account2" asp-action="Logout">
+                                <i class="fa-solid fa-arrow-right-from-bracket" style="margin-right: 10px"></i>Đăng xuất
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- END nav -->
+    </header>
+
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer class="ftco-footer ftco-section img">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-3">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Về chúng tôi</h2>
+                        <p>
+                            Dự án Website tổ chức phi lợi nhuận nhằm mục đích học tập không
+                            chỉ là nơi cập nhật thông tin về các hoạt động từ thiện mà còn
+                            là nền tảng giúp mọi người dễ dàng tham gia, đóng góp và theo
+                            dõi tác động của từng hành động nhỏ bé nhưng đầy ý nghĩa.
+                        </p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                            <li class="ftco-animate">
+                                <a href="#">
+                                    <span class="icon-twitter">
+                                        <i class="fa-brands fa-github"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="ftco-animate">
+                                <a href="#">
+                                    <span class="icon-facebook">
+                                        <i class="fa-brands fa-facebook"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="ftco-animate">
+                                <a href="#">
+                                    <span class="icon-instagram">
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Tin tức gần đây</h2>
+                        <div class="block-21 mb-4 d-flex">
+                            <a class="blog-img mr-4" style="background-image: url(/images/image_1.jpg)"></a>
+                            <div class="text">
+                                <h3 class="heading">
+                                    <a href="#">Even the all-powerful Pointing has no control about</a>
+                                </h3>
+                                <div class="meta">
+                                    <div>
+                                        <a href="#"><span class="icon-calendar"></span> July 12, 2018</a>
+                                    </div>
+                                    <div>
+                                        <a href="#"><span class="icon-person"></span> Admin</a>
+                                    </div>
+                                    <div>
+                                        <a href="#"><span class="icon-chat"></span> 19</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-21 mb-4 d-flex">
+                            <a class="blog-img mr-4" style="background-image: url(/images/image_2.jpg)"></a>
+                            <div class="text">
+                                <h3 class="heading">
+                                    <a href="#">Even the all-powerful Pointing has no control about</a>
+                                </h3>
+                                <div class="meta">
+                                    <div>
+                                        <a href="#"><span class="icon-calendar"></span> July 12, 2018</a>
+                                    </div>
+                                    <div>
+                                        <a href="#"><span class="icon-person"></span> Admin</a>
+                                    </div>
+                                    <div>
+                                        <a href="#"><span class="icon-chat"></span> 19</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="ftco-footer-widget mb-4 ml-md-4">
+                        <h2 class="ftco-heading-2">Liên kết</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="py-2 d-block">Trang chủ</a></li>
+                            <li><a href="#" class="py-2 d-block">Sự kiện</a></li>
+                            <li><a href="#" class="py-2 d-block">Gây quỹ</a></li>
+                            <li><a href="#" class="py-2 d-block">Tình nguyện viên</a></li>
+                            <li><a href="#" class="py-2 d-block">Tin tức</a></li>
+                            <li><a href="#" class="py-2 d-block">Về chúng tôi</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Đặt câu hỏi cho chúng tôi?</h2>
+                        <div class="block-23 mb-3">
+                            <ul class="contact-list">
+                                <li>
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span class="text">Đại học bách khoa đại học đà nẵng</span>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-solid fa-phone"></i>
+                                        <span class="text">+2 392 3929 210</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-solid fa-envelope"></i>
+                                        <span class="text">info@yourdomain.com</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loader -->
+    <div id="ftco-loader" class="show fullscreen">
+        <svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        </svg>
+    </div>
+
+    <script src="~/js/Navbar_user.js"></script>
+    <script src="~/js/Search.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.easing.1.3.js"></script>
+    <script src="~/js/jquery.waypoints.min.js"></script>
+    <script src="~/js/jquery.stellar.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/aos.js"></script>
+    <script src="~/js/jquery.animateNumber.min.js"></script>
+    <script src="~/js/bootstrap-datepicker.js"></script>
+    <script src="~/js/jquery.timepicker.min.js"></script>
+    <script src="~/js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="~/js/google-map.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+<script>
+       document.addEventListener("DOMContentLoaded", function () {
+        const searchBtn = document.getElementById("search-btn");
+        const searchOverlay = document.getElementById("search-overlay");
+        const closeSearch = document.getElementById("close-search");
+
+        if (searchBtn && searchOverlay && closeSearch) {
+            searchBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                searchOverlay.style.display = "block";
+            });
+
+            closeSearch.addEventListener("click", function () {
+                searchOverlay.style.display = "none";
+            });
+
+            // Optional: Hide overlay if click outside the search box
+            searchOverlay.addEventListener("click", function (e) {
+                if (!e.target.closest(".search-box")) {
+                    searchOverlay.style.display = "none";
+                }
+            });
+        }
+    });
+
+</script>

@@ -97,6 +97,7 @@ namespace Volunteer_website.Areas.Organization.Controllers
                 });
             }
         }
+
         #endregion
 
         #region Xem chi tiết người tham gia

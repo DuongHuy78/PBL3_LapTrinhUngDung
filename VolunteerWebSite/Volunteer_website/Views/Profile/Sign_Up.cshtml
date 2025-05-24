@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewData["Title"] = "Sign Up";
+    Layout = null;
+}
+@model Volunteer_website.ViewModels.SignUpModel
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/signUp.css" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="SignUpContainer">
+            <div class="SignUpHeader">
+                <h1>@ViewData["Title"]</h1>
+            </div>
+
+            @using (Html.BeginForm("Sign_Up", "Profile", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+
+                <div class="inputBox">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "inputField", placeholder = " " })
+                    @Html.LabelFor(m => m.Name, new { @class = "inputLabel" })
+                    @Html.ValidationMessageFor(m => m.Name)
+                </div>
+
+                <div class="inputBox">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "inputField", placeholder = " " })
+                    @Html.LabelFor(m => m.Email, new { @class = "inputLabel" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+
+                <div class="inputBox">
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "inputField", placeholder = " " })
+                    @Html.LabelFor(m => m.PhoneNumber, new { @class = "inputLabel" })
+                    @Html.ValidationMessageFor(m => m.PhoneNumber)
+                </div>
+
+                <div class="genderBox">
+                    <label>Gender:</label>
+                    @Html.RadioButtonFor(m => m.Gender, false) Male
+                    @Html.RadioButtonFor(m => m.Gender, true) Female
+
+                    @Html.ValidationMessageFor(m => m.Gender)
+                </div>
+
+                <div class="inputBox">
+                    @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "inputField", type = "date" })
+                    @Html.ValidationMessageFor(m => m.DateOfBirth)
+                </div>
+
+                <div class="inputBox">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "inputField", placeholder = " " })
+                    @Html.LabelFor(m => m.UserName, new { @class = "inputLabel" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+
+                <div class="inputBox">
+                    @Html.PasswordFor(m => m.Password, new { @class = "inputField", placeholder = " " })
+                    @Html.LabelFor(m => m.Password, new { @class = "inputLabel" })
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+
+                <div class="inputBox">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "inputField", placeholder = " " })
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "inputLabel" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                </div>
+
+                <div>
+                    <button type="submit">Sign Up</button>
+                    <a href="@Url.Action("SignIn", "Profile")">Already have an Account?</a>
+                </div>
+            }
+        </div>
+		
+    </div>
+</body>
+</html>

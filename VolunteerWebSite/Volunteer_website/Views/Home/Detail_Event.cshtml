@@ -1,0 +1,341 @@
+﻿
+@model Volunteer_website.ViewModels.EventModel
+@{
+    ViewData["Title"] = "Detail_Event";
+    var role = Context.Session.GetString("UserRole");
+    Layout = (role != null && role == "volunteer") ? "~/Views/Shared/User_Layout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+    var today = DateOnly.FromDateTime(DateTime.Now);
+    bool isEventOver = Model.DateEnd < today;
+    bool isEventNotStarted = Model.DateBegin > today;
+    bool isRegistrationDisabled = isEventOver || isEventNotStarted;
+    bool isDonateDisabled = isEventOver || isEventNotStarted;
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<head>
+    <div class="hero-wrap" style="background-image: url('@Url.Content("~/images/bg_1.jpg")');" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
+                <div class="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
+                    <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+                        <span class="mr-2"><a href="@Url.Action("Index", "Home")">Home </a></span>
+                        <span>Event</span>
+                    </p>
+                    <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">EVENT</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</head>
+<body>
+    @* @if (Model == null) *@
+    @* { *@
+    @*     <div class="alert alert-danger">Không tìm thấy sự kiện</div> *@
+    @*     return; *@
+    @* } *@
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Message"]
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <section class="ftco-section">
+        <div class="container">
+            <!-- Tiêu đề không có nền trắng -->
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="@Url.Content(Model.ImagePath)" alt="@Model.Name" class="img-fluid banner-img" style="max-height: 500px; width: 100%; object-fit: cover;" />
+                    <div class="mt-4 d-flex align-items-center flex-wrap">
+                        <div class="me-4 d-flex align-items-center">
+                            <i class="bi bi-calendar-event text-primary me-2" style="font-size: 1.2rem;"></i>
+                            <strong class="me-1">Bắt đầu:</strong>
+                            <span>@Model.DateBegin.ToString("dd/MM/yyyy")</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-calendar-check-fill me-2" style="color: #ff6600; font-size: 1.2rem;"></i>
+                            <strong class="me-1">Kết thúc:</strong>
+                            <span>@Model.DateEnd.ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="donation-card">
+                        <h4 class="text-center text-danger mb-3">@Model.Name</h4>
+                        <div class="d-flex align-items-center mb-3">
+                            <!-- Thêm Logo tổ chức gây quỹ nếu có -->                   
+                            @if (!string.IsNullOrEmpty(Model.OrganizationImagePath))
+                            {
+                                <img src="@Url.Content(Model.OrganizationImagePath)" alt="@Model.Organization" width="40" class="me-2" />
+                            }
+                            <span class="text-danger fw-bold">@Model.Organization</span>
+                        </div>
+                        <p class="mb-2">
+                            Mục tiêu:
+                            <span class="fw-bold text-dark float-end">@Model.targetfund VND</span>
+                        </p>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @((Model.currentfund / (double)Model.targetfund) * 100)%" aria-valuenow="@Model.currentfund" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p class="mt-2 mb-3">
+                            Đã đạt:
+                            <span class="fw-bold text-danger float-end">@Model.currentfund VND</span>
+                        </p>
+                        <p class="mb-2">
+                            <i class="fa-solid fa-user"></i>
+                            <span class="fw-bold text-dark float-end">@Model.currentmember lượt ủng hộ</span>
+                        </p>
+                        <div class="input-group my-3">
+                            <span class="input-group-text">VND</span>
+                            <input type="text" class="form-control" value="@Model.targetfund" />
+                        </div>
+                        
+                        @if(role!="admin"){
+                            <div>
+                                <button class="btn w-100 @(isDonateDisabled ? "btn-disabled" : "btn-primary")"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#donationModal"
+                                @(isDonateDisabled ? "disabled" : "")>
+                                    @(isDonateDisabled ? "Không thể ủng hộ" : "Ủng hộ ngay")
+                                </button>
+                            </div>
+                        @Html.AntiForgeryToken()
+                            <form asp-action="Register" asp-controller="EventRegistration" asp-route-id="@Model.Event_Id" method="post" id="registerForm">
+                                <button type="button" class="btn w-100 mt-2 @(isRegistrationDisabled ? "btn-secondary" : "btn-outline-danger")"
+                                        data-bs-toggle="modal" data-bs-target="#registerConfirmModal"
+                                @(isRegistrationDisabled ? "disabled" : "")>
+                                    @(isRegistrationDisabled ? "Không thể đăng ký" : "Đăng ký ngay")
+                                </button>
+                            </form>
+
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            @{
+                ViewData["Title"] = "Event Details";
+            }
+
+            <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="donationModalLabel">Thông tin ủng hộ</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form gửi thông tin ủng hộ -->
+                            <form method="post" action="@Url.Action("CreatePaymentUrl", "VnPay")">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="Event_id" value="@Model.Event_Id" />
+                                    
+                                    <!-- Họ tên người ủng hộ -->
+                                    @* <div class="row mb-3"> *@
+                                    @*     <div class="col-md-6"> *@
+                                    @*         <label for="name" class="form-label"> *@
+                                    @*             Họ tên người ủng hộ *@
+                                    @*             <span class="text-danger">*</span> *@
+                                    @*         </label> *@
+                                    @*         <input type="text" class="form-control" name="Name" placeholder="Tên người ủng hộ" required /> *@
+                                    @*     </div> *@
+                                    @*     <div class="col-md-6"> *@
+                                    @*         <label for="phone" class="form-label">Số điện thoại</label> *@
+                                    @*         <input type="text" class="form-control" name="Phone" placeholder="Số điện thoại" /> *@
+                                    @*     </div> *@
+                                    @* </div> *@
+
+                                    @* <!-- Địa chỉ và Email --> *@
+                                    @* <div class="row mb-3"> *@
+                                    @*     <div class="col-md-6"> *@
+                                    @*         <label for="address" class="form-label">Địa chỉ</label> *@
+                                    @*         <input type="text" class="form-control" name="Address" placeholder="Địa chỉ" /> *@
+                                    @*     </div> *@
+                                    @*     <div class="col-md-6"> *@
+                                    @*         <label for="email" class="form-label">Email <span class="text-danger">*</span></label> *@
+                                    @*         <input type="email" class="form-control" name="Email" placeholder="Email" required /> *@
+                                    @*     </div> *@
+                                    @* </div> *@
+                 
+                               
+                                <!-- Số tiền ủng hộ -->
+                                <div class="mb-3">
+                                    <label for="total_money" class="form-label">Số tiền ủng hộ</label>
+                                    <input type="number" class="form-control" name="Amount" placeholder="50.000" value="50000" required />
+                                </div>
+                                <!-- Lời nhắn -->
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Lời nhắn của bạn</label>
+                                    <textarea class="form-control" name="Note" rows="3" placeholder="Nhập lời nhắn của bạn"></textarea>
+                                </div>
+
+                                <!-- Nút gửi form -->
+                                <button type="submit" class="btn btn-danger w-100">Ủng hộ</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         
+            <!-- Danh sách ủng hộ -->
+            <ul class="nav nav-tabs mt-4">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#content">Nội dung</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#donors">Danh sách ủng hộ</a>
+                </li>
+            </ul>        
+            <div class="tab-content p-0 mt-3">
+                <!-- Nội dung -->
+                <div id="content" class="tab-pane fade show active">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="content-card">
+                                <h5>Nội dung</h5>
+                                <p>@Model.EventDescription</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="org-card">
+                                <h6 class="text-muted">Thông tin tổ chức gây quỹ</h6>
+                                <div class="row align-items-center">
+                                    <div class="col-md-3 text-center">
+                                        @if (!string.IsNullOrEmpty(Model.OrganizationImagePath))
+                                        {
+                                            <img src="@Url.Content(Model.OrganizationImagePath)" alt="@Model.Organization" width="80" class="me-2" />
+                                        }
+                                    </div>
+                                    <div class="col-md-9">
+                                        <h5 class="text-danger">@Model.Organization</h5>
+                                        <p class="text-muted">@Model.OrganizationDescription</p>
+                                        <p class="mb-1">
+                                            <i class="bi bi-envelope-fill text-primary me-2"></i>
+                                            @Model.OrganizationEmail
+                                        </p>
+                                        <p>
+                                            <i class="bi bi-telephone-fill text-success me-2"></i>
+                                            @Model.OrganizationPhone
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Danh sách ủng hộ -->
+                <div id="donors" class="tab-pane fade">
+                    <h5>Danh sách ủng hộ</h5>
+                    <input type="text" id="search-donor" class="form-control search-bar" placeholder="Nhập tên người ủng hộ" />
+
+                    <table class="table donor-table">
+                        <thead>
+                            <tr>
+                                <th>Người ủng hộ</th>
+                                <th>Số tiền</th>
+                                <th>Thời gian</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Donations != null && Model.Donations.Any())
+                            {
+                                foreach (var donation in Model.Donations)
+                                {
+                                    <tr>
+                                    
+                                        <td>@donation.VolunteerName</td>
+                                         <td>@string.Format("{0:N0} VND", (donation.Amount ?? 0))</td> 
+                                        <td>@donation.DonationDate?.ToString("HH:mm - dd/MM/yyyy")</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="3">Chưa có khoản ủng hộ nào.</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    </div>
+</section>
+</body>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function loadDonations(eventId) {
+            console.log("Gọi danh sách ủng hộ cho Event_Id:", eventId); // Debug
+            $.get('/Event/Donate_List', { id: eventId }, function (data) {
+                $('#donors').html(data); // Chèn nội dung partial vào tab
+            });
+        }
+    </script>
+    <script>
+        document.getElementById('search-donor').addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
+            const rows = document.querySelectorAll('.donor-table tbody tr');
+
+            rows.forEach(row => {
+                const nameCell = row.querySelector('td:first-child');
+                if (nameCell) {
+                    const name = nameCell.textContent.toLowerCase();
+                    row.style.display = name.includes(searchValue) ? '' : 'none';
+                }
+            });
+        });
+    </script>
+
+}
+<div class="modal fade" id="registerConfirmModal" tabindex="-1" aria-labelledby="registerConfirmLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-body">
+                <i class="bi bi-exclamation-circle-fill" style="font-size: 4.5rem; color: #e74c3c;"></i>
+                <h4 class="mt-3 fw-bold">Xác nhận</h4>
+                <p style="white-space: nowrap;">Bạn có chắc chắn muốn đăng ký tham gia sự kiện này không?</p>
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="button" class="btn btn-primary me-2" id="confirmRegisterBtn">Có</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("confirmRegisterBtn").addEventListener("click", function () {
+        document.getElementById("registerForm").submit();
+    });
+</script>
+<style>
+    .modal-content {
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .modal-body i {
+        font-size: 3rem;
+    }
+
+    .modal-body h4 {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        border: none;
+    }
+
+</style>

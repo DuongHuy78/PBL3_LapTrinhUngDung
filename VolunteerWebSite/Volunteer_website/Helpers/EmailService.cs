@@ -29,9 +29,9 @@ namespace Volunteer_website.Helpers
                     client.Send(message);
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine("ERROR: " + ex);
+                Console.WriteLine("ERROR: " + e);
                 return false;
             }
             return true;
