@@ -1,5 +1,5 @@
 ﻿@{
-     Layout = "_Layout";
+    Layout = "_Layout";
 }
 
 <!DOCTYPE html>
@@ -17,8 +17,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f9fafb;
         }
-
-
 
         #event-list {
             height: 100vh;
@@ -60,6 +58,11 @@
             color: #555;
         }
 
+        .event-date {
+            font-size: 0.875rem;
+            color: #555;
+        }
+
         #search-box {
             margin-bottom: 20px;
             border: 2px solid #dc3545;
@@ -69,11 +72,35 @@
             width: 100%;
             box-sizing: border-box;
         }
+
+        /* Tab Styling */
+        .nav-tabs {
+            border-bottom: 2px solid #dc3545;
+            margin-bottom: 20px;
+        }
+
+            .nav-tabs .nav-link {
+                color: #dc3545;
+                font-weight: 600;
+                padding: 10px 20px;
+                border: none;
+                transition: background-color 0.3s ease;
+            }
+
+                .nav-tabs .nav-link.active {
+                    background-color: #dc3545;
+                    color: white;
+                    border-radius: 6px 6px 0 0;
+                }
+
+                .nav-tabs .nav-link:hover {
+                    background-color: #f8d7da;
+                    color: #b71c1c;
+                }
     </style>
-    
 </head>
 <body>
-    <div class="container-fluid h-100 ">
+    <div class="container-fluid h-100">
         <div class="row h-100">
             <!-- Cột trái: tìm kiếm + danh sách -->
             <div id="event-list" class="col-md-4 col-12">
@@ -82,6 +109,20 @@
                        id="search-box"
                        placeholder="Tìm kiếm sự kiện..."
                        oninput="filterEvents()" />
+
+                <!-- Tabs for event categories -->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-status="Ongoing" onclick="filterByStatus('Ongoing')">Đang diễn ra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-status="Upcoming" onclick="filterByStatus('Upcoming')">Sắp diễn ra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-status="Ended" onclick="filterByStatus('Ended')">Đã kết thúc</a>
+                    </li>
+                </ul>
+
                 <div id="events-container">
                     <p>Đang tải danh sách sự kiện...</p>
                 </div>
@@ -95,77 +136,62 @@
     </div>
 
     <script>
-        function initMap() {
-            const defaultLocation = { lat: 21.0285, lng: 105.8542 }; // Trung tâm tạm Hà Nội
+        let map;
+        let allEvents = [];
+        let markers = [];
 
-            const map = new google.maps.Map(document.getElementById("map"), {
+        function initMap() {
+            const defaultLocation = { lat: 21.0285, lng: 105.8542 }; // Trung tâm Hà Nội
+
+            map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 6,
                 center: defaultLocation,
             });
 
-            // Gọi API backend để lấy danh sách sự kiện (giả sử trả về JSON [{name, address}, ...])
+            // Load events on map load
+            loadEvents();
+        }
+
+        function loadEvents() {
             fetch("/Map/GetEvents")
                 .then(response => response.json())
                 .then(events => {
-                    const container = document.getElementById("events-container");
-                    container.innerHTML = ""; // Xóa text đang tải
-
-                    events.forEach(event => {
-                        // Tạo phần tử hiển thị tên và địa chỉ bên trái
-                        const eventDiv = document.createElement("div");
-                        eventDiv.classList.add("event-item");
-
-                        const title = document.createElement("div");
-                        title.classList.add("event-title");
-                        title.textContent = event.name;
-
-                        const address = document.createElement("div");
-                        address.classList.add("event-address");
-                        address.textContent = event.address;
-
-                        eventDiv.appendChild(title);
-                        eventDiv.appendChild(address);
-                        container.appendChild(eventDiv);
-
-                        // Gọi Nominatim API để lấy tọa độ
-                        const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(event.address)}&format=json&limit=1`;
-
-                        fetch(url)
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data && data.length > 0) {
-                                const lat = parseFloat(data[0].lat);
-                                const lon = parseFloat(data[0].lon);
-
-                                // Tạo marker trên bản đồ
-                                new google.maps.Marker({
-                                    position: { lat: lat, lng: lon },
-                                    map: map,
-                                    title: event.name
-                                });
-                            } else {
-                                console.warn("Không tìm thấy tọa độ cho địa chỉ:", event.address);
-                            }
-                        })
-                        .catch(err => {
-                            console.error("Lỗi khi gọi Nominatim API:", err);
-                        });
-                    });
+                    allEvents = events; // Store all events for filtering
+                    filterByStatus('Ongoing'); // Default to Ongoing events
                 })
                 .catch(err => {
                     console.error("Lỗi khi lấy danh sách sự kiện:", err);
                     document.getElementById("events-container").innerHTML = "<p>Không thể tải danh sách sự kiện.</p>";
                 });
         }
-            let allEvents = []; // Danh sách tất cả sự kiện để phục vụ filter
-        let markers = [];   // Nếu dùng marker thì vẫn giữ lại
 
-        function filterEvents() {
-            const query = document.getElementById("search-box").value.toLowerCase();
-            const filtered = allEvents.filter(e =>
-                e.name.toLowerCase().includes(query) || e.address.toLowerCase().includes(query)
-            );
-            renderEventList(filtered);
+        function clearMarkers() {
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
+        }
+
+        function addMarkers(events) {
+            clearMarkers();
+            events.forEach(event => {
+                const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(event.address)}&format=json&limit=1`;
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            const lat = parseFloat(data[0].lat);
+                            const lon = parseFloat(data[0].lon);
+                            const marker = new google.maps.Marker({
+                                position: { lat: lat, lng: lon },
+                                map: map,
+                                title: event.name
+                            });
+                            markers.push(marker);
+                        }
+                    })
+                    .catch(err => {
+                        console.warn("Lỗi khi gọi Nominatim API:", err);
+                    });
+            });
         }
 
         function renderEventList(events) {
@@ -189,26 +215,58 @@
                 address.classList.add("event-address");
                 address.textContent = event.address;
 
+                const dateBegin = document.createElement("div");
+                dateBegin.classList.add("event-date");
+                dateBegin.textContent = event.dayBegin
+                    ? new Date(event.dayBegin).toLocaleDateString('vi-VN', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    })
+                    : "N/A";
+
                 eventDiv.appendChild(title);
                 eventDiv.appendChild(address);
+                eventDiv.appendChild(dateBegin);
                 container.appendChild(eventDiv);
             });
+
+            // Update markers on the map
+            addMarkers(events);
         }
 
-        // Gọi khi trang load xong
-        document.addEventListener("DOMContentLoaded", () => {
-            fetch("/Map/GetEvents")
-                .then(response => response.json())
-                .then(events => {
-                    allEvents = events; // Lưu để filter
-                    renderEventList(events); // Hiển thị ban đầu
-                })
-                .catch(err => {
-                    console.error("Lỗi khi lấy danh sách sự kiện:", err);
-                    document.getElementById("events-container").innerHTML = "<p>Không thể tải danh sách sự kiện.</p>";
-                });
-        });
+        function filterEvents() {
+            const query = document.getElementById("search-box").value.toLowerCase();
+            const activeTab = document.querySelector(".nav-tabs .nav-link.active");
+            const status = activeTab ? activeTab.getAttribute("data-status") : "Ongoing";
+            const filtered = allEvents.filter(e =>
+                (e.name.toLowerCase().includes(query) || e.address.toLowerCase().includes(query)) &&
+                e.status === status
+            );
+            renderEventList(filtered);
+        }
 
+        function filterByStatus(status) {
+            // Update active tab
+            document.querySelectorAll(".nav-tabs .nav-link").forEach(tab => {
+                tab.classList.remove("active");
+                if (tab.getAttribute("data-status") === status) {
+                    tab.classList.add("active");
+                }
+            });
+
+            const query = document.getElementById("search-box").value.toLowerCase();
+            const filtered = allEvents.filter(e =>
+                (e.name.toLowerCase().includes(query) || e.address.toLowerCase().includes(query)) &&
+                e.status === status
+            );
+            renderEventList(filtered);
+        }
+
+        // Load events when the page is ready
+        document.addEventListener("DOMContentLoaded", () => {
+            // Already handled by initMap
+        });
     </script>
 
     <script async defer

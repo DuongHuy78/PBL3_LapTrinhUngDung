@@ -44,6 +44,7 @@
                         <th>Email</th>
                         <th>Address</th>
                         <th>Phone</th>
+                        <th>Age</th>
                         <th>Gender</th>
                         <th>Actions</th>
                     </tr>
@@ -66,13 +67,27 @@
                                 <td>@item.Email</td>
                                 <td>@item.Address</td>
                                 <td>@item.PhoneNumber</td>
+                                <td>
+                                    @{
+                                        var birthDate = item.DateOfBirth;
+                                        if (birthDate != null)
+                                        {
+                                            var today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")); // Current time +07
+                                            var birthDateTime = ((DateOnly)birthDate).ToDateTime(new TimeOnly(0, 0)); // Convert to DateTime at midnight
+                                            int age = today.Year - birthDateTime.Year;
+                                            if (birthDateTime > today.AddYears(-age)) age--; // Adjust if birthday hasn't occurred
+                                            <span>@age years old</span>
+                                        }
+                                        else
+                                        {
+                                            <span>N/A</span>
+                                        }
+                                    }
+                                </td>
                                 <td>@Gender</td>
+                           
                                 <td class="action_btn">
-                                    <button type="button" class="btn btn-info btn-sm view-volunteer-btn"
-                                            data-reg-id="@item.VolunteerId"
-                                            onclick="showVolunteerDetails('@item.VolunteerId', '/Admin/Volunteers/GetVolunteerDetails')">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
+                                
                                     <a class="btn btn-success btn-sm" asp-area="Admin" asp-controller="Volunteers" asp-action="ListEventReg" asp-route-volId="@item.VolunteerId" title="List Event">
                                         <i class="fa fa-list-alt"></i>
                                     </a>
@@ -82,65 +97,7 @@
                     </tbody>
                 }
             </table>
-            <!-- Volunteer Details Modal - Redesigned -->
-            <div class="modal fade" id="volunteerDetailsModal" tabindex="-1" aria-labelledby="volunteerDetailsModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary text-white">
-                            <h5 class="modal-title fs-4" id="volunteerDetailsModalLabel">
-                                <i class="bi bi-person-badge me-2"></i>VOLUNTEER DETAILS
-                            </h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body p-4">
-                            <div class="row">
-                                <!-- Volunteer Image Column -->
-                                <div class="col-md-4 text-center mb-3 mb-md-0">
-                                    <div id="volunteerImageContainer" class="border rounded p-2 bg-light">
-                                        <img id="volunteerImage" src="https://via.placeholder.com/200" alt="Volunteer Photo"
-                                             class="img-fluid rounded" style="max-height: 200px;">
-                                        <div class="mt-2">
-                                            <span id="volunteerId" class="badge bg-info text-dark">ID: N/A</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Volunteer Details Column -->
-                                <div class="col-md-8">
-                                    <div class="volunteer-details-grid">
-                                        <div class="detail-item">
-                                            <span class="detail-label"><i class="bi bi-person-fill me-2"></i>Name:</span>
-                                            <span id="volunteerName" class="detail-value">N/A</span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-label"><i class="bi bi-envelope-fill me-2"></i>Email:</span>
-                                            <span id="volunteerEmail" class="detail-value">N/A</span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-label"><i class="bi bi-telephone-fill me-2"></i>Phone:</span>
-                                            <span id="volunteerPhone" class="detail-value">N/A</span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-label"><i class="bi bi-calendar-event me-2"></i>Date of Birth:</span>
-                                            <span id="volunteerDob" class="detail-value">N/A</span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-label"><i class="bi bi-gender-ambiguous me-2"></i>Gender:</span>
-                                            <span id="volunteerGender" class="detail-value">N/A</span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-label"><i class="bi bi-geo-alt-fill me-2"></i>Address:</span>
-                                            <span id="volunteerAddress" class="detail-value">N/A</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- Pagination -->
         <div class="pagination d-flex justify-content-center mt-5 custom-pagination">
             @if (Model!.HasPreviousPage)

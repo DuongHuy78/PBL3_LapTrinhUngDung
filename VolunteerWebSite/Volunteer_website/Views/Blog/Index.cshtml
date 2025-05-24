@@ -1,0 +1,38 @@
+﻿@model List<Volunteer_website.Controllers.Article>
+
+@{
+    ViewData["Title"] = "Blog Tình Nguyện";
+    Layout = "_Layout";
+}
+
+<h2 class="heading">Blog Tình Nguyện - Câu Chuyện Truyền Cảm Hứng</h2>
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-warning">@ViewBag.ErrorMessage</div>
+}
+
+<div class="row g-4">
+    @if (Model?.Any() == true)
+    {
+        foreach (var article in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@article.Title</h5>
+                        <p class="card-text">@Html.Raw(article.Description)</p> <!-- Sử dụng Html.Raw để hiển thị HTML nếu có -->
+                        <p class="text-muted">Nguồn: @article.Source | Ngày: @article.PublishedAt</p>
+                        <a href="@article.Url" target="_blank" class="btn revenue-btn">Đọc thêm</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else if (string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="col-12 text-center">
+            <p>Không có bài viết nào được tìm thấy.</p>
+        </div>
+    }
+</div>

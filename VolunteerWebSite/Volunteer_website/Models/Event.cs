@@ -33,7 +33,7 @@ public partial class Event
 
     public string? Status { get; set; }
 
-    public virtual ICollection<Donation>? Donations { get; set; } = new List<Donation>();
+    public virtual ICollection<Donation> Donations { get; set; } = new List<Donation>();
 
     public virtual Organization? Org { get; set; }
 

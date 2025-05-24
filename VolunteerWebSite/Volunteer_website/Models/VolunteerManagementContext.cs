@@ -33,6 +33,8 @@ public partial class VolunteerManagementContext : DbContext
 
     public virtual DbSet<Volunteer> Volunteers { get; set; }
 
+  
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Admin>(entity =>
@@ -156,7 +158,7 @@ public partial class VolunteerManagementContext : DbContext
 
             entity.HasOne(d => d.Org).WithMany(p => p.Events)
                 .HasForeignKey(d => d.OrgId)
-                .HasConstraintName("FK__Events__org_id__4E88ABD4");
+                .HasConstraintName("FK__Events__org_id__52593CB8");
 
             entity.HasOne(d => d.TypeEvent).WithMany(p => p.Events)
                 .HasForeignKey(d => d.TypeEventId)
@@ -166,7 +168,7 @@ public partial class VolunteerManagementContext : DbContext
 
         modelBuilder.Entity<EventType>(entity =>
         {
-            entity.HasKey(e => e.TypeEventId).HasName("PK__EventTyp__9AB5A4B027EAEFA3");
+            entity.HasKey(e => e.TypeEventId).HasName("PK__EventTyp__9AB5A4B0DAFD5528");
 
             entity.ToTable("EventType");
 

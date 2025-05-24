@@ -16,13 +16,22 @@ namespace Volunteer_website.Controllers
            return View();
         }
 
+       
         [HttpGet]
         public JsonResult GetEvents()
         {
+            var today = DateOnly.FromDateTime(DateTime.Now);
             var data = _db.Events.Select(e => new
             {
                 name = e.Name,
-                address = e.Location // hoặc e.Address nếu tên cột là vậy
+                address = e.Location, // Adjust to e.Address if that's the column name
+                dayBegin = e.DayBegin, // Assuming DateTime or DateOnly
+                dayEnd = e.DayEnd,     // Assuming DateTime or DateOnly
+                status = e.DayBegin.HasValue && e.DayEnd.HasValue
+                    ? (e.DayEnd.Value < today ? "Ended" : // Event ended
+                       e.DayBegin.Value > today ? "Upcoming" : // Event hasn't started
+                       "Ongoing") // Event is currently happening
+                    : "Unknown" // Fallback for null dates
             }).ToList();
 
             return Json(data);

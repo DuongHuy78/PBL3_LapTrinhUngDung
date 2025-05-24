@@ -141,5 +141,82 @@ namespace Volunteer_website.Areas.Admin.Controllers
             });
         }
         #endregion
+
+
+        #region Xem chi tiet su kien
+        [HttpGet]
+        public async Task<IActionResult> EventDetails(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound("Event ID is required.");
+            }
+
+            try
+            {
+               
+                var eventDetail = await _db.Events
+                    .Where(x => x.EventId == id)
+                    .FirstOrDefaultAsync();
+
+                if (eventDetail == null)
+                {
+                    return NotFound("Event not found.");
+                }
+
+               
+                var orgName = await _db.Organizations
+                    .Where(o => o.OrgId == eventDetail.OrgId)
+                    .Select(o => o.Name)
+                    .FirstOrDefaultAsync() ?? "Unknown Organization";
+
+               
+                var registrations = await _db.Registrations
+                    .Where(r => r.EventId == id)
+                    .OrderByDescending(r => r.RegisterAt)
+                    .Take(10)
+                    .Join(
+                        _db.Volunteers,
+                        r => r.VolunteerId,
+                        v => v.VolunteerId,
+                        (r, v) => new
+                        {
+                            Name = v.Name ?? "Unknown",
+                            Time = r.RegisterAt.HasValue ? r.RegisterAt.Value.ToString("dd/MM/yyyy") : "N/A"
+                        })
+                    .ToListAsync();
+
+              
+                var donations = await _db.Donations
+                    .Where(d => d.EventId == id)
+                    .OrderByDescending(d => d.DonationDate)
+                    .Take(10)
+                    .Join(
+                        _db.Volunteers,
+                        d => d.VolunteerId,
+                        v => v.VolunteerId,
+                        (d, v) => new
+                        {
+                            Name = v.Name ?? "Unknown",
+                            Amount = d.Amount,
+                            Time = d.DonationDate.HasValue ? d.DonationDate.Value.ToString("dd/MM/yyyy") : "N/A"
+                        })
+                    .ToListAsync();
+
+            
+                ViewBag.OrgName = orgName;
+                ViewBag.Participants = registrations;
+                ViewBag.Donations = donations;
+                ViewBag.RegisteredCount = await _db.Registrations.CountAsync(r => r.EventId == id);
+
+                return View(eventDetail);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR: " + ex);
+                return StatusCode(500, "An error occurred while fetching event details.");
+            }
+        }
+        #endregion
     }
 }
