@@ -16,7 +16,6 @@ namespace Volunteer_website.Controllers
         {
             _context = context;
         }
-
         [HttpGet]
         public IActionResult Registered_Event()
         {
@@ -29,6 +28,7 @@ namespace Volunteer_website.Controllers
 
             var registeredEvents = _context.Registrations
                 .Include(ev => ev.Event)
+                .Include(ev => ev.Evaluations) 
                 .Where(ev => ev.VolunteerId == volunteerId)
                 .ToList();
 

@@ -3,10 +3,13 @@
     Layout = null;
     var userid = Context.Session.GetString("UserID") ?? "Người dùng";
 
-    // Tách danh sách sự kiện thành hai phần: đang diễn ra và đã kết thúc
-    var currentDate = DateOnly.FromDateTime(DateTime.Now);
-    var ongoingEvents = Model?.Where(r => !r.Event.DayEnd.HasValue || r.Event.DayEnd.Value >= currentDate).ToList() ?? new List<Volunteer_website.Models.Registration>();
-    var endedEvents = Model?.Where(r => r.Event.DayEnd.HasValue && r.Event.DayEnd.Value < currentDate).ToList() ?? new List<Volunteer_website.Models.Registration>();
+    // Phân loại sự kiện theo trạng thái
+    var allEvents = Model ?? new List<Volunteer_website.Models.Registration>();
+    var pendingEvents = allEvents.Where(r => r.Status == "PENDING").ToList();
+    // Accepted events are those with Status = "ACCEPTED" but no completed evaluation
+    var acceptedEvents = allEvents.Where(r => r.Status == "ACCEPTED" && !r.Evaluations.Any(e => e.IsCompleted)).ToList();
+    // Completed events are those with any evaluation marked as completed
+    var completedEvents = allEvents.Where(r => r.Evaluations.Any(e => e.IsCompleted)).ToList();
 }
 
 <!DOCTYPE html>
@@ -22,10 +25,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <link rel="stylesheet" href="@Url.Content("~/css/Registered_Event.css")" />
     <link rel="stylesheet" href="~/css/Profile_Manage.css" />
-    
+
     <style>
         /* Lighter yellow background for the section container */
         .section-container {
@@ -37,31 +40,44 @@
             transition: box-shadow 0.3s ease; /* Smooth shadow transition */
         }
 
-        .section-container:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hover shadow effect */
-        }
+            .section-container:hover {
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hover shadow effect */
+            }
 
         /* Custom badge colors for Event Status */
         .badge-event-active {
             background-color: #2ecc71; /* Xanh lá sáng */
             color: white;
         }
+
         .badge-event-inactive {
             background-color: #215415; /* Xám nhẹ */
             color: white;
         }
-        
+
         /* Custom badge colors for Registration Status */
         .badge-registration-approved {
             background-color: #3498db; /* Xanh dương sáng */
             color: white;
         }
+
         .badge-registration-pending {
             background-color: #e67e22; /* Cam sáng */
             color: white;
         }
+
         .badge-registration-rejected {
             background-color: #e74c3c; /* Đỏ nhạt */
+            color: white;
+        }
+
+        .badge-registration-accepted {
+            background-color: #27ae60; /* Xanh lá đậm */
+            color: white;
+        }
+
+        .badge-registration-completed {
+            background-color: #3489eb; /* Tím */
             color: white;
         }
 
@@ -72,25 +88,25 @@
             background-color: #fffef0; /* Match section-container background */
         }
 
-        .nav-tabs .nav-link {
-            color: #555; /* Màu chữ của tab */
-            font-weight: 500; /* Độ đậm chữ */
-            padding: 10px 20px; /* Khoảng đệm cho tab */
-            border: none; /* Xóa viền mặc định */
-            border-bottom: 3px solid transparent; /* Viền dưới trong suốt khi không active */
-            transition: all 0.3s ease; /* Hiệu ứng chuyển đổi mượt */
-        }
+            .nav-tabs .nav-link {
+                color: #555; /* Màu chữ của tab */
+                font-weight: 500; /* Độ đậm chữ */
+                padding: 10px 20px; /* Khoảng đệm cho tab */
+                border: none; /* Xóa viền mặc định */
+                border-bottom: 3px solid transparent; /* Viền dưới trong suốt khi không active */
+                transition: all 0.3s ease; /* Hiệu ứng chuyển đổi mượt */
+            }
 
-        .nav-tabs .nav-link:hover {
-            color: #e85a13; /* Màu chữ khi hover (xanh lá sáng) */
-            border-bottom: 3px solid #2ecc71; /* Viền dưới màu xanh khi hover */
-        }
+                .nav-tabs .nav-link:hover {
+                    color: #e85a13; /* Màu chữ khi hover (xanh lá sáng) */
+                    border-bottom: 3px solid #2ecc71; /* Viền dưới màu xanh khi hover */
+                }
 
-        .nav-tabs .nav-link.active {
-            color: #e85a13; /* Màu chữ khi tab được chọn */
-            background-color: transparent; /* Không có nền riêng */
-            border-bottom: 3px solid #fa8448; /* Viền dưới màu xanh khi active */
-        }
+                .nav-tabs .nav-link.active {
+                    color: #e85a13; /* Màu chữ khi tab được chọn */
+                    background-color: transparent; /* Không có nền riêng */
+                    border-bottom: 3px solid #fa8448; /* Viền dưới màu xanh khi active */
+                }
 
         /* Match tab content background to section container */
         .tab-content {
@@ -110,15 +126,25 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transform and shadow */
         }
 
-        .btn-details:hover, .btn-cancel:hover {
-            transform: translateY(-2px); /* Slight lift effect */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow on hover */
-        }
+            .btn-details:hover, .btn-cancel:hover {
+                transform: translateY(-2px); /* Slight lift effect */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+            }
 
         /* Main content shift for sidebar toggle */
         .main-content.shifted {
             margin-left: 60px; /* Adjust based on sidebar collapsed width */
             transition: margin-left 0.3s ease;
+        }
+
+        /* Badge with count */
+        .tab-badge {
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            margin-left: 5px;
         }
     </style>
 </head>
@@ -162,61 +188,147 @@
 
         <div class="main-content container mt-5">
             <div class="section-container">
-                <h5 class="mb-4">Danh sách sự kiện</h5>
+                <h5 class="mb-4">Danh sách sự kiện đã đăng ký</h5>
 
-                <!-- Thanh tab -->
+                <!-- Thanh tab với 4 trạng thái -->
                 <ul class="nav nav-tabs" id="eventTabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="ongoing-tab" data-bs-toggle="tab" data-bs-target="#ongoing" type="button" role="tab" aria-controls="ongoing" aria-selected="true">
-                            Sự kiện đang diễn ra
+                        <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">
+                            Tất cả
+                            <span class="tab-badge">@allEvents.Count()</span>
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="ended-tab" data-bs-toggle="tab" data-bs-target="#ended" type="button" role="tab" aria-controls="ended" aria-selected="false">
-                            Sự kiện đã kết thúc
+                        <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="false">
+                            Chưa được duyệt
+                            <span class="tab-badge">@pendingEvents.Count()</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="accepted-tab" data-bs-toggle="tab" data-bs-target="#accepted" type="button" role="tab" aria-controls="accepted" aria-selected="false">
+                            Đang tham gia
+                            <span class="tab-badge">@acceptedEvents.Count()</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">
+                            Đã hoàn thành
+                            <span class="tab-badge">@completedEvents.Count()</span>
                         </button>
                     </li>
                 </ul>
 
                 <!-- Nội dung tab -->
                 <div class="tab-content" id="eventTabsContent">
-                    <!-- Tab 1: Sự kiện đang diễn ra -->
-                    <div class="tab-pane fade show active" id="ongoing" role="tabpanel" aria-labelledby="ongoing-tab">
-                        @if (ongoingEvents.Any())
+                    <!-- Tab 1: Tất cả sự kiện -->
+                    <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                        @if (allEvents.Any())
                         {
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered">
                                     <thead class="thead-light">
                                         <tr>
                                             <th style="width: 25%; text-align: left;">Tên sự kiện</th>
-                                            <th style="width: 20%; text-align: center;">Ngày bắt đầu</th>
-                                            <th style="width: 20%; text-align: center;">Trạng thái sự kiện</th>
-                                            <th style="width: 15%; text-align: center;">Trạng thái</th>
-                                            <th style="width: 20%; text-align: center;">Hoạt động</th>
+                                            <th style="width: 15%; text-align: center;">Ngày bắt đầu</th>
+                                            <th style="width: 15%; text-align: center;">Ngày kết thúc</th>
+                                            <th style="width: 15%; text-align: center;">Trạng thái đăng ký</th>
+                                            <th style="width: 15%; text-align: center;">Trạng thái sự kiện</th>
+                                            <th style="width: 15%; text-align: center;">Hoạt động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var registration in ongoingEvents)
+                                        @foreach (var registration in allEvents)
                                         {
                                             <tr>
                                                 <td style="text-align: left;">@registration.Event.Name</td>
                                                 <td style="text-align: center;">
-                                                    @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Không có ngày bắt đầu")
+                                                    @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    @(registration.Event.DayEnd.HasValue ? registration.Event.DayEnd.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <span class="badge @(registration.Status == "ACCEPTED" ? "badge-registration-accepted" :
+                                                          registration.Status == "PENDING" ? "badge-registration-pending" : "badge-registration-rejected")">
+                                                        @(registration.Status == "ACCEPTED" ? "Đã duyệt" :
+                                                            registration.Status == "PENDING" ? "Chờ duyệt" : "Bị từ chối")
+                                                    </span>
                                                 </td>
                                                 <td style="text-align: center;">
                                                     @{
                                                         var eventStatus = "Đang diễn ra";
                                                         var badgeClass = "badge-event-active";
+                                                        var currentDate = DateOnly.FromDateTime(DateTime.Now);
+
+                                                        if (registration.Evaluations.Any(e => e.IsCompleted))
+                                                        {
+                                                            eventStatus = "Đã hoàn thành";
+                                                            badgeClass = "badge-registration-completed";
+                                                        }
+                                                        else if (registration.Event.DayEnd.HasValue && registration.Event.DayEnd.Value < currentDate)
+                                                        {
+                                                            eventStatus = "Đã kết thúc";
+                                                            badgeClass = "badge-event-inactive";
+                                                        }
                                                     }
                                                     <span class="badge @badgeClass">
                                                         @eventStatus
                                                     </span>
                                                 </td>
                                                 <td style="text-align: center;">
-                                                    <span class="badge @(registration.Status == "Approved" ? "badge-registration-approved" :
-                                                          registration.Status == "Pending" ? "badge-registration-pending" : "badge-registration-rejected")">
-                                                        @registration.Status
-                                                    </span>
+                                                    <div class="d-flex justify-content-center gap-2">
+                                                        <a href="@Url.Action("Detail_Event", "Home", new { id = registration.EventId })"
+                                                           class="btn btn-sm btn-primary btn-details">
+                                                            <i class="fas fa-info-circle"></i> Chi tiết
+                                                        </a>
+                                                        @if (registration.Status == "PENDING" || registration.Status == "ACCEPTED")
+                                                        {
+                                                            <button class="btn btn-sm btn-light btn-cancel"
+                                                                    onclick="confirmCancel('@registration.EventId')"
+                                                                    title="Hủy đăng ký">
+                                                                <i class="fas fa-trash"></i> Hủy
+                                                            </button>
+                                                        }
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>Bạn chưa đăng ký sự kiện nào.
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Tab 2: Sự kiện chưa được duyệt -->
+                    <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                        @if (pendingEvents.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th style="width: 30%; text-align: left;">Tên sự kiện</th>
+                                            <th style="width: 20%; text-align: center;">Ngày bắt đầu</th>
+                                            <th style="width: 20%; text-align: center;">Trạng thái đăng ký</th>
+                                            <th style="width: 30%; text-align: center;">Hoạt động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var registration in pendingEvents)
+                                        {
+                                            <tr>
+                                                <td style="text-align: left;">@registration.Event.Name</td>
+                                                <td style="text-align: center;">
+                                                    @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <span class="badge badge-registration-pending">Chờ duyệt</span>
                                                 </td>
                                                 <td style="text-align: center;">
                                                     <div class="d-flex justify-content-center gap-2">
@@ -240,40 +352,48 @@
                         else
                         {
                             <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>Bạn chưa đăng ký sự kiện đang diễn ra nào.
+                                <i class="fas fa-info-circle me-2"></i>Bạn không có sự kiện nào đang chờ duyệt.
                             </div>
                         }
                     </div>
 
-                    <!-- Tab 2: Sự kiện đã kết thúc -->
-                    <div class="tab-pane fade" id="ended" role="tabpanel" aria-labelledby="ended-tab">
-                        @if (endedEvents.Any())
+                    <!-- Tab 3: Sự kiện đang tham gia -->
+                    <div class="tab-pane fade" id="accepted" role="tabpanel" aria-labelledby="accepted-tab">
+                        @if (acceptedEvents.Any())
                         {
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th style="width: 40%; text-align: left;">Tên sự kiện</th>
-                                            <th style="width: 30%; text-align: center;">Ngày bắt đầu</th>
-                                            <th style="width: 30%; text-align: center;">Trạng thái sự kiện</th>
+                                            <th style="width: 30%; text-align: left;">Tên sự kiện</th>
+                                            <th style="width: 20%; text-align: center;">Ngày bắt đầu</th>
+                                            <th style="width: 20%; text-align: center;">Trạng thái đăng ký</th>
+                                            <th style="width: 30%; text-align: center;">Hoạt động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var registration in endedEvents)
+                                        @foreach (var registration in acceptedEvents)
                                         {
                                             <tr>
                                                 <td style="text-align: left;">@registration.Event.Name</td>
                                                 <td style="text-align: center;">
-                                                    @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Không có ngày bắt đầu")
+                                                    @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
                                                 </td>
                                                 <td style="text-align: center;">
-                                                    @{
-                                                        var eventStatus = "Kết thúc";
-                                                        var badgeClass = "badge-event-inactive";
-                                                    }
-                                                    <span class="badge @badgeClass">
-                                                        @eventStatus
-                                                    </span>
+                                                    <span class="badge badge-registration-accepted">Đã duyệt</span>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <div class="d-flex justify-content-center gap-2">
+                                                        <a href="@Url.Action("Detail_Event", "Home", new { id = registration.EventId })"
+                                                           class="btn btn-sm btn-primary btn-details">
+                                                            <i class="fas fa-info-circle"></i> Chi tiết
+                                                        </a>
+                                                        <button class="btn btn-sm btn-light btn-cancel"
+                                                                onclick="confirmCancel('@registration.EventId')"
+                                                                title="Hủy đăng ký">
+                                                            <i class="fas fa-trash"></i> Hủy
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         }
@@ -284,7 +404,49 @@
                         else
                         {
                             <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>Bạn chưa có sự kiện nào đã kết thúc.
+                                <i class="fas fa-info-circle me-2"></i>Bạn không có sự kiện nào đang tham gia.
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Tab 4: Sự kiện đã hoàn thành -->
+                    <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+                        @if (completedEvents.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th style="width: 40%; text-align: left;">Tên sự kiện</th>
+                                            <th style="width: 20%; text-align: center;">Ngày bắt đầu</th>
+                                            <th style="width: 20%; text-align: center;">Ngày kết thúc</th>
+                                            <th style="width: 20%; text-align: center;">Trạng thái</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var registration in completedEvents)
+                                        {
+                                            <tr>
+                                                <td style="text-align: left;">@registration.Event.Name</td>
+                                                <td style="text-align: center;">
+                                                    @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    @(registration.Event.DayEnd.HasValue ? registration.Event.DayEnd.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <span class="badge badge-registration-completed">Đã hoàn thành</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>Bạn chưa có sự kiện nào đã hoàn thành.
                             </div>
                         }
                     </div>
@@ -312,7 +474,7 @@
         function confirmCancel(eventId) {
             Swal.fire({
                 title: 'Xác nhận hủy đăng ký',
-                text: "Bạn có chắc muốn hủy đăng ký khóa học này?",
+                text: "Bạn có chắc muốn hủy đăng ký sự kiện này?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#fd7e14',

@@ -1,33 +1,276 @@
-
-.ftco-section {
-    width: 100%;
+﻿
+/* Custom CSS cho giao diện xanh trắng */
+.volunteer-section {
+    background: linear-gradient(135deg, #f8fbff 0%, #e8f4f8 100%);
+    min-height: 100vh;
+    padding: 60px 0;
 }
 
-.event-name {
-    color: #f86f2d;
-    display: flex;
-    justify-content: center;
+.volunteer-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 123, 191, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 123, 191, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+    .volunteer-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 123, 191, 0.15);
+    }
+
+.table-container {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 123, 191, 0.1);
+}
+
+.custom-table {
+    margin: 0;
+    background: white;
+}
+
+    .custom-table thead {
+        background: linear-gradient(135deg, #007bbf 0%, #0056b3 100%);
+        color: white;
+    }
+
+        .custom-table thead th {
+            border: none;
+            padding: 20px 15px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+            .custom-table thead th::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+    .custom-table tbody tr {
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+        .custom-table tbody tr:nth-child(even) {
+            background-color: #f8fbff;
+        }
+
+        .custom-table tbody tr:hover {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0, 123, 191, 0.1);
+        }
+
+    .custom-table tbody td {
+        padding: 18px 15px;
+        border: none;
+        font-size: 14px;
+        color: #2c3e50;
+        vertical-align: middle;
+    }
+
+.stt-column {
+    width: 60px;
+    text-align: center;
+    font-weight: 600;
+    color: #007bbf;
+}
+
+.name-column {
+    font-weight: 600;
+    color: #1565c0;
+}
+
+.email-column {
+    color: #455a64;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+}
+
+.phone-column {
+    color: #37474f;
     font-weight: 500;
 }
 
-.persional-info {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
+.date-column {
+    color: #546e7a;
+    font-style: italic;
 }
 
- .persional-info li {
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #444;
+/* Pagination Styles */
+.custom-pagination {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
-.persional-info .head {
-    font-weight: bold;
-    color: #222;
+.pagination {
+    margin: 0;
+    background: white;
+    border-radius: 50px;
+    padding: 10px 20px;
+    box-shadow: 0 5px 20px rgba(0, 123, 191, 0.15);
+    border: 1px solid rgba(0, 123, 191, 0.1);
+}
+
+    .pagination .page-item .page-link {
+        border: none;
+        color: #007bbf;
+        font-weight: 500;
+        padding: 12px 16px;
+        margin: 0 2px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        background: transparent;
     }
 
-.persional-info .info {
-    color: #555;
-    word-wrap: break-word;
+        .pagination .page-item .page-link:hover {
+            background: linear-gradient(135deg, #007bbf 0%, #0056b3 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 191, 0.3);
+        }
+
+    .pagination .page-item.active .page-link {
+        background: linear-gradient(135deg, #007bbf 0%, #0056b3 100%);
+        color: white;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0, 123, 191, 0.3);
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #ccc;
+        background: transparent;
+    }
+
+/* Info Cards */
+.info-cards {
+    margin-bottom: 40px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
+
+.info-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 123, 191, 0.1);
+    border: 1px solid rgba(0, 123, 191, 0.1);
+    min-width: 200px;
+    transition: all 0.3s ease;
+}
+
+    .info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 123, 191, 0.15);
+    }
+
+.info-card-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #007bbf;
+    margin-bottom: 10px;
+}
+
+.info-card-label {
+    color: #546e7a;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #546e7a;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    color: #b0bec5;
+    margin-bottom: 20px;
+}
+
+/* Search Bar */
+.search-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-form {
+    display: flex;
+    background: white;
+    border-radius: 50px;
+    padding: 5px;
+    box-shadow: 0 5px 20px rgba(0, 123, 191, 0.1);
+    border: 1px solid rgba(0, 123, 191, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    padding: 15px 20px;
+    flex: 1;
+    background: transparent;
+    color: #2c3e50;
+}
+
+.search-button {
+    background: linear-gradient(135deg, #007bbf 0%, #0056b3 100%);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .search-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 123, 191, 0.3);
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .custom-table {
+        font-size: 12px;
+    }
+
+        .custom-table thead th,
+        .custom-table tbody td {
+            padding: 12px 8px;
+        }
+
+    .info-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-card {
+        max-width: 300px;
+        width: 100%;
+    }
+}
+
+

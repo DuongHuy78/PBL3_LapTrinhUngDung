@@ -251,33 +251,44 @@ namespace Volunteer_website.Controllers
         {
             return View();
         }
-        #region Danh sách tình nguyện viên
-        public IActionResult Volunteer_List()
+        public IActionResult Volunteer_List(string searchTerm, int page = 1)
         {
-            // Eagerly load Volunteers with related Donations and Registrations
-            var volunteers = _context.Volunteers
-                .Include(v => v.Donations)
-                .Include(v => v.Registrations)
-                .ToList(); // Materialize the query early
+            int pageSize = 10;
+            var query = _context.Volunteers
+                .Where(v => v.Registrations.Any(r => r.Status == "ACCEPTED"));
 
-            // Join with Users to get CreateAt (JoinDate)
-            var volunteerData = volunteers
-                .GroupJoin(_context.Users.AsEnumerable(),
-                    v => v.VolunteerId,
-                    u => u.UserId,
-                    (v, users) => new
-                    {
-                        Volunteer = v,
-                        User = users.FirstOrDefault()
-                    })
-                .Select(vu => new
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                searchTerm = searchTerm.ToLower();
+                query = query.Where(v =>
+                    v.Name.ToLower().Contains(searchTerm) ||
+                    v.Email.ToLower().Contains(searchTerm) ||
+                    v.PhoneNumber.Contains(searchTerm));
+            }
+
+            int totalCount = query.Count();
+
+            var volunteers = query
+                .Select(v => new Volunteer_List
                 {
-                    Volunteer = vu.Volunteer,
-                    JoinDate = vu.User != null ? vu.User.CreateAt : null,
-                    TotalDonations = vu.Volunteer.Donations.Sum(d => d.Amount ?? 0),
-                    EventCount = vu.Volunteer.Registrations.Count()
+                    VolunteerId = v.VolunteerId,
+                    Name = v.Name,
+                    Email = v.Email,
+                    PhoneNumber = v.PhoneNumber,
+                    JoinDate = v.Registrations
+                        .Where(r => r.Status == "ACCEPTED")
+                        .OrderByDescending(r => r.RegisterAt)
+                        .Select(r => r.RegisterAt)
+                        .FirstOrDefault()
                 })
+                .OrderBy(v => v.Name) 
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToList();
+            ViewBag.CurrentPage = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalCount = totalCount;
+            ViewBag.SearchTerm = searchTerm;
 
             // Store additional data in ViewBag
             ViewBag.VolunteerInfo = volunteerData.ToDictionary(
@@ -293,6 +304,7 @@ namespace Volunteer_website.Controllers
             return View(volunteers);
         }
         #endregion
+
 
         [HttpGet]
         public IActionResult GetAcceptedEvents()
