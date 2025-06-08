@@ -3,18 +3,22 @@
     ViewData["Title"] = "Volunteer List";
     Layout = "_Layout";
 
-    // Pagination variables
     int currentPage = ViewBag.CurrentPage ?? 1;
     int pageSize = ViewBag.PageSize ?? 10;
-    int totalCount = ViewBag.TotalCount ?? (Model?.Count ?? 0);
-    int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+    int totalCount = ViewBag.TotalCount ?? 0;
+    int totalPages = ViewBag.TotalPages ?? (totalCount > 0 ? (int)Math.Ceiling((double)totalCount / pageSize) : 0);
     int startIndex = (currentPage - 1) * pageSize;
+    string searchTerm = ViewBag.SearchTerm ?? "";
+    string errorMessage = ViewBag.ErrorMessage as string;
+    decimal totalDonationsAll = ViewBag.TotalDonationsAll ?? 0;
 }
+
 <head>
     <link rel="stylesheet" href="~/css/Volunteer_list.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
+<!-- Hero Section -->
 <div class="hero-wrap" style="background-image: url('@Url.Content("~/images/bg_1.jpg")');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
@@ -35,19 +39,58 @@
         <div class="row justify-content-center mb-5">
             <div class="col-md-8 text-center">
                 <h2 class="mb-4" style="color: #007bbf; font-weight: 700; font-size: 2.5rem;">Danh sách Volunteer</h2>
-                <p style="color: #546e7a; font-size: 1.1rem;">Quản lý và theo dõi thông tin các tình nguyện viên</p>
             </div>
         </div>
 
+        <!-- Error Message -->
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                @errorMessage
+            </div>
+        }
+
         <!-- Search Bar -->
         <div class="search-container">
-            <form class="search-form" method="get">
-                <input type="text" class="search-input" name="searchTerm" id="liveSearch" placeholder="Tìm kiếm theo tên, email..." value="@ViewBag.SearchTerm">
+            <form class="search-form" method="get" action="@Url.Action("Volunteer_List", "Home")">
+                <input type="text"
+                       class="search-input"
+                       name="searchTerm"
+                       id="searchInput"
+                       placeholder="Tìm kiếm theo tên, số điện thoại..."
+                       value="@Html.Raw(searchTerm)"
+                       autocomplete="off">
                 <button type="submit" class="search-button">
                     <i class="fas fa-search"></i>
                 </button>
+                @if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    <a href="@Url.Action("Volunteer_List", "Home", new { pageSize })" class="clear-search-btn" title="Xóa tìm kiếm">
+                        <i class="fas fa-times"></i>
+                    </a>
+                }
+                <input type="hidden" name="page" value="1">
+                <input type="hidden" name="pageSize" value="@pageSize">
             </form>
         </div>
+
+        @if (!string.IsNullOrEmpty(searchTerm))
+        {
+            <div class="search-info mb-3">
+                <span class="text-muted">
+                    <i class="fas fa-search mr-1"></i>
+                    Kết quả tìm kiếm cho: "<strong>@Html.Raw(searchTerm)</strong>" - <span id="resultCount">@totalCount</span> kết quả
+                    @if (totalDonationsAll > 0)
+                    {
+                        <span class="ml-3">
+                            <i class="fas fa-money-bill-wave mr-1"></i>
+                            Tổng quyên góp từ nhóm này: <strong>@totalDonationsAll.ToString("N0") VNĐ</strong>
+                        </span>
+                    }
+                </span>
+            </div>
+        }
 
         @if (Model == null || !Model.Any())
         {
@@ -56,8 +99,19 @@
                     <div class="empty-state-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h4 style="color: #007bbf; margin-bottom: 15px;">Chưa có dữ liệu</h4>
-                    <p>Hiện tại chưa có thông tin volunteer nào trong hệ thống.</p>
+                    @if (!string.IsNullOrEmpty(searchTerm))
+                    {
+                        <h4 style="color: #007bbf; margin-bottom: 15px;">Không tìm thấy kết quả</h4>
+                        <p>Không có volunteer nào phù hợp với từ khóa "<strong>@Html.Raw(searchTerm)</strong>".</p>
+                        <a href="@Url.Action("Volunteer_List", "Home", new { pageSize })" class="btn btn-primary mt-3">
+                            <i class="fas fa-list mr-2"></i>Xem tất cả volunteer
+                        </a>
+                    }
+                    else
+                    {
+                        <h4 style="color: #007bbf; margin-bottom: 15px;">Chưa có dữ liệu</h4>
+                        <p>Hiện tại chưa có thông tin volunteer nào trong hệ thống.</p>
+                    }
                 </div>
             </div>
         }
@@ -66,12 +120,28 @@
             <!-- Info Cards -->
             <div class="info-cards">
                 <div class="info-card">
-                    <div class="info-card-number">@totalCount</div>
-                    <div class="info-card-label">Tổng Volunteer</div>
+                    <div class="info-card-number"><span id="displayedCount">@totalCount</span></div>
+                    <div class="info-card-label">
+                        @if (!string.IsNullOrEmpty(searchTerm))
+                        {
+                            <span>Kết quả tìm kiếm</span>
+                        }
+                        else
+                        {
+                            <span>Tổng Volunteer</span>
+                        }
+                    </div>
+                </div>
+                <div class="info-card highlight-card">
+                    <div class="info-card-number">@totalDonationsAll.ToString("N0")</div>
+                    <div class="info-card-label">
+                        <i class="fas fa-donate mr-1"></i>
+                        Tổng quyên góp (VNĐ)
+                    </div>
                 </div>
                 <div class="info-card">
-                    <div class="info-card-number">@currentPage</div>
-                    <div class="info-card-label">Trang hiện tại</div>
+                    <div class="info-card-number">@(totalCount > 0 ? (totalDonationsAll / totalCount).ToString("N0") : "0")</div>
+                    <div class="info-card-label">Trung bình/người (VNĐ)</div>
                 </div>
                 <div class="info-card">
                     <div class="info-card-number">@totalPages</div>
@@ -82,7 +152,7 @@
             <!-- Volunteer List Table -->
             <div class="volunteer-card">
                 <div class="table-container">
-                    <table class="table custom-table">
+                    <table class="table custom-table volunteer-table">
                         <thead>
                             <tr>
                                 <th class="stt-column">STT</th>
@@ -98,26 +168,74 @@
                                 <th>
                                     <i class="fas fa-calendar mr-2"></i>Ngày tham gia
                                 </th>
+                                <th>
+                                    <i class="fas fa-dollar-sign mr-2"></i>Tổng quyên góp
+                                </th>
+                                <th>
+                                    <i class="fas fa-calendar-check mr-2"></i>Số sự kiện
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (Model != null)
+                            @foreach (var volunteer in Model.Select((value, index) => new { value, index }))
                             {
-                                @foreach (var volunteer in Model.Select((value, index) => new { value, index }))
-                                {
-                                    <tr>
-                                        <td class="stt-column">@(startIndex + volunteer.index + 1)</td>
-                                        <td class="name-column">
-                                            <i class="fas fa-user-circle mr-2" style="color: #007bbf;"></i>
-                                            @volunteer.value.Name
-                                        </td>
-                                        <td class="email-column">@volunteer.value.Email</td>
-                                        <td class="phone-column">@volunteer.value.PhoneNumber</td>
-                                        <td class="date-column">
-                                            @(volunteer?.value.JoinDate != null ? volunteer.value.JoinDate.Value.ToString("dd/MM/yyyy") : "N/A")
-                                        </td>
-                                    </tr>
-                                }
+                                <tr>
+                                    <td class="stt-column">@(startIndex + volunteer.index + 1)</td>
+                                    <td class="name-column">
+                                        <i class="fas fa-user-circle mr-2" style="color: #007bbf;"></i>
+                                        @(string.IsNullOrEmpty(volunteer.value.Name) || volunteer.value.Name == "N/A" ? "Chưa cập nhật" : volunteer.value.Name)
+                                    </td>
+                                    <td class="email-column">
+                                        @if (!string.IsNullOrEmpty(volunteer.value.Email) && volunteer.value.Email != "N/A")
+                                        {
+                                            <a href="mailto:@volunteer.value.Email" class="email-link">@volunteer.value.Email</a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Chưa cập nhật</span>
+                                        }
+                                    </td>
+                                    <td class="phone-column">
+                                        @if (!string.IsNullOrEmpty(volunteer.value.PhoneNumber) && volunteer.value.PhoneNumber != "N/A")
+                                        {
+                                            <a href="tel:@volunteer.value.PhoneNumber" class="phone-link">@volunteer.value.PhoneNumber</a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Chưa cập nhật</span>
+                                        }
+                                    </td>
+                                    <td class="date-column">
+                                        @if (volunteer.value.JoinDate.HasValue)
+                                        {
+                                            <span class="badge badge-info">@volunteer.value.JoinDate.Value.ToString("dd/MM/yyyy")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Chưa rõ</span>
+                                        }
+                                    </td>
+                                    <td class="donation-column">
+                                        @if (volunteer.value.TotalDonations > 0)
+                                        {
+                                            <span class="badge badge-success">@volunteer.value.TotalDonations.ToString("N0") VNĐ</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">0 VNĐ</span>
+                                        }
+                                    </td>
+                                    <td class="event-column">
+                                        @if (volunteer.value.EventCount > 0)
+                                        {
+                                            <span class="badge badge-primary">@volunteer.value.EventCount sự kiện</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Chưa tham gia</span>
+                                        }
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -126,33 +244,20 @@
 
             <!-- Pagination Section -->
             <div class="pagination-section">
-                <!-- Page Size Selector -->
-                @* <div class="page-size-selector"> *@
-                @*     <span>Hiển thị:</span> *@
-                @*     <select class="page-size-select" onchange="changePageSize(this.value)"> *@
-                @*         <option value="5" selected="@(pageSize == 5 ? "selected" : null)">5</option> *@
-                @*         <option value="10" selected="@(pageSize == 10 ? "selected" : null)">10</option> *@
-                @*         <option value="25" selected="@(pageSize == 25 ? "selected" : null)">25</option> *@
-                @*         <option value="50" selected="@(pageSize == 50 ? "selected" : null)">50</option> *@
-                @*     </select> *@
-                @* </div> *@
-
-                <!-- Pagination Links -->
                 @if (totalPages > 1)
                 {
                     <div class="custom-pagination">
                         <nav>
                             <ul class="pagination">
-                                <!-- First Page -->
                                 @if (currentPage > 1)
                                 {
                                     <li class="page-item">
-                                        <a class="page-link" href="@Url.Action("Volunteer_List", new { page = 1, pageSize, searchTerm = ViewBag.SearchTerm })">
+                                        <a class="page-link" href="@Url.Action("Volunteer_List", new { page = 1, pageSize, searchTerm })" title="Trang đầu">
                                             <i class="fas fa-angle-double-left"></i>
                                         </a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" href="@Url.Action("Volunteer_List", new { page = currentPage - 1, pageSize, searchTerm = ViewBag.SearchTerm })">
+                                        <a class="page-link" href="@Url.Action("Volunteer_List", new { page = currentPage - 1, pageSize, searchTerm })" title="Trang trước">
                                             <i class="fas fa-angle-left"></i>
                                         </a>
                                     </li>
@@ -167,7 +272,6 @@
                                     </li>
                                 }
 
-                                <!-- Page Numbers -->
                                 @{
                                     int startPage = Math.Max(1, currentPage - 2);
                                     int endPage = Math.Min(totalPages, currentPage + 2);
@@ -184,21 +288,20 @@
                                     else
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" href="@Url.Action("Volunteer_List", new { page = i, pageSize, searchTerm = ViewBag.SearchTerm })">@i</a>
+                                            <a class="page-link" href="@Url.Action("Volunteer_List", new { page = i, pageSize, searchTerm })">@i</a>
                                         </li>
                                     }
                                 }
 
-                                <!-- Next Page -->
                                 @if (currentPage < totalPages)
                                 {
                                     <li class="page-item">
-                                        <a class="page-link" href="@Url.Action("Volunteer_List", new { page = currentPage + 1, pageSize, searchTerm = ViewBag.SearchTerm })">
+                                        <a class="page-link" href="@Url.Action("Volunteer_List", new { page = currentPage + 1, pageSize, searchTerm })" title="Trang sau">
                                             <i class="fas fa-angle-right"></i>
                                         </a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" href="@Url.Action("Volunteer_List", new { page = totalPages, pageSize, searchTerm = ViewBag.SearchTerm })">
+                                        <a class="page-link" href="@Url.Action("Volunteer_List", new { page = totalPages, pageSize, searchTerm })" title="Trang cuối">
                                             <i class="fas fa-angle-double-right"></i>
                                         </a>
                                     </li>
@@ -217,37 +320,65 @@
                     </div>
                 }
 
-                <!-- Pagination Info -->
-                <div class="text-center mt-3" style="color: #546e7a;">
-                    Hiển thị @(startIndex + 1) - @(Math.Min(startIndex + pageSize, totalCount))
-                    trong tổng số @totalCount volunteer
-                </div>
+                @if (totalCount > 0)
+                {
+                    <div class="text-center mt-3" style="color: #546e7a;">
+                        Hiển thị <span id="displayRangeStart">@(startIndex + 1)</span> - <span id="displayRangeEnd">@(Math.Min(startIndex + pageSize, totalCount))</span>
+                        trong tổng số <span id="totalCount">@totalCount</span> volunteer
+                        @if (!string.IsNullOrEmpty(searchTerm))
+                        {
+                            <span>phù hợp với "<strong>@Html.Raw(searchTerm)</strong>"</span>
+                        }
+                    </div>
+                }
             </div>
         }
     </div>
 </section>
 
 @section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const input = document.getElementById('liveSearch');
-            let timeout = null;
+            const form = document.querySelector('.search-form');
+            const searchInput = document.getElementById('searchInput');
 
-            input.addEventListener('input', function () {
-                clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                    const query = input.value;
-                    const url = '@Url.Action("Volunteer_List", "Home")' + '?searchTerm=' + encodeURIComponent(query);
-                    window.location.href = url;
-                }, 500); // Wait 500ms after typing stops to send request
+            // Server-side search on form submit
+            form.addEventListener('submit', function (e) {
+                const searchValue = searchInput.value.trim();
+                if (searchValue.length === 0) {
+                    window.location.href = '@Url.Action("Volunteer_List", "Home")';
+                    e.preventDefault();
+                    return;
+                }
+
+                const searchBtn = document.querySelector('.search-button');
+                if (searchBtn) {
+                    searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                    searchBtn.disabled = true;
+                }
+            });
+
+            // Client-side search for dynamic filtering
+            searchInput.addEventListener('input', function () {
+                const searchValue = this.value.toLowerCase();
+                const rows = document.querySelectorAll('.volunteer-table tbody tr');
+
+                rows.forEach(row => {
+                    const nameCell = row.querySelector('.name-column');
+                    const phoneCell = row.querySelector('.phone-column');
+
+                    const nameText = nameCell ? nameCell.textContent.toLowerCase() : '';
+                    const phoneText = phoneCell ? phoneCell.textContent.toLowerCase() : '';
+
+                    const isMatch = nameText.includes(searchValue) || phoneText.includes(searchValue);
+                    row.style.display = isMatch ? '' : 'none';
+                });
+
+                // Update displayed count
+                const visibleRows = Array.from(rows).filter(row => row.style.display !== 'none').length;
+                document.getElementById('displayedCount').textContent = visibleRows;
             });
         });
-
-        function changePageSize(pageSize) {
-            const currentUrl = new URL(window.location.href);
-            currentUrl.searchParams.set('pageSize', pageSize);
-            currentUrl.searchParams.set('page', 1); // Reset to page 1 when changing page size
-            window.location.href = currentUrl.toString();
-        }
     </script>
 }

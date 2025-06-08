@@ -3,6 +3,8 @@
     var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
     var userName = User.Identity.Name; // Lấy từ ClaimTypes.Name
     ViewData["Title"] = "navbar";
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
 }
 
 <!-- Thêm jQuery -->
@@ -22,22 +24,22 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
+                <li class="nav-item @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
                     <a asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @(currentController == "Home" && currentAction == "Events" ? "active" : "")">
                     <a asp-controller="Home" asp-action="Events" class="nav-link">Events</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @(currentController == "Home" && currentAction == "Volunteer_List" ? "active" : "")">
                     <a asp-controller="Home" asp-action="Volunteer_List" class="nav-link">Volunteers</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @(currentController == "Blog" && currentAction == "Index" ? "active" : "")">
                     <a asp-controller="Blog" asp-action="Index" class="nav-link">News</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @(currentController == "Map" && currentAction == "Index" ? "active" : "")">
                     <a asp-controller="Map" asp-action="Index" class="nav-link">Maps</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @(currentController == "Home" && currentAction == "AboutUs" ? "active" : "")">
                     <a asp-controller="Home" asp-action="AboutUs" class="nav-link">About Us</a>
                 </li>
             </ul>
@@ -106,7 +108,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" asp-controller="Profile" asp-action="Contact_Infor">
-                                <i class="fa-solid fa-gear" style="margin-right: 10px"></i>Chỉnh sửa thông tin  
+                                <i class="fa-solid fa-gear" style="margin-right: 10px"></i>Chỉnh sửa thông tin
                             </a>
                         </li>
                         <li>
@@ -190,27 +192,27 @@
         font-size: 14px;
     }
 
-    .dropdown-item:hover {
-        background-color: #f8f9fa; /* Light hover background */
-    }
+        .dropdown-item:hover {
+            background-color: #f8f9fa; /* Light hover background */
+        }
 </style>
 
 <!-- Script AJAX để cập nhật số lượng -->
 <script>
-$(document).ready(function() {
-    updateRegisteredCount();
+    $(document).ready(function() {
+        updateRegisteredCount();
 
-    // Cập nhật mỗi 5 giây (có thể bỏ nếu không cần cập nhật tự động)
-    setInterval(updateRegisteredCount, 5000);
+        // Cập nhật mỗi 5 giây (có thể bỏ nếu không cần cập nhật tự động)
+        setInterval(updateRegisteredCount, 5000);
 
-    function updateRegisteredCount() {
-        $.get("/Manage/GetRegisteredEventCount", function(data) {
-            if (data.count !== undefined) {
-                $(".badge-notify").text(data.count);
-            }
-        }).fail(function() {
-            $(".badge-notify").text("0"); // Nếu lỗi, hiển thị 0
-        });
-    }
-});
+        function updateRegisteredCount() {
+            $.get("/Manage/GetRegisteredEventCount", function(data) {
+                if (data.count !== undefined) {
+                    $(".badge-notify").text(data.count);
+                }
+            }).fail(function() {
+                $(".badge-notify").text("0"); // Nếu lỗi, hiển thị 0
+            });
+        }
+    });
 </script>

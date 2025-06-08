@@ -107,7 +107,7 @@ namespace Volunteer_website.Controllers
                 .Include(e => e.TypeEvent)
                 .Include(e => e.Registrations)
                 .Include(e => e.Donations)
-                .Where(e => e.Status == "ACCEPT") 
+                .Where(e => e.Status == "ACCEPTED") 
                 .AsQueryable();
             var today = DateOnly.FromDateTime(DateTime.Today);
             if (!string.IsNullOrEmpty(statusFilter))
@@ -251,48 +251,103 @@ namespace Volunteer_website.Controllers
         {
             return View();
         }
-        public IActionResult Volunteer_List(string searchTerm, int page = 1)
+        public IActionResult Volunteer_List(int page = 1, int pageSize = 10, string searchTerm = null)
         {
-            int pageSize = 10;
-            var query = _context.Volunteers
-                .Where(v => v.Registrations.Any(r => r.Status == "ACCEPTED"));
-
-            if (!string.IsNullOrEmpty(searchTerm))
+            try
             {
-                searchTerm = searchTerm.ToLower();
-                query = query.Where(v =>
-                    v.Name.ToLower().Contains(searchTerm) ||
-                    v.Email.ToLower().Contains(searchTerm) ||
-                    v.PhoneNumber.Contains(searchTerm));
-            }
+                // Validate parameters
+                page = Math.Max(1, page);
+                pageSize = Math.Max(1, Math.Min(100, pageSize));
 
-            int totalCount = query.Count();
+                // Normalize search term
+                var normalizedSearchTerm = string.IsNullOrWhiteSpace(searchTerm) ? null : searchTerm.Trim();
 
-            var volunteers = query
-                .Select(v => new Volunteer_List
+                // Build base query with proper joins
+                var baseQuery = from v in _context.Volunteers
+                                join u in _context.Users on v.VolunteerId equals u.UserId into userGroup
+                                from user in userGroup.DefaultIfEmpty()
+                                select new
+                                {
+                                    Volunteer = v,
+                                    User = user,
+                                    TotalDonations = v.Donations.Sum(d => d.Amount ?? 0),
+                                    EventCount = v.Registrations.Count()
+                                };
+
+                // Apply search filter if provided
+                if (!string.IsNullOrEmpty(normalizedSearchTerm))
                 {
-                    VolunteerId = v.VolunteerId,
-                    Name = v.Name,
-                    Email = v.Email,
-                    PhoneNumber = v.PhoneNumber,
-                    JoinDate = v.Registrations
-                        .Where(r => r.Status == "ACCEPTED")
-                        .OrderByDescending(r => r.RegisterAt)
-                        .Select(r => r.RegisterAt)
-                        .FirstOrDefault()
-                })
-                .OrderBy(v => v.Name) 
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-            ViewBag.CurrentPage = page;
-            ViewBag.PageSize = pageSize;
-            ViewBag.TotalCount = totalCount;
-            ViewBag.SearchTerm = searchTerm;
+                    baseQuery = baseQuery.Where(x =>
+                        (x.Volunteer.Name != null && EF.Functions.Like(x.Volunteer.Name, $"%{normalizedSearchTerm}%")) ||
+                        (x.Volunteer.PhoneNumber != null && EF.Functions.Like(x.Volunteer.PhoneNumber, $"%{normalizedSearchTerm}%"))
+                    );
+                }
 
-            return View(volunteers);
+                // Get total count and donations for filtered results
+                var aggregateData = baseQuery
+                    .GroupBy(x => 1)
+                    .Select(g => new
+                    {
+                        TotalCount = g.Count(),
+                        TotalDonationsAll = g.Sum(x => x.TotalDonations)
+                    })
+                    .FirstOrDefault();
+
+                int totalCount = aggregateData?.TotalCount ?? 0;
+                decimal totalDonationsAll = aggregateData?.TotalDonationsAll ?? 0;
+                int totalPages = totalCount > 0 ? (int)Math.Ceiling((double)totalCount / pageSize) : 0;
+
+                // Adjust page if it exceeds total pages
+                if (page > totalPages && totalPages > 0)
+                {
+                    page = totalPages;
+                }
+
+                int skip = (page - 1) * pageSize;
+
+                // Get paginated data
+                var volunteerData = baseQuery
+                    .OrderBy(x => x.Volunteer.Name ?? "")
+                    .Skip(skip)
+                    .Take(pageSize)
+                    .Select(x => new Volunteer_List
+                    {
+                        VolunteerId = x.Volunteer.VolunteerId ?? string.Empty,
+                        Name = x.Volunteer.Name ?? "N/A",
+                        Email = x.Volunteer.Email ?? "N/A",
+                        PhoneNumber = x.Volunteer.PhoneNumber ?? "N/A",
+                        JoinDate = x.User != null ? x.User.CreateAt : null,
+                        TotalDonations = x.TotalDonations,
+                        EventCount = x.EventCount
+                    })
+                    .ToList();
+
+                // Store data in ViewBag
+                ViewBag.CurrentPage = page;
+                ViewBag.PageSize = pageSize;
+                ViewBag.TotalCount = totalCount;
+                ViewBag.TotalPages = totalPages;
+                ViewBag.SearchTerm = normalizedSearchTerm;
+                ViewBag.TotalDonationsAll = totalDonationsAll;
+
+                return View(volunteerData);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging
+                // _logger.LogError(ex, "Error occurred while loading volunteer list with search term: {SearchTerm}", searchTerm);
+
+                ViewBag.ErrorMessage = "Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại.";
+                ViewBag.CurrentPage = 1;
+                ViewBag.PageSize = pageSize;
+                ViewBag.TotalCount = 0;
+                ViewBag.TotalPages = 0;
+                ViewBag.SearchTerm = searchTerm;
+                ViewBag.TotalDonationsAll = 0;
+
+                return View(new List<Volunteer_List>());
+            }
         }
-
 
         [HttpGet]
         public IActionResult GetAcceptedEvents()
