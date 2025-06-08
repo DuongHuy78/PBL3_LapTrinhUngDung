@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <!-- Phần tiêu đề -->
     <div class="header-section border rounded p-4 mb-4" style="background-color: #ffffff;">
-        <h1 class="text-center my-4 heading-title">Event Management</h1>
+        <h1 class="text-center my-4 heading-title">Quản lý sự kiện</h1>
     </div>
     @if (TempData["SuccessMessage"] != null)
     {
@@ -30,8 +30,8 @@
         <!-- Search Bar and Create Button -->
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
             <div class="search-container">
-                <label for="searchBox">Search: </label>
-                <input type="text" id="searchBox" class="form-control search-input" placeholder="Search events..." onkeyup="search()">
+                <label for="searchBox">Tìm: </label>
+                <input type="text" id="searchBox" class="form-control search-input" placeholder="Tìm kiếm ở đây..." onkeyup="search()">
             </div>
         </div>
 
@@ -40,13 +40,13 @@
             <table class="table table-bordered table-hover event-table shadow-sm">
                 <thead class="table-dark">
                     <tr>
-                        <th>Event ID</th>
-                        <th>Event Name</th>
-                        <th>Date</th>
-                        <th>Location</th>
-                        <th>Is active</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        <th>Ngày diễn ra</th>
+                        <th>Địa chỉ</th>
+                        <th>Đang hoạt động</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 @if (Model == null || !Model.Any())
@@ -70,22 +70,26 @@
                                 <td>@item.Location</td>
                                 <td>
                                     <span class="badge @(item.IsActive == 0 ? "bg-success" : "bg-secondary")">
-                                        @(item.IsActive == 0 ? "Active" : "Inactive")
+                                        @(item.IsActive == 0 ? "Có" : "Không")
+
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge 
-                                @(item.Status == "PENDING" ? "bg-warning" :
-                                item.Status == "ACCEPTED" ? "bg-success" :
-                                 "bg-danger") text-white fw-semibold text-uppercase">
-                                        @(item.Status == "PENDING" ? "PENDING" :
-                                            item.Status == "ACCEPTED" ? "ACCEPTED" :
-                                            "REJECTED")
-                                    </span>
+                                    @if (item.Status == "PENDING")
+                                    {
+                                        <span class="badge bg-warning text-dark">Đang xét</span>
+                                    }
+                                    else if (item.Status == "ACCEPTED")
+                                    {
+                                        <span class="badge bg-success">Chấp nhận</span>
+                                    }
+                                    else if (item.Status == "REJECTED")
+                                    {
+                                        <span class="badge bg-danger">Từ chối</span>
+                                    }
                                 </td>
                                 <td class="action_btn">
-@*<<<<<<< HEAD*@
-                                    <a asp-controller="EventManager" asp-action="EventDetails" asp-route-id="@item.EventId" class="btn btn-info btn-sm view-event-detail">
+                                    <a asp-controller="EventManager" asp-action="EventDetails" asp-route-id="@item.EventId" class="btn btn-info btn-sm view-event-detail action-btn">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
                                     <button onclick="confirmAccept('@item.EventId')" class="btn btn-success btn-sm action-btn">
@@ -100,26 +104,6 @@
                     </tbody>
                 }    
             </table>
-            @*
-=======
-                                  
-                                    <a asp-controller="EventManager" asp-action="EventDetails" asp-route-id="@item.EventId" class="btn btn-info btn-sm view-event-detail">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                    <button onclick="confirmAccept('@item.EventId')" class="btn btn-success btn-sm action-btn">
-                                        <i class="fa-solid fa-check"></i>
-                                    </button>
-                                    <button onclick="confirmReject('@item.EventId')" class="btn btn-danger btn-sm action-btn">
-                                        <i class="fa-solid fa-xmark"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        }
-                      
-
-                    </tbody>
-                }    
-            </table> *@
         </div>
         <!-- Pagination -->
         <div class="pagination d-flex justify-content-center mt-5 custom-pagination">

@@ -348,12 +348,14 @@ namespace Volunteer_website.Controllers
                 return View(new List<Volunteer_List>());
             }
         }
+        #endregion
+
 
         [HttpGet]
         public IActionResult GetAcceptedEvents()
         {
             var acceptedEvents = _context.Events
-                .Where(e => e.Status != null && e.Status.Equals("ACCEPT", StringComparison.OrdinalIgnoreCase))
+                .Where(e => e.Status != null && e.Status.Equals("ACCEPTED", StringComparison.OrdinalIgnoreCase))
                 .ToList();
 
             return View(acceptedEvents);

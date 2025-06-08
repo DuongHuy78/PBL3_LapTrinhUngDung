@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Volunteer_website.Areas.Admin.Data;
+using Volunteer_website.Areas.Admins.Data;
 using Volunteer_website.Models;
 using X.PagedList.Extensions;
 
-namespace Volunteer_website.Areas.Admin.Controllers
+namespace Volunteer_website.Areas.Admins.Controllers
 {
     [Area("Admin")]
     [Authorize("Admin")]
@@ -49,7 +49,7 @@ namespace Volunteer_website.Areas.Admin.Controllers
                 }
 
                 // chuyển trạng thái status
-                existingEvent.Status = "ACCEPT";
+                existingEvent.Status = "ACCEPTED";
 
                 _db.Update(existingEvent);
                 await _db.SaveChangesAsync();
@@ -76,7 +76,7 @@ namespace Volunteer_website.Areas.Admin.Controllers
                 }
 
                 // chuyển trạng thái status
-                existingEvent.Status = "REJECT";
+                existingEvent.Status = "REJECTED";
 
                 _db.Update(existingEvent);
                 await _db.SaveChangesAsync();
@@ -116,6 +116,11 @@ namespace Volunteer_website.Areas.Admin.Controllers
                     .Where(o => o.OrgId == eventDetail.OrgId)
                     .Select(o => o.Name)
                     .FirstOrDefaultAsync() ?? "Unknown Organization";
+                var org = await _db.Organizations
+                    .Where(o => o.OrgId == eventDetail.OrgId)
+                    .FirstOrDefaultAsync();
+                var imgPath = "/images/default.jpg";
+                if(org!.ImagePath != null) imgPath = org.ImagePath;
 
 
                 var registrations = await _db.Registrations
@@ -153,6 +158,7 @@ namespace Volunteer_website.Areas.Admin.Controllers
 
                 ViewBag.OrgName = orgName;
                 ViewBag.Participants = registrations;
+                ViewBag.ImgPath = imgPath;
                 ViewBag.Donations = donations;
                 ViewBag.RegisteredCount = await _db.Registrations.CountAsync(r => r.EventId == id);
 
@@ -165,80 +171,6 @@ namespace Volunteer_website.Areas.Admin.Controllers
             }
         }
         #endregion
-
-        //#region lấy dữ liệu event
-        //[Route("GetEventDetails")]
-        //public async Task<IActionResult> GetEventDetails(string id)
-        //{
-        //    var eventObj = await _db.Events
-        //        .Include(e => e.Org)  // Include related organization
-        //        .FirstOrDefaultAsync(ev => ev.EventId == id);
-
-        //    if (eventObj == null)
-        //        return Json(new { success = false, message = "Event not found" });
-
-        //    // Count registrations
-        //    var registrationCount = await _db.Registrations.CountAsync(r => r.EventId == id);
-
-        //    // Get donations information
-        //    var donations = await _db.Donations
-        //        .Where(d => d.EventId == id)
-        //        .ToListAsync();
-
-        //    return Json(new
-        //    {
-        //        success = true,
-        //        data = new
-        //        {
-        //            eventId = eventObj.EventId,
-        //            name = eventObj.Name,
-        //            description = eventObj.Description,
-        //            location = eventObj.Location,
-        //            dayBegin = eventObj.DayBegin,
-        //            dayEnd = eventObj.DayEnd,
-        //            targetMember = eventObj.TargetMember,
-        //            targetFunds = eventObj.TargetFunds,
-        //            type_event_name = eventObj.TypeEventId,
-        //            organizationName = eventObj.Org?.Name,
-        //            status = eventObj.Status,
-        //            imagePath = eventObj.ImagePath,
-        //            listImg = eventObj.ListImg,
-        //            registrationCount = registrationCount,
-        //            donationCount = donations.Count,
-        //            totalAmount = donations.Sum(d => d.Amount ?? 0)
-        //        }
-        //    });
-        //}
-        //#endregion
-
-        //#region Danh Sach Doantion
-        //[Route("ListVolunteerDonation")]
-        //public IActionResult ListVolunteerDonation(string id, int? page)
-        //{
-        //    int pageSize = 8;
-        //    int pageNumber = page ?? 1;
-
-        //    var ListVolunteerDonate = _db.Donations
-        //        .Where(r => r.EventId == id)
-        //        .ToPagedList(pageNumber, pageSize);
-        //    ViewBag.EventId = id;
-        //    return View(ListVolunteerDonate);
-        //}
-        //#endregion
-
-        //#region Danh sách volunteer
-        //[Route("ListVolunteerRegistrationm")]
-        //public IActionResult ListVolunteerRegistration(string id, int? page)
-        //{
-        //    int pageSize = 8;
-        //    int pageNumber = page ?? 1;
-
-        //    var ListVolunteerRegis = _db.Registrations
-        //        .Where(r => r.EventId == id)
-        //        .ToPagedList(pageNumber, pageSize);
-        //    return View(ListVolunteerRegis);
-        //}
-        //#endregion
 
     }
 }

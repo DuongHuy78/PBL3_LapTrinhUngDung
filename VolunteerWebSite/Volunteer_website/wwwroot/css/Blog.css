@@ -1,0 +1,33 @@
+.news-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.news-card img {
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  min-height: 3em;
+}
+
+.card-text {
+  font-size: 0.95rem;
+}
+
+.pagination .page-link {
+  color: #007bff;
+}
+
+.pagination .page-link:hover {
+  background-color: #e9ecef;
+}

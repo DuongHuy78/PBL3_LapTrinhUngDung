@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <!-- Phần tiêu đề -->
     <div class="header-section border rounded p-4 mb-4" style="background-color: #ffffff;">
-        <h1 class="text-center my-4 heading-title">Organization Management</h1>
+        <h1 class="text-center my-4 heading-title">Quản lý tổ chức</h1>
     </div>
     @if (TempData["SuccessMessage"] != null)
     {
@@ -31,21 +31,22 @@
         <!-- Search Bar and Create Button -->
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
             <div class="search-container">
-                <label for="searchBox">Search: </label>
-                <input type="text" id="searchBox" class="form-control search-input" placeholder="Search events..." onkeyup="search()">
+                <label for="searchBox">Tìm: </label>
+                <input type="text" id="searchBox" class="form-control search-input" placeholder="Tìm kiếm ở đây..." onkeyup="search()">
             </div>
-            <a asp-area="Admin" asp-controller="OrgManager" asp-action="ApprovalOrg" class="btn btn-primary create-btn"><i class="fa-solid fa-plus"></i> Approval</a>
+            <a asp-area="Admin" asp-controller="OrgManager" asp-action="ApprovalOrg" class="btn btn-primary create-btn"><i class="fa-solid fa-plus"></i> Duyệt </a>
         </div>
         <!-- Event List Table -->
         <div class="table-responsive">
             <table class="table table-bordered table-hover event-table shadow-sm">
                 <thead class="table-dark">
                     <tr>
-                        <th>Name</th>
+                        <th>Mã</th>
+                        <th>Tên</th>
                         <th>Email</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Event</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Số sự kiện</th>
                         @* <th>Is Active</th> *@
                         <th>Actions</th>
                     </tr>
@@ -61,6 +62,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td>@item.OrgId</td>
                                 <td>@item.Name</td>
                                 <td>@item.Email</td>
                                 <td>@item.Address</td>

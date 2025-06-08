@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <!-- Phần tiêu đề -->
     <div class="header-section border rounded p-4 mb-4" style="background-color: #ffffff;">
-        <h1 class="text-center my-4 heading-title">Users Management</h1>
+        <h1 class="text-center my-4 heading-title">Quản lý người dùng</h1>
     </div>
     @if (TempData["SuccessMessage"] != null)
     {
@@ -30,8 +30,8 @@
         <!-- Search Bar and Create Button -->
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
             <div class="search-container">
-                <label for="searchBox">Search: </label>
-                <input type="text" id="searchBox" class="form-control search-input" placeholder="Search users..." onkeyup="search()">
+                <label for="searchBox">Tìm: </label>
+                <input type="text" id="searchBox" class="form-control search-input" placeholder="Tìm kiếm ở đây" onkeyup="search()">
             </div>
         </div>
 
@@ -40,17 +40,17 @@
             <table class="table table-bordered table-hover event-table shadow-sm">
                 <thead class="table-dark">
                     <tr>
-                        <th>Username</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
+                        <th>Tên</th>
+                        <th>Quyền</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo tài khoản</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 @if (Model == null || !Model.Any())
                 {
                     <tr>
-                        <td colspan="5" class="text-center">No users found.</td>
+                        <td colspan="5" class="text-center">Không có người dùng nào được tìm thấy</td>
                     </tr>
                 }
                 else
@@ -62,23 +62,24 @@
                                 <td>@item.UserName</td>
                                 <td>
                                     <span class="badge @(item.Role == 2 ? "bg-danger" : item.Role == 1 ? "bg-primary" : "bg-success")">
-                                        @(item.Role == 2 ? "Admin" : item.Role == 1 ? "Organization" : "Volunteer")
+                                        @(item.Role == 2 ? "Quản trị viên" : item.Role == 1 ? "Tổ chức" : "Tình nguyện viên")
                                     </span>
                                 </td>
                                 <td>
                                     @if (item.IsActive == true)
                                     {
-                                        <span class="badge bg-success">Active</span>
+                                        <span class="badge bg-success">Đang hoạt động</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-secondary">Inactive</span>
+                                        <span class="badge bg-secondary">Không hoạt động</span>
                                     }
                                 </td>
                                 <td>@item.CreateAt?.ToString("dd/MM/yyyy")</td>
-                                <td class="action_btn">
+                               
                                     @if(item.Role != 2) {
-                                        if (item.IsActive == true)
+                                    <td class="action_btn">
+                                        @if (item.IsActive == true)
                                         {
                                             <button class="btn btn-danger btn-sm action-btn" onclick="BanUser('@item.UserId')">
                                                 <i class="fa-solid fa-ban"></i>
@@ -90,11 +91,15 @@
                                                 <i class="fa-solid fa-unlock"></i>
                                             </button>
                                         }
+                                        <button class="btn btn-success btn-sm action-btn" onclick="confirmAcceptToAdmin('@item.UserId')">
+                                            <i class="fa-solid bi-person-fill-up"></i>
+                                        </button>
+                                         </td>
                                     }
                                     else {
 
                                     }
-                                </td>
+                               
                             </tr>
                         }
                     </tbody>
@@ -123,3 +128,4 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/OrgLayout/Search.js"></script>
 <script src="/OrgLayout/approvalVolunteer.js"></script>
+<script src="/OrgLayout/PromoteToAdmin.js"></script>

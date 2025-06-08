@@ -10,9 +10,9 @@ using Volunteer_website.Models;
 using X.PagedList.Extensions;
 using MyCommerce.Models;
 using X.PagedList;
-using Volunteer_website.Areas.Admin.Data;
+using Volunteer_website.Areas.Admins.Data;
 
-namespace Volunteer_website.Areas.Admin.Controllers
+namespace Volunteer_website.Areas.Admins.Controllers
 {
     [Area("Admin")]
     [Authorize("Admin")]
@@ -43,26 +43,6 @@ namespace Volunteer_website.Areas.Admin.Controllers
                             .OrderBy(x => x.OrgId)
                             .ToPagedList(pageNumber, pageSize);
             return View(lstOrg);
-        }
-        #endregion
-
-        #region details
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var organization = await _context.Organizations
-                .FirstOrDefaultAsync(m => m.OrgId == id);
-
-            if (organization == null)
-            {
-                return NotFound();
-            }
-
-            return View(organization);
         }
         #endregion
 

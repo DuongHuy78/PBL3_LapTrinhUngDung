@@ -2,13 +2,13 @@
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Volunteer_website.Models;
-using Volunteer_website.Areas.Admin.Data;
+using Volunteer_website.Areas.Admins.Data;
 using X.PagedList.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using System.Buffers;
 using Volunteer_website.Helpers;
 using Volunteer_website.ViewModels;
-namespace Volunteer_website.Areas.Admin.Controllers
+namespace Volunteer_website.Areas.Admins.Controllers
 {
     [Area("Admin")]
     [Route("Admin/HomeAdmin")]

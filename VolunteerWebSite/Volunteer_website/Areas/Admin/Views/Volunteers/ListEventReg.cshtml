@@ -1,5 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model X.PagedList.IPagedList<Volunteer_website.Areas.Admin.Data.ListEvent>
+@model X.PagedList.IPagedList<Volunteer_website.Areas.Admins.Data.ListEvent>
 @using X.PagedList.Mvc.Core
 @Html.AntiForgeryToken()
 @{
@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <!-- Phần tiêu đề -->
     <div class="header-section border rounded p-4 mb-4" style="background-color: #ffffff;">
-        <h1 class="text-center my-4 heading-title">List Event Registrated</h1>
+        <h1 class="text-center my-4 heading-title">Danh sách sự kiện đã được đăng ký</h1>
     </div>
     @if (TempData["SuccessMessage"] != null)
     {
@@ -30,8 +30,8 @@
         <!-- Search Bar and Create Button -->
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
             <div class="search-container">
-                <label for="searchBox">Search: </label>
-                <input type="text" id="searchBox" class="form-control search-input" placeholder="Search events..." onkeyup="search()">
+                <label for="searchBox">Tìm: </label>
+                <input type="text" id="searchBox" class="form-control search-input" placeholder="Tìm kiếm ở đây..." onkeyup="search()">
             </div>
         </div>
 
@@ -40,13 +40,14 @@
             <table class="table table-bordered table-hover event-table shadow-sm">
                 <thead class="table-dark">
                     <tr>
-                        <th>Event ID</th>
-                        <th>Event Name</th>
-                        <th>Date</th>
-                        <th>Location</th>
-                        <th>Members</th>
-                        <th>Funds</th>
-                        <th>Actions</th>
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        <th>Ngày diễn ra</th>
+                        <th>Địa chỉ</th>
+                        <th>Thành viên</th>
+                        <th>Ủng hộ</th>
+                        <th>Đang hoạt động</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 @if (Model == null || !Model.Any())
@@ -70,10 +71,10 @@
                                 <td>@dayBegin - @dayEnd</td>
                                 <td>@item.Location</td>
                                 <td>@item.CurrentMember/@item.TargetMember</td>
-                                <td>@item.CurrentFunds/@item.TargetFunds</td>
+                                <td>@(item.CurrentFunds?.ToString("N0")??"0")/@item.TargetFunds VNĐ</td>
                                 <td>
                                     <span class="badge @(item.IsActive == 0 ? "bg-success" : "bg-secondary")">
-                                        @(item.IsActive == 0 ? "Active" : "Inactive")
+                                        @(item.IsActive == 0 ? "Có" : "Không")
                                     </span>
                                 </td>
                                 <td class="action_btn">

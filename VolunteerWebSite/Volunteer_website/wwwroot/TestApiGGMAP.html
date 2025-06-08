@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test Google Maps API</title>
+    <style>
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Bản đồ với địa điểm từ Nominatim (OpenStreetMap)</h3>
+    <div id="map"></div>
+
+    <script>
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 6,
+          center: { lat: 21.0285, lng: 105.8542 }, // trung tâm tạm Hà Nội
+        });
+
+        // JSON giả lập, có các địa chỉ cần geocode
+        const events = [
+          { name: "Sự kiện Hà Nội", address: "Hà Nội, Việt Nam" },
+          { name: "Sự kiện Đà Nẵng", address: "Đà Nẵng, Việt Nam" },
+          { name: "Sự kiện Hồ Chí Minh", address: "Hồ Chí Minh, Việt Nam" },
+        ];
+
+        events.forEach((event) => {
+          // Gọi Nominatim API để lấy tọa độ
+          const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+            event.address
+          )}&format=json&limit=1`;
+
+          fetch(url, {
+            headers: {
+              Accept: "application/json",
+              "User-Agent": "YourAppName/1.0 (your-email@example.com)", // Nên khai báo user-agent đúng quy định Nominatim
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data && data.length > 0) {
+                const lat = parseFloat(data[0].lat);
+                const lon = parseFloat(data[0].lon);
+
+                const location = { lat: lat, lng: lon };
+
+                // Tạo marker trên bản đồ
+                new google.maps.Marker({
+                  position: location,
+                  map: map,
+                  title: event.name,
+                });
+              } else {
+                console.error(
+                  "Không tìm thấy tọa độ cho địa chỉ:",
+                  event.address
+                );
+              }
+            })
+            .catch((error) => {
+              console.error("Lỗi khi gọi Nominatim API:", error);
+            });
+        });
+      }
+    </script>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhouNsHILTOBnoHIaIRaoshOXGC6D5pYM&callback=initMap"
+    ></script>
+  </body>
+</html>

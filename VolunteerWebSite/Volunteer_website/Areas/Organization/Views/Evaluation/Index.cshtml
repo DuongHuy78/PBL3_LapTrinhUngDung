@@ -1,12 +1,11 @@
-﻿```cshtml
-@model X.PagedList.IPagedList<Volunteer_website.Models.Evaluation>
+﻿@model X.PagedList.IPagedList<Volunteer_website.Models.Evaluation>
 @using Volunteer_website.Models
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = "Evaluation List";
+    ViewData["Title"] = "Quản lý đánh giá";
     Layout = "~/Areas/Organization/Views/OrgLayout.cshtml";
 }
 
@@ -17,12 +16,12 @@
 
 <div class="container-fluid">
     <div class="header-section border rounded p-4 mb-4 bg-white">
-        <h1 class="text-center my-4 heading-title">Evaluation Management</h1>
+        <h1 class="text-center my-4 heading-title">Quản lý đánh giá</h1>
     </div>
 
     <div class="body-section border rounded p-4 bg-white">
         <!-- Hiển thị thông báo từ TempData -->
-      
+        <!-- Chưa có TempData trong mã gốc, giữ chỗ nếu cần -->
 
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
             <div class="search-container">
@@ -31,27 +30,27 @@
                            name="searchValue"
                            id="searchBoxVolunteers"
                            class="form-control me-2"
-                           placeholder="Search Event.."
+                           placeholder="Tìm kiếm sự kiện..."
                            value="@ViewBag.SearchValue" />
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search"></i> <!-- Font Awesome search icon -->
                     </button>
                 </form>
             </div>
-            <a asp-area="Organization" asp-controller="Evaluation" asp-action="Create" class="btn btn-primary create-btn"><i class="fa-solid fa-plus"></i> Create Evaluation</a>
+            <a asp-area="Organization" asp-controller="Evaluation" asp-action="Create" class="btn btn-primary create-btn"><i class="fa-solid fa-plus"></i> Tạo đánh giá mới</a>
         </div>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover shadow-sm">
                 <thead class="table-dark">
                     <tr>
-                        <th>Evaluation ID</th>
-                        <th>Volunteer Name</th>
-                        <th>Event Name</th>
-                        <th>Feedback</th>
-                        <th>Completed</th>
-                        <th>Evaluated At</th>
-                        <th>Actions</th>
+                        <th>Mã đánh giá</th>
+                        <th>Tên tình nguyện viên</th>
+                        <th>Tên sự kiện</th>
+                        <th>Phản hồi</th>
+                        <th>Hoàn thành</th>
+                        <th>Ngày đánh giá</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,17 +68,17 @@
 
                         <tr>
                             <td>@item.EvaluationId</td>
-                            <td>@(volunteer?.Name ?? "N/A")</td>
-                            <td>@(evt?.Name ?? "N/A")</td>
-                            <td>@(item.Feedback ?? "No feedback")</td>
+                            <td>@(volunteer?.Name ?? "Không có")</td>
+                            <td>@(evt?.Name ?? "Không có")</td>
+                            <td>@(item.Feedback ?? "Không có phản hồi")</td>
                             <td>
                                 @if (item.IsCompleted)
                                 {
-                                    <span class="badge bg-success">Yes</span>
+                                    <span class="badge bg-success">Có</span>
                                 }
                                 else
                                 {
-                                    <span class="badge bg-secondary">No</span>
+                                    <span class="badge bg-secondary">Không</span>
                                 }
                             </td>
                             <td>
@@ -89,7 +88,7 @@
                                 }
                                 else
                                 {
-                                    @:N/A
+                                    @:Không có
                                 }
                             </td>
                             <td class="action_btn text-center">
@@ -140,7 +139,7 @@
         function confirmDelete(evaluationId) {
             Swal.fire({
                 title: "Bạn chắc chắn muốn xóa?",
-                text: "Bạn không thể hoàn tác hành động này!",
+                text: "Hành động này không thể hoàn tác!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",

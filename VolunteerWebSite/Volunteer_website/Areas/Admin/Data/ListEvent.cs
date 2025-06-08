@@ -1,4 +1,4 @@
-﻿namespace Volunteer_website.Areas.Admin.Data
+﻿namespace Volunteer_website.Areas.Admins.Data
 {
     public class ListEvent
     {

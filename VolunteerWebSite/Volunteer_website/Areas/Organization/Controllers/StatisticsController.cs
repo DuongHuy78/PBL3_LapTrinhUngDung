@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using Volunteer_website.Models;
 
 namespace Volunteer_website.Areas.Organizations.Controllers
@@ -441,9 +442,6 @@ namespace Volunteer_website.Areas.Organizations.Controllers
 
             var data = StatisticsEventSummary(searchValue, startDate, endDate);
 
-            // Set EPPlus license context
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
             using (var package = new ExcelPackage())
             {
                 var worksheet = package.Workbook.Worksheets.Add("Thống kê sự kiện");
@@ -452,22 +450,22 @@ namespace Volunteer_website.Areas.Organizations.Controllers
                 worksheet.Cells[1, 1, 1, 3].Merge = true;
                 worksheet.Cells[1, 1].Style.Font.Size = 16;
                 worksheet.Cells[1, 1].Style.Font.Bold = true;
-                worksheet.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
                 string formattedStartDate = string.IsNullOrEmpty(startDate) ? DateTime.Now.AddDays(-30).ToString("dd/MM/yyyy") : DateOnly.Parse(startDate).ToString("dd/MM/yyyy");
                 string formattedEndDate = string.IsNullOrEmpty(endDate) ? DateTime.Now.ToString("dd/MM/yyyy") : DateOnly.Parse(endDate).ToString("dd/MM/yyyy");
                 worksheet.Cells[2, 1].Value = $"Thống kê từ ngày {formattedStartDate} đến ngày {formattedEndDate}";
                 worksheet.Cells[2, 1, 2, 3].Merge = true;
                 worksheet.Cells[2, 1].Style.Font.Size = 12;
-                worksheet.Cells[2, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells[2, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
                 worksheet.Cells[3, 1].Value = "Tên sự kiện";
                 worksheet.Cells[3, 2].Value = "Số lượt tham gia";
                 worksheet.Cells[3, 3].Value = "Số tiền ủng hộ (VND)";
                 worksheet.Cells[3, 1, 3, 3].Style.Font.Bold = true;
-                worksheet.Cells[3, 1, 3, 3].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                worksheet.Cells[3, 1, 3, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 worksheet.Cells[3, 1, 3, 3].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
-                worksheet.Cells[3, 1, 3, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells[3, 1, 3, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
                 int row = 4;
                 foreach (var item in data)
@@ -481,10 +479,10 @@ namespace Volunteer_website.Areas.Organizations.Controllers
 
                 worksheet.Cells[3, 1, row - 1, 3].AutoFitColumns();
 
-                worksheet.Cells[3, 1, row - 1, 3].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                worksheet.Cells[3, 1, row - 1, 3].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                worksheet.Cells[3, 1, row - 1, 3].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                worksheet.Cells[3, 1, row - 1, 3].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[3, 1, row - 1, 3].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[3, 1, row - 1, 3].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[3, 1, row - 1, 3].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[3, 1, row - 1, 3].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
                 var stream = new MemoryStream();
                 package.SaveAs(stream);

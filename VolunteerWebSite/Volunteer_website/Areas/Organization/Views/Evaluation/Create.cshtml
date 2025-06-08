@@ -9,7 +9,7 @@
         ? User.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "ORG1"
         : "ORG1";
 
-    ViewData["Title"] = "Đánh giá tình nguyện viên";
+    ViewData["Title"] = "Tạo đánh giá mới";
     Layout = "~/Areas/Organization/Views/OrgLayout.cshtml";
 
     var volunteers = _db.Volunteers
@@ -21,25 +21,25 @@
 }
 
 <div class="container">
-    <h2 class="form-title">Create New Evaluation</h2>
+    <h2 class="form-title">Tạo đánh giá mới</h2>
     <hr />
 
     <div class="row">
-        <!-- Form Section -->
+        <!-- Phần biểu mẫu -->
         <div class="col-md-8 grid-margin stretch-card">
             <div class="card-vol">
                 <div class="card-vol-body">
                     <form id="evaluationForm" class="forms-sample" asp-action="Create" method="post">
 
                         <div class="form-group">
-                            <label asp-for="EvaluationId"></label>
+                            <label asp-for="EvaluationId">Mã đánh giá</label>
                             <input asp-for="EvaluationId" class="form-control" readonly />
                             <span asp-validation-for="EvaluationId" class="text-danger"></span>
-                        </div>                
+                        </div>
                         <div class="form-group">
-                            <label for="volunteerSelect">Volunteer <span class="text-danger">*</span></label>
-                            <select class="form-control" id="volunteerSelect"  required>
-                                <option value="">-- Select Volunteer --</option>
+                            <label for="volunteerSelect">Tình nguyện viên <span class="text-danger">*</span></label>
+                            <select class="form-control" id="volunteerSelect" required>
+                                <option value="">-- Chọn tình nguyện viên --</option>
                                 @foreach (var volunteer in volunteers ?? Enumerable.Empty<Volunteer>())
                                 {
                                     <option value="@volunteer.VolunteerId">@volunteer.Name</option>
@@ -47,28 +47,27 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="eventSelect">Event</label>
+                            <label for="eventSelect">Sự kiện</label>
                             <select class="form-control" id="eventSelect" name="RegId" asp-for="RegId" required>
-                                <option value="">-- Select Event --</option>
+                                <option value="">-- Chọn sự kiện --</option>
                             </select>
                         </div>
 
-
                         <div class="form-group">
-                            <label for="statusSelect">Status</label>
+                            <label for="statusSelect">Trạng thái</label>
                             <select class="form-control" id="statusSelect" asp-for="IsCompleted">
-                                <option value="">-- Select Status --</option>
-                                <option value="true">Completed</option>
-                                <option value="false">Not Completed</option>
+                                <option value="">-- Chọn trạng thái --</option>
+                                <option value="true">Đã hoàn thành</option>
+                                <option value="false">Chưa hoàn thành</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="Feedback">Feedback</label>
+                            <label asp-for="Feedback">Phản hồi</label>
                             <textarea class="form-control"
                                       asp-for="Feedback"
                                       rows="5"
-                                      placeholder="Enter feedback about the volunteer..."></textarea>
+                                      placeholder="Nhập phản hồi về tình nguyện viên..."></textarea>
                         </div>
 
                         <div class="d-flex justify-content-between">
@@ -76,7 +75,7 @@
                                     class="btn btn-gradient-primary"
                                     name="action"
                                     value="save">
-                                <i class="mdi mdi-content-save"></i> Save Evaluation
+                                <i class="mdi mdi-content-save"></i> Lưu đánh giá
                             </button>
                         </div>
                     </form>
@@ -84,16 +83,16 @@
             </div>
         </div>
 
-        <!-- Volunteer Info Section -->
+        <!-- Phần thông tin tình nguyện viên -->
         <div class="col-md-4 grid-margin stretch-card">
             <div class="card-vol">
                 <div class="card-vol-body">
-                    <h4 class="card-vol-title">Volunteer Information</h4>
+                    <h4 class="card-vol-title">Thông tin tình nguyện viên</h4>
                     <div class="volunteer-details text-center">
                         <img id="volunteerImage"
                              src="/OrgLayout/assets/images/pic-1.jpg"
                              class="img-lg rounded-circle mb-3"
-                             alt="Profile Picture" />
+                             alt="Ảnh đại diện" />
                         <h4 id="volunteerName">--</h4>
                         <p class="text-muted mb-1" id="volunteerEmail">--</p>
                         <p class="text-muted mb-2" id="volunteerPhone">--</p>
@@ -107,39 +106,35 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
     <script src="~/OrgLayout/Evaluation.js"></script>
     <style>
-        /*  */
         .container {
-            max-width: 100%; /* Ghi đè max-width để container chiếm toàn bộ chiều rộng */
+            max-width: 100%;
             margin: 30px auto;
             padding: 20px;
             font-family: 'Arial', sans-serif;
-            width: 100%; /* Đảm bảo container chiếm toàn bộ chiều rộng */
-            box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        /* Form title styling */
         .form-title {
             color: #ff6f00;
             font-size: 24px;
             margin-bottom: 20px;
         }
 
-
-
-        /* Row styling for equal split */
         .row {
             display: flex;
             flex-wrap: wrap;
             margin-right: -15px;
             margin-left: -15px;
-            width: 100%; /* Đảm bảo row chiếm toàn bộ chiều rộng */
-            max-width: 100%; /* Đảm bảo row không bị giới hạn */
+            width: 100%;
+            max-width: 100%;
             box-sizing: border-box;
         }
-        /* Card styling */
+
         .card-vol {
             border: none;
             border-radius: 10px;
@@ -157,7 +152,6 @@
             margin-bottom: 20px;
         }
 
-        /* Form group styling */
         .form-group {
             margin-bottom: 20px;
         }
@@ -186,7 +180,6 @@
                 box-shadow: 0 0 5px rgba(255, 111, 0, 0.3);
             }
 
-        /* Rating container styling */
         .rating-container {
             margin-top: 15px;
             text-align: center;
@@ -211,7 +204,6 @@
                     color: #ffb22b;
                 }
 
-        /* Volunteer details section - Fixed height */
         .volunteer-details {
             text-align: center;
             margin-bottom: 25px;
@@ -219,12 +211,12 @@
             border: 2px solid #ff6f00;
             border-radius: 10px;
             background: #fff9f0;
-            height: 300px; /* Fixed height */
+            height: 300px;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Center content vertically */
-            align-items: center; /* Center content horizontally */
-            overflow: hidden; /* Hide any overflow content */
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
             .volunteer-details img {
@@ -253,7 +245,7 @@
                 padding: 6px 12px;
                 margin: 0 5px;
             }
-        /* Checkbox styling */
+
         .form-check {
             margin-bottom: 20px;
         }
@@ -267,7 +259,6 @@
             margin-right: 8px;
         }
 
-        /* Button styling */
         .btn {
             padding: 10px 20px;
             border: none;
@@ -296,7 +287,6 @@
                 background: #ccc;
             }
 
-        /* Stretch card to ensure equal height */
         .stretch-card {
             display: flex;
             flex-direction: column;
@@ -306,7 +296,6 @@
                 flex: 1;
             }
 
-        /* Grid margin */
         .grid-margin {
             margin-bottom: 30px;
         }

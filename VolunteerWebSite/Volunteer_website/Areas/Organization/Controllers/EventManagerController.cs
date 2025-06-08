@@ -378,7 +378,7 @@ namespace Volunteer_website.Areas.Organizations.Controllers
             existingEvent.Location = model.Location;
             existingEvent.TargetFunds = model.TargetFunds;
             existingEvent.Description = model.Description;
-
+            existingEvent.IsActive = model.IsActive;
             // Upload ảnh nếu có
             if (imagePath != null)
             {

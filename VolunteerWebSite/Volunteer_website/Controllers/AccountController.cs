@@ -248,13 +248,14 @@ namespace Volunteer_website.Controllers
                     ModelState.AddModelError("loi", "Thông tin Admin không tồn tại.");
                     return View(model);
                 }
-
+                var ImgPath = Admin.ImgPath;
+                if (ImgPath == null) ImgPath = "/images/default.jpg";
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, Admin.Name ?? ""),
                     new Claim(ClaimTypes.Email, Admin.Email ?? ""),
                     new Claim(ClaimTypes.Role, user.Role.ToString()!),
-                    new Claim("AvatarUrl", Admin.ImgPath!),
+                    new Claim("AvatarUrl", ImgPath),
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
                 };
 

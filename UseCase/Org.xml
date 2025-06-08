@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Use Case - Tổ chức từ thiện" id="UzgV0Pa8GlHuWMRczekT">
+    <mxGraphModel dx="1290" dy="723" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Actor -->
+        <mxCell id="actor1" value="Tổ chức từ thiện" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="30" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Quản lý tài khoản -->
+        <mxCell id="acc1" value="Chỉnh sửa thông tin tổ chức" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="40" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="acc2" value="Thay đổi ảnh đại diện" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="100" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="acc3" value="Thay đổi mật khẩu" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="160" width="180" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Quản lý sự kiện -->
+        <mxCell id="event1" value="Xem & tìm kiếm sự kiện" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="20" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="event2" value="Thêm sự kiện" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="70" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="event3" value="Cập nhật sự kiện" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="120" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="event4" value="Xóa sự kiện" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="170" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="event5" value="Xem & chỉnh sửa lịch (FullCalendar)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="220" width="180" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Quản lý tình nguyện viên -->
+        <mxCell id="vol1" value="Xem danh sách tình nguyện viên" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="40" width="220" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="vol2" value="Duyệt/hủy đăng ký tình nguyện viên" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="100" width="220" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="vol3" value="Đánh giá tình nguyện viên" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="160" width="220" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="vol4" value="Gửi email sau đánh giá" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="160" width="180" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- include -->
+        <mxCell id="inc1" style="endArrow=block;dashed=1;" edge="1" parent="1" source="vol3" target="vol4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Báo cáo & Thống kê -->
+        <mxCell id="report1" value="Thống kê số tiền quyên góp" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="300" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="report2" value="Thống kê số lượng tình nguyện viên" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="360" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="report3" value="Xuất báo cáo tổng hợp (Excel)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="420" width="220" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Kết nối Actor với các UseCase -->
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="acc1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="acc2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="acc3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="event1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="event2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="event3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="event4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="event5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="vol1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="vol2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="vol3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="report1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="report2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell style="endArrow=none;" edge="1" parent="1" source="actor1" target="report3"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* Modal đẹp hơn */
 .modal-content {
   border-radius: 10px;
@@ -50,56 +49,3 @@
 .toast-body i {
   margin-right: 8px;
 }
-=======
-/* Modal đẹp hơn */
-.modal-content {
-  border-radius: 10px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-  border: 1px #ff7300 solid;
-}
-
-.modal-header {
-  background-color: #ff7300 !important;
-  color: white;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.modal-body {
-  font-size: 18px;
-  text-align: center;
-}
-
-.modal-footer .btn-danger {
-  background-color: #ff4d4d;
-  border: none;
-  transition: 0.3s;
-}
-
-.modal-footer .btn-danger:hover {
-  background-color: #cc0000;
-}
-
-.modal-footer .btn-success {
-  background-color: #28a745;
-  border: none;
-  transition: 0.3s;
-}
-.modal-footer .btn-success:hover {
-  background-color: #106925;
-}
-
-/* Toast Styles */
-.toast-container {
-  z-index: 1050;
-}
-
-.toast {
-  font-size: 16px;
-  border-radius: 8px;
-}
-
-.toast-body i {
-  margin-right: 8px;
-}
->>>>>>> 2ebca8439f845ee34dc7a2f7af26f953bb8a182e

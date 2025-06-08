@@ -1,0 +1,149 @@
+﻿@model Volunteer_website.Models.Admin
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Admin Profile";
+    Layout = "~/Areas/Admin/Views/AdminLayout.cshtml";
+}
+
+<!-- Phần tiêu đề -->
+<div class="header-section border rounded p-4 mb-4" style="background-color: #ffffff;">
+    <h1 class="text-center my-4 heading-title">
+        <i class="mdi mdi-account-circle me-2"></i>Admin Profile
+    </h1>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="mdi mdi-check-circle me-2"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="mdi mdi-alert-circle me-2"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <!-- Header với gradient -->
+                <div class="card-header bg-gradient-primary text-white text-center p-4 rounded-top-4">
+                    <div class="position-relative d-inline-block">
+                        <img id="adminAvatar"
+                             src="@(!string.IsNullOrEmpty(Model.ImgPath) ? Model.ImgPath : "https://via.placeholder.com/150/6f42c1/ffffff?text=Admin")"
+                             alt="Admin Avatar"
+                             class="rounded-circle shadow-lg border border-3 border-white"
+                             style="width: 120px; height: 120px; object-fit: cover;">
+                    </div>
+                    <h3 class="fw-bold mt-3 mb-1">@Model.Name</h3>
+                    <p class="mb-0 opacity-75">
+                        <i class="mdi mdi-shield-account me-1"></i>System Administrator
+                    </p>
+                </div>
+
+                <!-- Thông tin chi tiết -->
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                                <div class="flex-shrink-0">
+                                    <i class="mdi mdi-account-circle text-primary" style="font-size: 24px;"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <small class="text-muted d-block">Tên đầy đủ</small>
+                                    <strong class="text-dark">@Model.Name</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                                <div class="flex-shrink-0">
+                                    <i class="mdi mdi-email text-primary" style="font-size: 24px;"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <small class="text-muted d-block">Địa chỉ Email</small>
+                                    <strong class="text-dark">@Model.Email</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="card-footer bg-transparent p-4">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-4">
+                            <a class="btn btn-success w-100 rounded-3 py-2"
+                               asp-controller="Profile"
+                               asp-action="ProfileEdit"
+                               title="Edit Profile">
+                                <i class="mdi mdi-pencil me-2"></i>
+                                <span class="d-none d-sm-inline">Cập nhật</span>
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <a class="btn btn-warning w-100 rounded-3 py-2"
+                               asp-controller="Profile"
+                               asp-action="ChangePassword"
+                               title="Change Password">
+                                <i class="mdi mdi-key me-2"></i>
+                                <span class="d-none d-sm-inline">Mật khẩu</span>
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <a asp-controller="HomeAdmin"
+                               asp-action="Index"
+                               class="btn btn-outline-secondary w-100 rounded-3 py-2"
+                               title="Back to Dashboard">
+                                <i class="mdi mdi-arrow-left me-2"></i>
+                                <span class="d-none d-sm-inline">Thống kê</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #6f42c1 0%, #007bff 100%);
+    }
+
+    .card {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        }
+
+    .btn {
+        transition: all 0.3s ease;
+    }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+</style>
+
+@section Scripts {
+    <script>
+        // Animation cho các thẻ thông tin
+        $(document).ready(function() {
+            $('.bg-light').each(function(index) {
+                $(this).css('opacity', '0').delay(index * 100).animate({
+                    opacity: 1
+                }, 500);
+            });
+        });
+    </script>
+}

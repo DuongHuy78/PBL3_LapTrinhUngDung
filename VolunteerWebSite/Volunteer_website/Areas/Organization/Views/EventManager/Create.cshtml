@@ -2,55 +2,54 @@
 @using System.Security.Claims
 @{
     var orgID = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "ORG1";
-    ViewData["Title"] = "Create Event";
+    ViewData["Title"] = "Tạo sự kiện mới";
     Layout = "~/Areas/Organization/Views/OrgLayout.cshtml";
 }
 
 <div class="container">
     <div class="edit-event-container">
-        <h2 class="form-title">Create Event</h2>
+        <h2 class="form-title">Tạo sự kiện mới</h2>
         <hr />
-      
 
-        <form method="post" asp-area="Organization" asp-action="Create" asp-route-id="@Model.EventId" enctype="multipart/form-data" novalidate>
+        <form method="post" asp-area="Organization" asp-action="Create" enctype="multipart/form-data" novalidate>
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
             <input asp-for="Status" type="hidden" value="@Model.Status" name="Status" />
 
             <div class="row mb-3">
                 <div class="col-md-3 form-group">
-                    <label asp-for="EventId" class="form-label">Event ID</label>
+                    <label asp-for="EventId" class="form-label">Mã sự kiện</label>
                     <input asp-for="EventId" class="form-control" readonly value="@Model.EventId" name="EventId" />
                     <span asp-validation-for="EventId" class="text-danger"></span>
                 </div>
                 <div class="col-md-3 form-group">
-                    <label asp-for="Name" class="form-label">Event Name</label>
+                    <label asp-for="Name" class="form-label">Tên sự kiện</label>
                     <input asp-for="Name" class="form-control" name="Name" value="@Model.Name" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="col-md-3 form-group">
-                    <label asp-for="TargetMember" class="form-label">Target Members</label>
+                    <label asp-for="TargetMember" class="form-label">Số người tham gia mục tiêu</label>
                     <input asp-for="TargetMember" class="form-control" type="number" name="TargetMember" value="@Model.TargetMember" />
                     <span asp-validation-for="TargetMember" class="text-danger"></span>
                 </div>
                 <div class="col-md-3 form-group">
-                    <label asp-for="IsActive" class="form-label">IsActive</label>
+                    <label asp-for="IsActive" class="form-label">Trạng thái hoạt động</label>
                     <select asp-for="IsActive" class="form-control form-select" name="IsActive">
-                        <option value="0" @(Model.IsActive == 0 ? "selected" : "")>Inactive</option>
-                        <option value="1" @(Model.IsActive == 1 ? "selected" : "")>Active</option>
+                        <option value="0" @(Model.IsActive == 0 ? "selected" : "")>Không hoạt động</option>
+                        <option value="1" @(Model.IsActive == 1 ? "selected" : "")>Hoạt động</option>
                     </select>
                     <span asp-validation-for="IsActive" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3 form-group">
-                    <label asp-for="OrgId" class="form-label">Organization ID</label>
+                    <label asp-for="OrgId" class="form-label">Mã tổ chức</label>
                     <input asp-for="OrgId" class="form-control" readonly value="@ViewBag.OrgId" name="OrgId" />
                     <span asp-validation-for="OrgId" class="text-danger"></span>
                 </div>
                 <div class="col-md-3 form-group">
-                    <label asp-for="TypeEventId" class="form-label">Event Type</label>
+                    <label asp-for="TypeEventId" class="form-label">Loại sự kiện</label>
                     <select class="form-control form-select" asp-for="TypeEventId" id="TypeEventSelected" name="TypeEventId" required>
-                        <option value="">-- Select Event Type --</option>
+                        <option value="">-- Chọn loại sự kiện --</option>
                         @if (ViewBag.TypeEvents != null)
                         {
                             @foreach (var item in ViewBag.TypeEvents)
@@ -62,19 +61,19 @@
                         }
                         else
                         {
-                            <option value="">No Event Types Available</option>
+                            <option value="">Không có loại sự kiện</option>
                         }
                     </select>
                     <span asp-validation-for="TypeEventId" class="text-danger"></span>
                 </div>
                 <div class="col-md-3 form-group">
-                    <label asp-for="DayBegin" class="form-label">Start Date</label>
+                    <label asp-for="DayBegin" class="form-label">Ngày bắt đầu</label>
                     <input asp-for="DayBegin" class="form-control" type="date" name="DayBegin"
                            value="@(Model.DayBegin.HasValue ? Model.DayBegin.Value.ToString("yyyy-MM-dd") : "")" />
                     <span asp-validation-for="DayBegin" class="text-danger"></span>
                 </div>
                 <div class="col-md-3 form-group">
-                    <label asp-for="DayEnd" class="form-label">End Date</label>
+                    <label asp-for="DayEnd" class="form-label">Ngày kết thúc</label>
                     <input asp-for="DayEnd" class="form-control" type="date" name="DayEnd"
                            value="@(Model.DayEnd.HasValue ? Model.DayEnd.Value.ToString("yyyy-MM-dd") : "")" />
                     <span asp-validation-for="DayEnd" class="text-danger"></span>
@@ -82,70 +81,43 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-3 form-group">
-                    <label asp-for="Location" class="form-label">Location</label>
+                    <label asp-for="Location" class="form-label">Địa điểm</label>
                     <input asp-for="Location" class="form-control" name="Location" value="@Model.Location" />
                     <span asp-validation-for="Location" class="text-danger"></span>
                 </div>
                 <div class="col-md-3 form-group">
-                    <label asp-for="TargetFunds" class="form-label">Target Funds</label>
+                    <label asp-for="TargetFunds" class="form-label">Số tiền quyên góp mục tiêu</label>
                     <input asp-for="TargetFunds" class="form-control" type="number" name="TargetFunds" value="@Model.TargetFunds" />
                     <span asp-validation-for="TargetFunds" class="text-danger"></span>
                 </div>
                 <div class="col-md-3 form-group">
-                    <label class="form-label">Main Image <small>(Optional)</small></label>
+                    <label class="form-label">Hình ảnh chính <small>(Tùy chọn)</small></label>
                     <input name="imagePath" class="form-control" type="file" id="mainImageInput" accept="image/*" />
-                    @if (!string.IsNullOrEmpty(Model.ImagePath))
-                    {
-                        <div class="mt-2">
-                            <label class="form-label">Current Main Image:</label>
-                            <div class="d-flex align-items-center">
-                                <img src="~/@Model.ImagePath" alt="Current Image" style="max-width: 100px; max-height: 100px; margin-right: 10px;" id="mainImagePreview" />
-                                <button type="button" class="btn btn-danger btn-sm" onclick="removeMainImage()">Remove</button>
-                            </div>
-                            <input type="hidden" name="existingImagePath" value="@Model.ImagePath" />
-                        </div>
-                    }
                     <div class="mt-2" id="mainImageNewPreview" style="display: none;">
-                        <label class="form-label">New Main Image Preview:</label>
-                        <img src="" alt="New Image Preview" style="max-width: 100px; max-height: 100px;" id="mainImageNewPreviewImg" />
+                        <label class="form-label">Xem trước hình ảnh chính:</label>
+                        <img src="" alt="Xem trước hình ảnh chính" style="max-width: 100px; max-height: 100px;" id="mainImageNewPreviewImg" />
                     </div>
                 </div>
                 <div class="col-md-3 form-group">
-                    <label class="form-label">Additional Images <small>(Optional)</small></label>
+                    <label class="form-label">Hình ảnh bổ sung <small>(Tùy chọn)</small></label>
                     <input name="listImg" class="form-control" type="file" multiple id="additionalImagesInput" accept="image/*" />
-                    @if (!string.IsNullOrEmpty(Model.ListImg))
-                    {
-                        <div class="mt-2">
-                            <label class="form-label">Current Additional Images:</label>
-                            <div class="d-flex flex-wrap" id="additionalImagesContainer">
-                                @foreach (var img in Model.ListImg.Split(',', StringSplitOptions.RemoveEmptyEntries))
-                                {
-                                    <div class="d-flex align-items-center mb-2 mr-2" style="margin-right: 10px;">
-                                        <img src="~/@img" alt="Additional Image" style="max-width: 100px; max-height: 100px; margin-right: 5px;" class="additional-image" />
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="removeAdditionalImage(this, '@img')">Remove</button>
-                                        <input type="hidden" name="existingListImg" value="@img" />
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
                     <div class="mt-2" id="additionalImagesNewPreview" style="display: none;">
-                        <label class="form-label">New Additional Images Preview:</label>
+                        <label class="form-label">Xem trước hình ảnh bổ sung:</label>
                         <div class="d-flex flex-wrap" id="additionalImagesNewPreviewContainer"></div>
                     </div>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-12 form-group">
-                    <label asp-for="Description" class="form-label">Description</label>
+                    <label asp-for="Description" class="form-label">Mô tả</label>
                     <textarea asp-for="Description" class="form-control" rows="5" name="Description">@Model.Description</textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
             </div>
             @Html.AntiForgeryToken()
             <div class="form-group d-flex justify-content-end gap-3 mt-4">
-                <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-action="Index" asp-area="Organization" class="btn btn-back">Cancel</a>
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-action="Index" asp-area="Organization" class="btn btn-back">Hủy</a>
             </div>
         </form>
     </div>
@@ -154,7 +126,7 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        // JavaScript để xử lý preview và xóa ảnh
+        // JavaScript để xử lý xem trước ảnh
         document.getElementById('mainImageInput').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -180,7 +152,7 @@
                 reader.onload = function (e) {
                     const img = document.createElement('img');
                     img.src = e.target.result;
-                    img.alt = 'New Additional Image';
+                    img.alt = 'Hình ảnh bổ sung mới';
                     img.style.maxWidth = '100px';
                     img.style.maxHeight = '100px';
                     img.style.marginRight = '10px';
@@ -191,36 +163,5 @@
                 reader.readAsDataURL(file);
             }
         });
-
-        function removeMainImage() {
-            const preview = document.getElementById('mainImagePreview');
-            if (preview) {
-                preview.parentElement.style.display = 'none';
-            }
-            document.getElementById('mainImageInput').value = '';
-            document.getElementById('mainImageNewPreview').style.display = 'none';
-            const existingImageInput = document.querySelector('input[name="existingImagePath"]');
-            if (existingImageInput) {
-                existingImageInput.value = '';
-            }
-        }
-
-        function removeAdditionalImage(button, imgPath) {
-            button.parentElement.remove();
-            const inputs = document.querySelectorAll('input[name="existingListImg"]');
-            const remainingImages = Array.from(inputs)
-                .map(input => input.value)
-                .filter(value => value !== imgPath && value !== '');
-            document.querySelectorAll('input[name="existingListImg"]').forEach(input => input.remove());
-            remainingImages.forEach(img => {
-                if (img) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'existingListImg';
-                    input.value = img;
-                    document.getElementById('additionalImagesContainer').appendChild(input);
-                }
-            });
-        }
     </script>
 }

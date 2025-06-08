@@ -4,7 +4,7 @@
 @using X.PagedList.Mvc.Core
 @using Volunteer_website.Models
 @{
-    ViewData["Title"] = "Registered Volunteers";
+    ViewData["Title"] = "Quản lý đăng ký tình nguyện viên";
     Layout = "~/Areas/Organization/Views/OrgLayout.cshtml";
 }
 
@@ -15,7 +15,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <div class="container-fluid">
     <div class="header-section border rounded p-4 mb-4" style="background-color: #ffffff;">
-        <h1 class="text-center my-4 heading-title">Registration Management</h1>
+        <h1 class="text-center my-4 heading-title">Quản lý đăng ký tình nguyện viên</h1>
     </div>
 
     <!-- Phần thân -->
@@ -43,7 +43,7 @@
                            name="searchValue"
                            id="searchBoxVolunteers"
                            class="form-control me-2"
-                           placeholder="Search Register.."
+                           placeholder="Tìm kiếm đăng ký..."
                            value="@ViewBag.SearchValue" />
 
                     <button type="submit" class="btn btn-primary">
@@ -57,12 +57,12 @@
             <table class="table table-bordered table-hover event-table shadow-sm">
                 <thead class="table-dark">
                     <tr>
-                        <th>Register ID</th>
-                        <th>Volunteer Name</th>
-                        <th>Event Name</th>
-                        <th>Registation Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>Mã đăng ký</th>
+                        <th>Tên tình nguyện viên</th>
+                        <th>Tên sự kiện</th>
+                        <th>Ngày đăng ký</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody id="eventTable">
@@ -73,13 +73,13 @@
                             <td>
                                 @{
                                     var volunteer = ViewBag.Volunteers?[item.VolunteerId] as Volunteer;
-                                    @volunteer?.Name
+                                    @(volunteer?.Name ?? "Không có")
                                 }
                             </td>
                             <td>
                                 @{
                                     var eventItem = ViewBag.Events[item.EventId] as Event;
-                                    @eventItem?.Name
+                                    @(eventItem?.Name ?? "Không có")
                                 }
                             </td>
                             <td>
@@ -89,7 +89,7 @@
                                 }
                                 else
                                 {
-                                    @:N/A
+                                    @:Không có
                                 }
                             </td>
                             <td>
@@ -97,7 +97,9 @@
                                 @(item.Status == "PENDING" ? "bg-warning" :
                                   item.Status == "ACCEPTED" ? "bg-success" :
                                   "bg-danger") text-white fw-semibold text-uppercase">
-                                    @item.Status
+                                    @(item.Status == "PENDING" ? "ĐANG CHỜ" :
+                                        item.Status == "ACCEPTED" ? "ĐÃ DUYỆT" :
+                                        "BỊ TỪ CHỐI")
                                 </span>
                             </td>
 
@@ -128,7 +130,7 @@
                             <div class="modal-content">
                                 <div class="modal-header bg-primary text-white">
                                     <h5 class="modal-title fs-4" id="volunteerDetailsModalLabel">
-                                        <i class="bi bi-person-badge me-2"></i>VOLUNTEER DETAILS
+                                        <i class="bi bi-person-badge me-2"></i>Chi tiết tình nguyện viên
                                     </h5>
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
@@ -137,10 +139,10 @@
                                         <!-- Volunteer Image Column -->
                                         <div class="col-md-4 text-center mb-3 mb-md-0">
                                             <div id="volunteerImageContainer" class="border rounded p-2 bg-light">
-                                                <img id="volunteerImage" src="https://via.placeholder.com/200" alt="Volunteer Photo"
+                                                <img id="volunteerImage" src="https://via.placeholder.com/200" alt="Ảnh tình nguyện viên"
                                                      class="img-fluid rounded" style="max-height: 200px;">
                                                 <div class="mt-2">
-                                                    <span id="volunteerId" class="badge bg-info text-dark">ID: N/A</span>
+                                                    <span id="volunteerId" class="badge bg-info text-dark">Mã: Không có</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -149,28 +151,28 @@
                                         <div class="col-md-8">
                                             <div class="volunteer-details-grid">
                                                 <div class="detail-item">
-                                                    <span class="detail-label"><i class="bi bi-person-fill me-2"></i>Name:</span>
-                                                    <span id="volunteerName" class="detail-value">N/A</span>
+                                                    <span class="detail-label"><i class="bi bi-person-fill me-2"></i>Họ và tên:</span>
+                                                    <span id="volunteerName" class="detail-value">Không có</span>
                                                 </div>
                                                 <div class="detail-item">
                                                     <span class="detail-label"><i class="bi bi-envelope-fill me-2"></i>Email:</span>
-                                                    <span id="volunteerEmail" class="detail-value">N/A</span>
+                                                    <span id="volunteerEmail" class="detail-value">Không có</span>
                                                 </div>
                                                 <div class="detail-item">
-                                                    <span class="detail-label"><i class="bi bi-telephone-fill me-2"></i>Phone:</span>
-                                                    <span id="volunteerPhone" class="detail-value">N/A</span>
+                                                    <span class="detail-label"><i class="bi bi-telephone-fill me-2"></i>Số điện thoại:</span>
+                                                    <span id="volunteerPhone" class="detail-value">Không có</span>
                                                 </div>
                                                 <div class="detail-item">
-                                                    <span class="detail-label"><i class="bi bi-calendar-event me-2"></i>Date of Birth:</span>
-                                                    <span id="volunteerDob" class="detail-value">N/A</span>
+                                                    <span class="detail-label"><i class="bi bi-calendar-event me-2"></i>Ngày sinh:</span>
+                                                    <span id="volunteerDob" class="detail-value">Không có</span>
                                                 </div>
                                                 <div class="detail-item">
-                                                    <span class="detail-label"><i class="bi bi-gender-ambiguous me-2"></i>Gender:</span>
-                                                    <span id="volunteerGender" class="detail-value">N/A</span>
+                                                    <span class="detail-label"><i class="bi bi-gender-ambiguous me-2"></i>Giới tính:</span>
+                                                    <span id="volunteerGender" class="detail-value">Không có</span>
                                                 </div>
                                                 <div class="detail-item">
-                                                    <span class="detail-label"><i class="bi bi-geo-alt-fill me-2"></i>Address:</span>
-                                                    <span id="volunteerAddress" class="detail-value">N/A</span>
+                                                    <span class="detail-label"><i class="bi bi-geo-alt-fill me-2"></i>Địa chỉ:</span>
+                                                    <span id="volunteerAddress" class="detail-value">Không có</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -179,7 +181,6 @@
                             </div>
                         </div>
                     </div>
-
                 </tbody>
             </table>
         </div>
@@ -211,92 +212,92 @@
 </div>
 @section Scripts {
     <script>
-
-           // Hàm viewVolunteerDetails để hiển thị thông tin tình nguyện viên qua AJAX
-           function showVolunteerDetails(volunteerId) {
+        // Hàm showVolunteerDetails để hiển thị thông tin tình nguyện viên qua AJAX
+        function showVolunteerDetails(volunteerId) {
             $.ajax({
                 url: '/Organization/RegistrationManager/GetVolunteerDetails?id=' + volunteerId,
                 type: 'GET',
                 success: function (volunteer) {
-                    console.log('Volunteer data:', volunteer); // Thêm log để kiểm tra dữ liệu
+                    console.log('Dữ liệu tình nguyện viên:', volunteer); // Thêm log để kiểm tra dữ liệu
                     if (volunteer) {
                         // Cập nhật thông tin vào modal
-                        $('#volunteerId').text('ID: ' + (volunteer.volunteerId || 'N/A'));
-                        $('#volunteerName').text(volunteer.name || 'N/A');
-                        $('#volunteerEmail').text(volunteer.email || 'N/A');
-                        $('#volunteerPhone').text(volunteer.phoneNumber || 'N/A');
-                        $('#volunteerDob').text(volunteer.dateOfBirth ? new Date(volunteer.dateOfBirth).toLocaleDateString() : 'N/A');
-                        $('#volunteerGender').text(volunteer.gender || 'N/A');
-                        $('#volunteerAddress').text(volunteer.address || 'N/A');
-                        $('#volunteerImage').attr('src', volunteer.imagePath ? `~/images/${volunteer.imagePath}` : 'https://via.placeholder.com/200');
+                        $('#volunteerId').text('Mã: ' + (volunteer.volunteerId || 'Không có'));
+                        $('#volunteerName').text(volunteer.name || 'Không có');
+                        $('#volunteerEmail').text(volunteer.email || 'Không có');
+                        $('#volunteerPhone').text(volunteer.phoneNumber || 'Không có');
+                        $('#volunteerDob').text(volunteer.dateOfBirth ? new Date(volunteer.dateOfBirth).toLocaleDateString('vi-VN') : 'Không có');
+                        $('#volunteerGender').text(volunteer.gender || 'Không có');
+                        $('#volunteerAddress').text(volunteer.address || 'Không có');
+                        $('#volunteerImage').attr('src', volunteer.imagePath ? `/images/${volunteer.imagePath}` : 'https://via.placeholder.com/200');
 
                         // Hiển thị modal
                         $('#volunteerDetailsModal').modal('show');
                     } else {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Error',
-                            text: 'Volunteer not found!'
+                            title: 'Lỗi',
+                            text: 'Không tìm thấy tình nguyện viên!'
                         });
                     }
                 },
                 error: function (xhr, status, error) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
-                        text: 'Failed to load volunteer details: ' + error
+                        title: 'Lỗi',
+                        text: 'Không thể tải thông tin tình nguyện viên: ' + error
                     });
                 }
             });
         }
-                function confirmAction(regId, status) {
-                    const actionText = status === "ACCEPTED" ? "approve" : "reject";
-                    const actionColor = status === "ACCEPTED" ? "#28a745" : "#dc3545";
 
-                    Swal.fire({
-                        title: `Are you sure to ${actionText} this registration?`,
-                        text: "This action cannot be undone!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: actionColor,
-                        cancelButtonColor: "#6c757d",
-                        confirmButtonText: `Yes, ${actionText} it!`,
-                        cancelButtonText: "Cancel"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            updateRegistrationStatus(regId, status);
-                        }
-                    });
+        function confirmAction(regId, status) {
+            const actionText = status === "ACCEPTED" ? "duyệt" : "từ chối";
+            const actionColor = status === "ACCEPTED" ? "#28a745" : "#dc3545";
+
+            Swal.fire({
+                title: `Bạn có chắc muốn ${actionText} đăng ký này?`,
+                text: "Hành động này không thể hoàn tác!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: actionColor,
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: `Có, ${actionText}!`,
+                cancelButtonText: "Hủy"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateRegistrationStatus(regId, status);
                 }
+            });
+        }
 
-                function updateRegistrationStatus(regId, status) {
-                    if (!regId || !["ACCEPTED", "REJECTED"].includes(status)) {
-                        Swal.fire("Lỗi", "Dữ liệu không hợp lệ", "error");
-                        return;
+        function updateRegistrationStatus(regId, status) {
+            if (!regId || !["ACCEPTED", "REJECTED"].includes(status)) {
+                Swal.fire("Lỗi", "Dữ liệu không hợp lệ", "error");
+                return;
+            }
+
+            const url = `/Organization/RegistrationManager/Update?regId=${encodeURIComponent(regId)}&status=${status}`;
+
+            fetch(url)
+                .then((response) => {
+                    if (!response.ok) throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data.success) {
+                        Swal.fire(
+                            "Thành công",
+                            "Cập nhật trạng thái thành công",
+                            "success"
+                        ).then(() => window.location.reload());
+                    } else {
+                        throw new Error(data.message || "Cập nhật thất bại");
                     }
-
-                    const url = `/Organization/RegistrationManager/Update?regId=${encodeURIComponent(regId)}&status=${status}`;
-
-                    fetch(url)
-                        .then((response) => {
-                            if (!response.ok) throw new Error(`Lỗi HTTP! Status: ${response.status}`);
-                            return response.json();
-                        })
-                        .then((data) => {
-                            if (data.success) {
-                                Swal.fire(
-                                    "Thành công",
-                                    "Cập nhật trạng thái thành công",
-                                    "success"
-                                ).then(() => window.location.reload());
-                            } else {
-                                throw new Error(data.message || "Cập nhật thất bại");
-                            }
-                        })
-                        .catch((error) => {
-                            console.error("Chi tiết lỗi:", error);
-                            Swal.fire("Lỗi", error.message || "Có lỗi xảy ra khi cập nhật", "error");
-                        });
-                }
+                })
+                .catch((error) => {
+                    console.error("Chi tiết lỗi:", error);
+                    Swal.fire("Lỗi", error.message || "Có lỗi xảy ra khi cập nhật", "error");
+                });
+        }
     </script>
 }

@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <img src="@Model.ImagePath" alt="@Model.Name" class="banner-img" />
+                <img src="~/@Model.ImagePath" alt="@Model.Name" class="banner-img" />
               
                 @if (!string.IsNullOrEmpty(Model.ListImg))
                 {
@@ -22,7 +22,7 @@
                             @for (int i = 0; i < imgs.Length; i++)
                             {
                                 <div class="carousel-item @(i == 0 ? "active" : "")">
-                                    <img src="@imgs[i]" class="d-block" alt="Image @(i + 1)" />
+                                    <img src="~/@imgs[i]" class="d-block" alt="Image @(i + 1)" />
                                 </div>
                             }
                         </div>
@@ -40,10 +40,7 @@
             <div class="col-md-6">
                 <div class="donation-card shadow-sm p-4 rounded-4">
                     <h2 class="text-center text-danger fw-bold">@Model.Name</h2>
-                    <div class="d-flex align-items-center mb-3">
-                        <img src="~/images/person_7.jpg" alt="@orgName" width="50" class="rounded-circle me-3 shadow-sm" />
-                        <span class="text-primary fw-semibold fs-5">@orgName</span>
-                    </div>
+                   
 
                     <p class="mb-2">
                         <i class="fa-solid fa-calendar-day text-secondary me-2"></i>
@@ -64,16 +61,7 @@
                         <strong>Số tiền cần ủng hộ:</strong> @Model.TargetFunds
                     </p>
 
-                    <div class="progress mb-2" style="height: 20px;">
-                        @{
-                            var progress = ViewBag.RegisteredCount != null && Model.TargetMember > 0
-                            ? ((double)ViewBag.RegisteredCount / Model.TargetMember) * 100
-                            : 0;
-                        }
-                        <div class="progress-bar bg-success" role="progressbar" style="width: @progress%;" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">
-                            @($"{progress:F0}%")
-                        </div>
-                    </div>
+                    
                     <p class="mb-0">
                         <i class="fa-solid fa-user-check text-success me-2"></i>
                         <strong>@ViewBag.RegisteredCount người đã tham gia</strong>

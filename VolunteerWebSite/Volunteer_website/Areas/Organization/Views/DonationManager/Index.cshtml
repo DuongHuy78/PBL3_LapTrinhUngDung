@@ -4,7 +4,7 @@
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @{
-    ViewData["Title"] = "GetDonatedVolunteer";
+    ViewData["Title"] = "Quản lý quyên góp";
     Layout = "~/Areas/Organization/Views/OrgLayout.cshtml";
 }
 <!-- SweetAlert Confirmation Modal -->
@@ -17,7 +17,7 @@
 <div class="container-fluid">
     <!-- Phần tiêu đề -->
     <div class="header-section border rounded p-4 mb-4" style="background-color: #ffffff;">
-        <h1 class="text-center my-4 heading-title">Donation Management</h1>
+        <h1 class="text-center my-4 heading-title">Quản lý quyên góp</h1>
     </div>
 
     <!-- Phần thân -->
@@ -38,7 +38,7 @@
             </div>
         }
 
-        <!-- Search Bar -->
+        <!-- Thanh tìm kiếm -->
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
             <div class="search-container">
                 <form asp-action="Index" method="get" class="d-flex align-items-center">
@@ -46,7 +46,7 @@
                            name="searchValue"
                            id="searchBoxVolunteers"
                            class="form-control me-2"
-                           placeholder="Search Event.."
+                           placeholder="Tìm kiếm sự kiện..."
                            value="@ViewBag.SearchValue" />
 
                     <button type="submit" class="btn btn-primary">
@@ -56,18 +56,18 @@
             </div>
         </div>
 
-        <!-- Volunteer Registration Table -->
+        <!-- Bảng quyên góp -->
         <div class="table-responsive">
             <table class="table table-bordered table-hover event-table shadow-sm">
                 <thead class="table-dark">
                     <tr>
-                        <th>Donation ID</th>
-                        <th>Volunteer Name</th>
-                        <th>Event Name</th>
-                        <th>Amount</th>
-                        <th>Message</th>
-                        <th>Donation Date</th>
-                        <th>Action</th> <!-- Cột Action -->
+                        <th>Mã quyên góp</th>
+                        <th>Tên tình nguyện viên</th>
+                        <th>Tên sự kiện</th>
+                        <th>Số tiền</th>
+                        <th>Tin nhắn</th>
+                        <th>Ngày quyên góp</th>
+                        <th>Thao tác</th> <!-- Cột Thao tác -->
                     </tr>
                 </thead>
                 <tbody id="eventTable">
@@ -78,13 +78,13 @@
                             <td>
                                 @{
                                     var volunteer = ViewBag.Volunteers?[item.VolunteerId] as Volunteer;
-                                    <span class="volunteer-name" data-volunteer-id="@item.VolunteerId">@(volunteer?.Name ?? "N/A")</span>
+                                    <span class="volunteer-name" data-volunteer-id="@item.VolunteerId">@(volunteer?.Name ?? "Không có")</span>
                                 }
                             </td>
                             <td>
                                 @{
                                     var eventItem = ViewBag.Events[item.EventId] as Event;
-                                    @eventItem?.Name
+                                    @(eventItem?.Name ?? "Không có")
                                 }
                             </td>
                             <td>@item.Amount</td>
@@ -96,14 +96,14 @@
                                 }
                                 else
                                 {
-                                    @:N/A
+                                    @:Không có
                                 }
                             </td>
                             <td>
                                 <button class="btn btn-info btn-sm view-volunteer-details"
                                         data-volunteer-id="@item.VolunteerId"
                                         onclick="viewVolunteerDetails('@item.VolunteerId')">
-                                    <i class="bi bi-eye me-1"></i> View Details
+                                    <i class="fas fa-eye"></i>
                                 </button>
                             </td>
                         </tr>
@@ -112,55 +112,55 @@
             </table>
         </div>
 
-        <!-- Volunteer Details Modal - Redesigned -->
+        <!-- Modal chi tiết tình nguyện viên -->
         <div class="modal fade" id="volunteerDetailsModal" tabindex="-1" aria-labelledby="volunteerDetailsModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title fs-4" id="volunteerDetailsModalLabel">
-                            <i class="bi bi-person-badge me-2"></i>VOLUNTEER DETAILS
+                            <i class="bi bi-person-badge me-2"></i>CHI TIẾT TÌNH NGUYỆN VIÊN
                         </h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-4">
                         <div class="row">
-                            <!-- Volunteer Image Column -->
+                            <!-- Cột ảnh tình nguyện viên -->
                             <div class="col-md-4 text-center mb-3 mb-md-0">
                                 <div id="volunteerImageContainer" class="border rounded p-2 bg-light">
-                                    <img id="volunteerImage" src="https://via.placeholder.com/200" alt="Volunteer Photo"
+                                    <img id="volunteerImage" src="https://via.placeholder.com/200" alt="Ảnh tình nguyện viên"
                                          class="img-fluid rounded" style="max-height: 200px;">
                                     <div class="mt-2">
-                                        <span id="volunteerId" class="badge bg-info text-dark">ID: N/A</span>
+                                        <span id="volunteerId" class="badge bg-info text-dark">Mã: Không có</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Volunteer Details Column -->
+                            <!-- Cột chi tiết tình nguyện viên -->
                             <div class="col-md-8">
                                 <div class="volunteer-details-grid">
                                     <div class="detail-item">
-                                        <span class="detail-label"><i class="bi bi-person-fill me-2"></i>Name:</span>
-                                        <span id="volunteerName" class="detail-value">N/A</span>
+                                        <span class="detail-label"><i class="bi bi-person-fill me-2"></i>Họ tên:</span>
+                                        <span id="volunteerName" class="detail-value">Không có</span>
                                     </div>
                                     <div class="detail-item">
                                         <span class="detail-label"><i class="bi bi-envelope-fill me-2"></i>Email:</span>
-                                        <span id="volunteerEmail" class="detail-value">N/A</span>
+                                        <span id="volunteerEmail" class="detail-value">Không có</span>
                                     </div>
                                     <div class="detail-item">
-                                        <span class="detail-label"><i class="bi bi-telephone-fill me-2"></i>Phone:</span>
-                                        <span id="volunteerPhone" class="detail-value">N/A</span>
+                                        <span class="detail-label"><i class="bi bi-telephone-fill me-2"></i>Điện thoại:</span>
+                                        <span id="volunteerPhone" class="detail-value">Không có</span>
                                     </div>
                                     <div class="detail-item">
-                                        <span class="detail-label"><i class="bi bi-calendar-event me-2"></i>Date of Birth:</span>
-                                        <span id="volunteerDob" class="detail-value">N/A</span>
+                                        <span class="detail-label"><i class="bi bi-calendar-event me-2"></i>Ngày sinh:</span>
+                                        <span id="volunteerDob" class="detail-value">Không có</span>
                                     </div>
                                     <div class="detail-item">
-                                        <span class="detail-label"><i class="bi bi-gender-ambiguous me-2"></i>Gender:</span>
-                                        <span id="volunteerGender" class="detail-value">N/A</span>
+                                        <span class="detail-label"><i class="bi bi-gender-ambiguous me-2"></i>Giới tính:</span>
+                                        <span id="volunteerName" class="detail-value">Không có</span>
                                     </div>
                                     <div class="detail-item">
-                                        <span class="detail-label"><i class="bi bi-geo-alt-fill me-2"></i>Address:</span>
-                                        <span id="volunteerAddress" class="detail-value">N/A</span>
+                                        <span class="detail-label"><i class="bi bi-geo-alt-fill me-2"></i>Địa chỉ:</span>
+                                        <span id="volunteerAddress" class="detail-value">Không có</span>
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +170,7 @@
             </div>
         </div>
 
-        <!-- Pagination -->
+        <!-- Phân trang -->
         <div class="pagination d-flex justify-content-center mt-4">
             @if (Model.HasPreviousPage)
             {
@@ -199,40 +199,40 @@
 
 <script>
     // Hàm viewVolunteerDetails để hiển thị thông tin tình nguyện viên qua AJAX
-   function viewVolunteerDetails(volunteerId) {
-    $.ajax({
-        url: '/Organization/DonationManager/GetVolunteerDetails?id=' + volunteerId,
-        type: 'GET',
-        success: function (volunteer) {
-            console.log('Volunteer data:', volunteer); // Thêm log để kiểm tra dữ liệu
-            if (volunteer) {
-                // Cập nhật thông tin vào modal
-                $('#volunteerId').text('ID: ' + (volunteer.volunteerId || 'N/A'));
-                $('#volunteerName').text(volunteer.name || 'N/A');
-                $('#volunteerEmail').text(volunteer.email || 'N/A');
-                $('#volunteerPhone').text(volunteer.phoneNumber || 'N/A');
-                $('#volunteerDob').text(volunteer.dateOfBirth ? new Date(volunteer.dateOfBirth).toLocaleDateString() : 'N/A');
-                $('#volunteerGender').text(volunteer.gender || 'N/A');
-                $('#volunteerAddress').text(volunteer.address || 'N/A');
-                $('#volunteerImage').attr('src', volunteer.imagePath ? `~/images/${volunteer.imagePath}` : 'https://via.placeholder.com/200');
+    function viewVolunteerDetails(volunteerId) {
+        $.ajax({
+            url: '/Organization/DonationManager/GetVolunteerDetails?id=' + volunteerId,
+            type: 'GET',
+            success: function (volunteer) {
+                console.log('Dữ liệu tình nguyện viên:', volunteer); // Thêm log để kiểm tra dữ liệu
+                if (volunteer) {
+                    // Cập nhật thông tin vào modal
+                    $('#volunteerId').text('Mã: ' + (volunteer.volunteerId || 'Không có'));
+                    $('#volunteerName').text(volunteer.name || 'Không có');
+                    $('#volunteerEmail').text(volunteer.email || 'Không có');
+                    $('#volunteerPhone').text(volunteer.phoneNumber || 'Không có');
+                    $('#volunteerDob').text(volunteer.dateOfBirth ? new Date(volunteer.dateOfBirth).toLocaleDateString('vi-VN') : 'Không có');
+                    $('#volunteerGender').text(volunteer.gender || 'Không có');
+                    $('#volunteerAddress').text(volunteer.address || 'Không có');
+                    $('#volunteerImage').attr('src', volunteer.imagePath ? `~/images/${volunteer.imagePath}` : 'https://via.placeholder.com/200');
 
-                // Hiển thị modal
-                $('#volunteerDetailsModal').modal('show');
-            } else {
+                    // Hiển thị modal
+                    $('#volunteerDetailsModal').modal('show');
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Không tìm thấy tình nguyện viên!'
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    text: 'Volunteer not found!'
+                    title: 'Lỗi',
+                    text: 'Không thể tải chi tiết tình nguyện viên: ' + error
                 });
             }
-        },
-        error: function (xhr, status, error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Failed to load volunteer details: ' + error
-            });
-        }
-    });
-}
+        });
+    }
 </script>

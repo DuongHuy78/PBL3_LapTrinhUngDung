@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <!-- Header -->
     <div class="header-section border rounded p-4 mb-4" style="background-color: #ffffff;">
-        <h1 class="text-center my-4 heading-title">DashBoard</h1>
+        <h1 class="text-center my-4 heading-title">Thống kê tổng quát</h1>
     </div>
 
     <!-- Overview Statistics -->
@@ -115,19 +115,19 @@
         <!-- Charts -->
         <div class="row g-4">
             <div class="revenue-summary shadow-sm p-4 bg-white rounded mb-4">
-                <h3>Tổng số lượt đăng kí : @ViewBag.TotalRegistrationsByDate </h3>
+                <h3>Tổng số lượt đăng ký: @ViewBag.TotalRegistrationsByDate</h3>
             </div>
-            <!-- Chart 1: Số lượt đăng kí theo thời gian -->
+            <!-- Chart 1: Số lượt đăng ký theo thời gian -->
             <div class="col-lg-6">
                 <div class="revenue-charts shadow-sm p-4 bg-white rounded mb-4">
-                    <h3>Số lượt đăng kí theo thời gian</h3>
+                    <h3>Số lượt đăng ký theo thời gian</h3>
                     <canvas id="registrationOverTimeChart" width="400" height="150"></canvas>
                 </div>
             </div>
-            <!-- Chart 2: Số lượt đăng kí theo sự kiện -->
+            <!-- Chart 2: Số lượt đăng ký theo sự kiện -->
             <div class="col-lg-6">
                 <div class="revenue-charts shadow-sm p-4 bg-white rounded mb-4">
-                    <h3>Số lượt đăng kí theo sự kiện</h3>
+                    <h3>Số lượt đăng ký theo sự kiện</h3>
                     <canvas id="registrationByEventChart" width="400" height="150"></canvas>
                 </div>
             </div>
@@ -135,7 +135,7 @@
 
         <div class="row g-4">
             <div class="revenue-summary shadow-sm p-4 bg-white rounded mb-4">
-                <h3>Tổng số tiền ủng hộ :  @ViewBag.TotalDonationByDate  </h3>
+                <h3>Tổng số tiền ủng hộ: @ViewBag.TotalDonationByDate</h3>
             </div>
             <!-- Chart 3: Số tiền ủng hộ theo thời gian -->
             <div class="col-lg-6">
@@ -194,7 +194,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 <style>
     .bg-teal {
         background-color: #20c997 !important;
@@ -289,6 +289,29 @@
         const donationByEventLabels = @Html.Raw(Json.Serialize(ViewBag.DonationByEventStatistics?.Labels ?? new string[0]));
         const donationByEventData = @Html.Raw(Json.Serialize(ViewBag.DonationByEventStatistics?.Data ?? new decimal[0]));
 
+        // Mảng màu định sẵn cho các sự kiện
+        const colorPalette = [
+            'rgba(75, 192, 192, 0.6)',  // Teal
+            'rgba(255, 99, 132, 0.6)',  // Red
+            'rgba(54, 162, 235, 0.6)',  // Blue
+            'rgba(255, 206, 86, 0.6)',  // Yellow
+            'rgba(153, 102, 255, 0.6)', // Purple
+            'rgba(255, 159, 64, 0.6)',  // Orange
+            'rgba(46, 204, 113, 0.6)',  // Green
+            'rgba(231, 76, 60, 0.6)',   // Dark Red
+            'rgba(52, 152, 219, 0.6)',  // Dark Blue
+            'rgba(241, 196, 15, 0.6)'   // Dark Yellow
+        ];
+
+        // Hàm tạo mảng màu cho biểu đồ dạng cột
+        function getColors(labels, baseColor, isBackground = true) {
+            const colors = labels.map((_, index) => {
+                const color = colorPalette[index % colorPalette.length];
+                return isBackground ? color : color.replace('0.6', '1');
+            });
+            return colors;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             function createChart(canvasId, chartType, labels, data, label, yAxisTitle, colors = {}) {
                 const canvas = document.getElementById(canvasId);
@@ -306,12 +329,12 @@
                             datasets: [{
                                 label: label,
                                 data: data,
-                                borderColor: colors.borderColor || 'rgba(75, 192, 192, 1)',
-                                backgroundColor: colors.backgroundColor || 'rgba(75, 192, 192, 0.2)',
-                                tension: 0.3,
+                                borderColor: chartType === 'bar' ? getColors(labels, colors.borderColor, false) : (colors.borderColor || 'rgba(75, 192, 192, 1)'),
+                                backgroundColor: chartType === 'bar' ? getColors(labels, colors.backgroundColor, true) : (colors.backgroundColor || 'rgba(75, 192, 192, 0.2)'),
+                                tension: chartType === 'line' ? 0.3 : 0,
                                 fill: chartType === 'line',
                                 borderWidth: 2,
-                                pointRadius: 3
+                                pointRadius: chartType === 'line' ? 3 : 0
                             }]
                         },
                         options: {
@@ -345,7 +368,7 @@
                 registrationLabels,
                 registrationData,
                 'Số lượt đăng ký',
-                'Số lượt đăng kí (Người)',
+                'Số lượt đăng ký (Người)',
                 { borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' }
             );
 
@@ -365,7 +388,7 @@
                 registrationByEventLabels,
                 registrationByEventData,
                 'Số lượt đăng ký',
-                'Số lượt đăng kí (Người)',
+                'Số lượt đăng ký (Người)',
                 { borderColor: 'rgba(153, 102, 255, 1)', backgroundColor: 'rgba(153, 102, 255, 0.2)' }
             );
 

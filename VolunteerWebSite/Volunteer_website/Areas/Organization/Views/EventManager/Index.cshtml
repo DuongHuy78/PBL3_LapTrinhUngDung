@@ -1,221 +1,182 @@
-﻿@* @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers *@
-@* @model X.PagedList.IPagedList<Volunteer_website.Models.Event> *@
-@* @using X.PagedList.Mvc.Core *@
-@* @using Volunteer_website.Models *@
-@* @{ *@
-@*     ViewData["Title"] = "Index"; *@
-@*     Layout = "~/Areas/Organization/Views/OrgLayout.cshtml"; *@
-@* } *@
-@* @Html.AntiForgeryToken() *@
-@* <div class="container-fluid"> *@
-@*     <div class="header-section border rounded p-4 mb-4" style="background-color: #ffffff;"> *@
-@*         <h1 class="text-center my-4 heading-title">Event Management</h1> *@
-@*     </div> *@
-@*     <div class="body-section border rounded p-4" style="background-color: #ffffff;"> *@
-@*         <!-- Search Bar and Create Button --> *@
-@*         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap"> *@
-@*             <div class="search-container"> *@
-@*                 <form asp-action="Index" method="get" class="d-flex align-items-center"> *@
-@*                     <input type="text" *@
-@*                            name="searchValue" *@
-@*                            id="searchBoxVolunteers" *@
-@*                            class="form-control me-2" *@
-@*                            placeholder="Search Event.." *@
-@*                            value="@ViewBag.SearchValue" /> *@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model X.PagedList.IPagedList<Volunteer_website.Models.Event>
+@using X.PagedList.Mvc.Core
+@using Volunteer_website.Models
 
-@*                     <button type="submit" class="btn btn-primary"> *@
-@*                         <i class="fas fa-search"></i> *@
-@*                     </button> *@
-@*                 </form> *@
-@*             </div> *@
+@{
+    ViewData["Title"] = "Quản lý sự kiện";
+    Layout = "~/Areas/Organization/Views/OrgLayout.cshtml";
+}
+@Html.AntiForgeryToken()
+<div class="container-fluid">
+    <div class="header-section border rounded p-4 mb-4" style="background-color: #ffffff;">
+        <h1 class="text-center my-4 heading-title">Quản lý sự kiện</h1>
+    </div>
+    <div class="body-section border rounded p-4" style="background-color: #ffffff;">
+        <!-- Thanh tìm kiếm và nút tạo sự kiện -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <div class="search-container">
+                <form asp-action="Index" method="get" class="d-flex align-items-center">
+                    <input type="text"
+                           name="searchValue"
+                           id="searchBoxVolunteers"
+                           class="form-control me-2"
+                           placeholder="Tìm kiếm sự kiện..."
+                           value="@ViewBag.SearchValue" />
 
-@*             <a asp-area="Organization" asp-controller="EventManager" asp-action="Create" class="btn btn-primary create-btn"><i class="fa-solid fa-plus"></i> Create Event</a> *@
-@*         </div> *@
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
 
-@*         <!-- Event List Table --> *@
-@*         <div class="table-responsive"> *@
-@*             <table class="table table-bordered table-hover event-table shadow-sm"> *@
-@*                 <thead class="table-dark"> *@
-@*                     <tr> *@
-@*                         <th>Event ID</th> *@
-@*                         <th>Event Name</th> *@
-@*                         <th>Date</th> *@
-@*                         <th>Location</th> *@
-@*                         <th>Status</th> *@
-@*                         <th>Actions</th> *@
-@*                     </tr> *@
-@*                 </thead> *@
-@*                 <tbody id="eventTable"> *@
-@*                     @foreach (var item in Model) *@
-@*                     { *@
-@*                         var dayBegin = item.DayBegin?.ToString("dd/MM/yyyy") ?? "N/A"; *@
-@*                         var dayEnd = item.DayEnd?.ToString("dd/MM/yyyy") ?? "N/A"; *@
-@*                         <tr> *@
-@*                             <td>@item.EventId</td> *@
-@*                             <td>@item.Name</td> *@
-@*                             <td>@dayBegin - @dayEnd</td> *@
-@*                             <td>@item.Location</td> *@
-@*                             <td> *@
-@*                                 <span class="badge status-badge *@
-@*                                 @(item.Status == "PENDING" ? "bg-warning" : *@
-@*                                 item.Status == "ACCEPTED" ? "bg-success" : *@
-@*                                  "bg-danger") text-white fw-semibold text-uppercase"> *@
-@*                                     @(item.Status == "PENDING" ? "PENDING" : *@
-@*                                         item.Status == "ACCEPTED" ? "ACCEPTED" : *@
-@*                                         "REJECTED") *@
-@*                                 </span> *@
-@*                             </td> *@
+            <a asp-area="Organization" asp-controller="EventManager" asp-action="Create" class="btn btn-primary create-btn">
+                <i class="fa-solid fa-plus"></i> Tạo sự kiện mới
+            </a>
+        </div>
 
+        <!-- Bảng danh sách sự kiện -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover event-table shadow-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Mã sự kiện</th>
+                        <th>Tên sự kiện</th>
+                        <th>Thời gian</th>
+                        <th>Địa điểm</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="eventTable">
+                    @foreach (var item in Model)
+                    {
+                        var dayBegin = item.DayBegin?.ToString("dd/MM/yyyy") ?? "Không có";
+                        var dayEnd = item.DayEnd?.ToString("dd/MM/yyyy") ?? "Không có";
+                        <tr>
+                            <td>@item.EventId</td>
+                            <td>@item.Name</td>
+                            <td>@dayBegin - @dayEnd</td>
+                            <td>@item.Location</td>
+                            <td>
+                                <span class="badge status-badge
+                                    @(item.Status == "PENDING" ? "bg-warning" :
+                                      item.Status == "ACCEPTED" ? "bg-success" :
+                                      "bg-danger") text-white fw-semibold text-uppercase">
+                                    @(item.Status == "PENDING" ? "ĐANG CHỜ" :
+                                        item.Status == "ACCEPTED" ? "ĐÃ DUYỆT" :
+                                        "BỊ TỪ CHỐI")
+                                </span>
+                            </td>
+                            <td class="action_btn">
+                                <a asp-area="Organization" asp-controller="EventManager" asp-action="EditEvent" asp-route-id="@item.EventId" class="btn btn-warning btn-sm action-btn">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
 
-@*                             <td class="action_btn"> *@
-@*                                 <a asp-area="Organization" asp-controller="EventManager" asp-action="EditEvent" asp-route-id="@item.EventId" class="btn btn-warning btn-sm action-btn"> *@
-@*                                     <i class="fa-solid fa-pen-to-square"></i> *@
-@*                                 </a> *@
+                                <a asp-controller="EventManager" asp-action="EventDetails" asp-route-id="@item.EventId" class="btn btn-info btn-sm view-event-detail">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
 
-@*                                 <a   asp-controller="EventManager" asp-action="EventDetails" asp-route-id="@item.EventId"   class="btn btn-info btn-sm view-event-detail"> *@
-@*                                     <i class="fa-solid fa-eye"></i> *@
-@*                                 </a> *@
+                                <button onclick="confirmDelete('@item.EventId')" class="btn btn-danger btn-sm action-btn">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
 
-@*                                 <button onclick="confirmDelete('@item.EventId')" class="btn btn-danger btn-sm action-btn"> *@
-@*                                     <i class="fa-solid fa-trash"></i> *@
-@*                                 </button> *@
+                                @if (TempData["DeleteMessage"] != null)
+                                {
+                                    <script>
+                                        Swal.fire({
+                                            icon: '@TempData["DeleteStatus"]' === 'success' ? 'success' : 'error',
+                                            title: '@TempData["DeleteMessage"]',
+                                            showConfirmButton: true,
+                                            timer: 2000
+                                        }).then(() => {
+                                            window.location.reload();
+                                        });
+                                    </script>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-@*                                 <!-- Hiển thị thông báo nếu có TempData --> *@
-@*                                 @if (TempData["DeleteMessage"] != null) *@
-@*                                 { *@
-@*                                     <script> *@
-@*                                         Swal.fire({ *@
-@*                                             icon: '@TempData["DeleteStatus"]' === 'success' ? 'success' : 'error', *@
-@*                                             title: '@TempData["DeleteMessage"]', *@
-@*                                             showConfirmButton: true, *@
-@*                                             timer: 2000 *@
-@*                                         }).then(() => { *@
-@*                                             window.location.reload(); // Reload sau khi đóng thông báo *@
-@*                                         }); *@
-@*                                     </script> *@
-@*                                 } *@
+        <div class="pagination d-flex justify-content-center mt-4">
+            @if (Model.HasPreviousPage)
+            {
+                <a href="@Url.Action("Index", new { page = Model.PageNumber - 1 })" class="pagination-link">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+            }
 
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <a href="@Url.Action("Index", new { page = i })"
+                   class="pagination-link @(i == Model.PageNumber ? "active" : "")">@i</a>
+            }
 
+            @if (Model.HasNextPage)
+            {
+                <a href="@Url.Action("Index", new { page = Model.PageNumber + 1 })" class="pagination-link">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            }
+        </div>
+    </div>
+</div>
 
-@*                             </td> *@
-@*                         </tr> *@
-@*                     } *@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+@section Scripts {
+    <script>
+        $(document).on('click', '.view-event-detail', function () {
+            var eventId = $(this).data('id');
+            $.get('/Organization/EventManager/EventDetails', { id: eventId }, function (response) {
+                if (response.success) {
+                    const data = response.data;
+                    const imagePath = data.imagePath
+                        ? `https://localhost:7007${data.imagePath}`
+                        : '/images/default.png';
+                    $('#eventMainImage').attr('src', imagePath);
+                    $('#eventName').val(data.name || '');
+                    $('#eventId').val(data.eventId || '');
+                    $('#eventType').val(data.type || '');
+                    $('#eventLocation').val(data.location || '');
+                    $('#eventStartDate').val(data.startDate || '');
+                    $('#eventEndDate').val(data.endDate || '');
+                    $('#eventTargetMembers').val((data.targetMember || 0).toLocaleString());
+                    $('#eventTargetFunds').val((data.targetFunds || 0).toLocaleString() + ' VND');
+                    $('#eventRegistrationCount').val(data.registrationCount || '0');
+                    $('#eventDonationCount').val(data.donationCount || '0');
+                    $('#eventTotalAmount').val((data.totalAmount || 0).toLocaleString() + ' VND');
+                    $('#eventDescription').val(data.description || '');
+                    $('#eventStatus').val(data.status ? 'Đang diễn ra' : 'Đã kết thúc');
+                    $('#eventDetailsModal').modal('show');
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Không thể tải dữ liệu sự kiện!'
+                    });
+                }
+            });
+        });
 
-@*                 </tbody> *@
-@*             </table> *@
-@*         </div> *@
-
-
-
-
-@*         <div class="pagination d-flex justify-content-center mt-4"> *@
-@*             @if (Model.HasPreviousPage) *@
-@*             { *@
-@*                 <a href="@Url.Action("Index", new { page = Model.PageNumber - 1 })" *@
-@*                    class="pagination-link"> *@
-@*                     <i class="fa-solid fa-arrow-left"></i> *@
-@*                 </a> *@
-@*             } *@
-
-@*             @for (int i = 1; i <= Model.PageCount; i++) *@
-@*             { *@
-@*                 <a href="@Url.Action("Index", new { page = i })" *@
-@*                    class="pagination-link @(i == Model.PageNumber ? "active" : "")">@i</a> *@
-@*             } *@
-
-@*             @if (Model.HasNextPage) *@
-@*             { *@
-@*                 <a href="@Url.Action("Index", new { page = Model.PageNumber + 1 })" *@
-@*                    class="pagination-link"> *@
-@*                     <i class="fa-solid fa-arrow-right"></i> *@
-@*                 </a> *@
-@*             } *@
-@*         </div> *@
-
-
-@*     </div> *@
-@* </div> *@
-@* <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> *@
-@* @section Scripts { *@
-@*     <script> *@
-@*         $(document).on('click', '.view-event-detail', function () { *@
-@*             var eventId = $(this).data('id'); *@
-
-@*             $.get('/Organization/EventManager/EventDetails', { id: eventId }, function (response) { *@
-@*                 if (response.success) { *@
-@*                     const data = response.data; *@
-
-@*                     // Ảnh chính *@
-@*                     const imagePath = data.imagePath *@
-@*                         ? `https://localhost:7007${data.imagePath}` *@
-@*                         : '/images/default.png'; *@
-@*                     $('#eventMainImage').attr('src', imagePath); *@
-
-@*                     // Gán dữ liệu vào các trường *@
-@*                     $('#eventName').val(data.name || ''); *@
-@*                     $('#eventId').val(data.eventId || ''); *@
-@*                     $('#eventType').val(data.type || ''); *@
-@*                     $('#eventLocation').val(data.location || ''); *@
-@*                     $('#eventStartDate').val(data.startDate || ''); *@
-@*                     $('#eventEndDate').val(data.endDate || ''); *@
-@*                     $('#eventTargetMembers').val((data.targetMember || 0).toLocaleString()); *@
-@*                     $('#eventTargetFunds').val((data.targetFunds || 0).toLocaleString() + ' VND'); *@
-@*                     $('#eventRegistrationCount').val(data.registrationCount || '0'); *@
-@*                     $('#eventDonationCount').val(data.donationCount || '0'); *@
-@*                     $('#eventTotalAmount').val((data.totalAmount || 0).toLocaleString() + ' VND'); *@
-@*                     $('#eventDescription').val(data.description || ''); *@
-@*                     $('#eventStatus').val(data.status ? 'Đang diễn ra' : 'Đã kết thúc'); *@
-
-@*                     // Hiển thị modal *@
-@*                     $('#eventDetailsModal').modal('show'); *@
-@*                 } else { *@
-@*                     alert("Không thể tải dữ liệu sự kiện!"); *@
-@*                 } *@
-@*             }); *@
-@*         }); *@
-
-@*                 function confirmDelete(eventId) { *@
-@*             Swal.fire({ *@
-@*                 title: "Bạn chắc chắn muốn xóa?", *@
-@*                 text: "Bạn không thể hoàn tác hành động này!", *@
-@*                 icon: "warning", *@
-@*                 showCancelButton: true, *@
-@*                 confirmButtonColor: "#d33", *@
-@*                 cancelButtonColor: "#3085d6", *@
-@*                 confirmButtonText: "Xóa", *@
-@*                 cancelButtonText: "Hủy", *@
-@*             }).then((result) => { *@
-@*                 if (result.isConfirmed) { *@
-@*                     // Tạo form ẩn để submit *@
-@*                     const form = document.createElement("form"); *@
-@*                     form.method = "POST"; *@
-@*                     form.action = `/Organization/EventManager/Delete?id=${eventId}`; *@
-
-@*                     // Thêm CSRF token an toàn *@
-@*                     const tokenInput = document.querySelector('input[name="__RequestVerificationToken"]'); *@
-@*                     if (!tokenInput) { *@
-@*                         console.error('Không tìm thấy CSRF token trong DOM!'); *@
-@*                         Swal.fire("Lỗi", "Không tìm thấy CSRF token để gửi yêu cầu xoá.", "error"); *@
-@*                         return; *@
-@*                     } *@
-@*                     const csrfToken = tokenInput.value; *@
-@*                     const csrfHiddenInput = document.createElement("input"); *@
-@*                     csrfHiddenInput.type = "hidden"; *@
-@*                     csrfHiddenInput.name = "__RequestVerificationToken"; *@
-@*                     csrfHiddenInput.value = csrfToken; *@
-
-@*                     form.appendChild(csrfHiddenInput); *@
-@*                     document.body.appendChild(form); *@
-@*                     form.submit(); *@
-@*                 } *@
-@*             }); *@
-@*         } *@
-
-
-@*     </script> *@
-    
-
-
-@* } *@
-@* <!-- Cột phải - Thông tin --> *@
+        function confirmDelete(eventId) {
+            Swal.fire({
+                title: "Bạn chắc chắn muốn xóa?",
+                text: "Hành động này không thể hoàn tác!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Xóa",
+                cancelButtonText: "Hủy"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Organization/EventManager/Delete/' + eventId;
+                }
+            });
+        }
+    </script>
+}

@@ -163,9 +163,24 @@ namespace Volunteer_website.Controllers
 
                         string? note = donationData.TryGetValue("Note", out var noteObj) ? noteObj?.ToString() : null;
 
+
+                        string newId = "DON0001";
+                        var maxId = await _context.Donations
+                            .Select(e => e.DonationId)
+                            .OrderByDescending(id => id)
+                            .FirstOrDefaultAsync();
+                        if (!string.IsNullOrEmpty(maxId) && maxId.StartsWith("DON")) // Sửa "D0N" thành "DON"
+                        {
+                            if (int.TryParse(maxId.Substring(3), out int numericPart))
+                            {
+                                newId = $"DON{(numericPart + 1):D4}";
+                            }
+                        }
+
+
                         var donation = new Models.Donation
                         {
-                            DonationId = vnp_TxnRef,
+                            DonationId = newId,
                             EventId = eventId,
                             VolunteerId = volunteerId,
                             Amount = amount,
@@ -177,11 +192,11 @@ namespace Volunteer_website.Controllers
                         {
                             _context.Donations.Add(donation);
                             await _context.SaveChangesAsync();
-                            _logger.LogInformation($"Donation saved: DonationId={vnp_TxnRef}, VolunteerId={volunteerId}");
+                            _logger.LogInformation($"Donation saved: DonationId={newId}, VolunteerId={volunteerId}");
                         }
                         catch (Exception ex)
                         {
-                            _logger.LogError(ex, $"Failed to save donation for vnp_TxnRef={vnp_TxnRef}");
+                            _logger.LogError(ex, $"Failed to save donation for vnp_TxnRef={newId}");
                             TempData["Error"] = "Thanh toán thành công nhưng không thể lưu donation.";
                             return RedirectToAction("Index", "Home");
                         }

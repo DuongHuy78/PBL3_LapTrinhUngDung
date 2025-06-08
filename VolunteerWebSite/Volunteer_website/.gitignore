@@ -410,7 +410,10 @@ obj/
 root/
 Areas/
 Models/
-Helpers/
 ViewModel/
 View/Account/
 View/Organization/
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll

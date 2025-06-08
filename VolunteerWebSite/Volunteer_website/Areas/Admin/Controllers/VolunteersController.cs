@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Volunteer_website.Areas.Admin.Data;
+using Volunteer_website.Areas.Admins.Data;
 using Volunteer_website.Models;
 using X.PagedList.Extensions;
 
-namespace Volunteer_website.Areas.Admin.Controllers
+namespace Volunteer_website.Areas.Admins.Controllers
 {
     [Area("Admin")]
     [Authorize("Admin")]

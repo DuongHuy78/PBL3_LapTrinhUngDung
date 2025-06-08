@@ -13,7 +13,7 @@ public partial class Evaluation
 
     public string? Feedback { get; set; }
 
-    public DateTime? EvaluatedAt { get; set; }
+    public DateTime EvaluatedAt { get; set; }
 
     public virtual Registration Reg { get; set; } = null!;
 }
