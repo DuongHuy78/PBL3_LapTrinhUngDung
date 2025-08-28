@@ -147,13 +147,13 @@ namespace Volunteer_website.Controllers
 
                     await transaction.CommitAsync();
 
-                    TempData["SuccessMessage"] = "Your registration was successful!";
+                    TempData["SuccessMessage"] = "Đăng ký thành công";
                     return RedirectToAction("Index", "Home");
                 }
                 catch (FormatException ex)
                 {
                     await transaction.RollbackAsync();
-                    TempData["ErrorMessage"] = $"Invalid ID format error: {ex.Message}. Please contact support.";
+                    TempData["ErrorMessage"] = $"Lỗi: {ex.Message}.";
                     return View(model);
                 }
                 catch (DbUpdateException ex)
