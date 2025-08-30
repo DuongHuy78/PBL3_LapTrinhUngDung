@@ -5,7 +5,7 @@ namespace Volunteer_website.Models;
 
 public partial class Admin
 {
-    public string AdminId { get; set; } = null!;
+    public string? AdminId { get; set; } = null!;
 
     public string? Name { get; set; }
 

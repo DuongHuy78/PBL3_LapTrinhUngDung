@@ -21,7 +21,7 @@ public partial class Volunteer
 
     public string? Address { get; set; }
 
-    public virtual ICollection<Donation> Donations { get; set; } = new List<Donation>();
+    public virtual ICollection<Donation>? Donations { get; set; } = new List<Donation>();
 
-    public virtual ICollection<Registration> Registrations { get; set; } = new List<Registration>();
+    public virtual ICollection<Registration>? Registrations { get; set; } = new List<Registration>();
 }

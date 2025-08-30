@@ -5,7 +5,7 @@ namespace Volunteer_website.Models;
 
 public partial class Donation
 {
-    public string DonationId { get; set; } = null!;
+    public string? DonationId { get; set; } = null!;
 
     public string? VolunteerId { get; set; }
 
