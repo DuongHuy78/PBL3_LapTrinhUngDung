@@ -148,6 +148,6 @@ app.Use(async (context, next) =>
     var routeValues = context.GetRouteData();
     Console.WriteLine($"Route Debug: {string.Join(", ", routeValues.Values.Select(kv => $"{kv.Key}={kv.Value}"))}");
     await next();
-});
+}); 
 
 app.Run();
