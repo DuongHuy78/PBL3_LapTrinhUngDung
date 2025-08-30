@@ -5,7 +5,7 @@ namespace Volunteer_website.Models;
 
 public partial class Organization
 {
-    public string OrgId { get; set; } = null!;
+    public string? OrgId { get; set; } = null!;
 
     public string? Name { get; set; }
 
@@ -19,5 +19,5 @@ public partial class Organization
 
     public string? Description { get; set; }
 
-    public virtual ICollection<Event> Events { get; set; } = new List<Event>();
+    public virtual ICollection<Event>? Events { get; set; } = new List<Event>();
 }

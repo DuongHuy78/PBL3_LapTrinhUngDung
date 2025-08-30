@@ -408,11 +408,9 @@ Dependencies/
 Properties/
 obj/
 root/
-Areas/
 Models/
 ViewModel/
-View/Account/
-View/Organization/
+Models/
 [Bb]in/
 [Oo]bj/
 *.exe

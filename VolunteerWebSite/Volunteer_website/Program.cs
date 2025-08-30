@@ -98,8 +98,7 @@ builder.Services.AddScoped<IVnPayService, VnPayService>();
 // Đăng ký EmailService
 builder.Services.AddScoped<Volunteer_website.Services.EmailService>();
 
-// Đăng ký EventNotificationService (dịch vụ nền gửi email)
-builder.Services.AddHostedService<EventNotificationService>();
+
 
 // Cấu hình logging
 builder.Services.AddLogging(logging =>
