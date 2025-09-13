@@ -51,7 +51,7 @@ namespace Volunteer_website.Areas.Organizations.Controllers
             ViewBag.UncompletedEvaluations = _db.Evaluations
                 .Count(e => !e.IsCompleted && eventIds.Contains(e.Reg.EventId));
 
-            // Handle default dates  
+           
             DateOnly startDateOnly, endDateOnly;
             if (!string.IsNullOrEmpty(startDate) && !string.IsNullOrEmpty(endDate))
             {

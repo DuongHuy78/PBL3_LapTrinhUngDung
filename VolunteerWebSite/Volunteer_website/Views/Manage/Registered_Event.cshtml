@@ -1,528 +1,408 @@
 ﻿@model List<Volunteer_website.Models.Registration>
 @{
-    Layout = null;
+    Layout = "_Layout";
     var userid = Context.Session.GetString("UserID") ?? "Người dùng";
 
     // Phân loại sự kiện theo trạng thái
     var allEvents = Model ?? new List<Volunteer_website.Models.Registration>();
     var pendingEvents = allEvents.Where(r => r.Status == "PENDING").ToList();
-    // Accepted events are those with Status = "ACCEPTED" but no completed evaluation
     var acceptedEvents = allEvents.Where(r => r.Status == "ACCEPTED" && !r.Evaluations.Any(e => e.IsCompleted)).ToList();
-    // Completed events are those with any evaluation marked as completed
     var completedEvents = allEvents.Where(r => r.Evaluations.Any(e => e.IsCompleted)).ToList();
 }
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Danh sách sự kiện</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <link rel="stylesheet" href="@Url.Content("~/css/Registered_Event.css")" />
-    <link rel="stylesheet" href="~/css/Profile_Manage.css" />
-
-    <style>
-        /* Lighter yellow background for the section container */
-        .section-container {
-            background-color: #fffef0; /* Very light yellow */
-            border-radius: 10px; /* Bo góc */
-            padding: 20px; /* Khoảng đệm bên trong */
-            margin-bottom: 30px; /* Khoảng cách dưới */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow like card */
-            transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+<style>
+    /* Section container with light orange background */
+    .section-container {
+        background-color: #fff4e0; /* Cam nhạt */
+        border-radius: 10px;
+        padding: 20px;
+        margin: 30px auto; /* Tự động căn giữa ngang */
+        max-width: 1500px; /* Giới hạn chiều rộng tối đa */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+        .section-container:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hover shadow effect */
         }
 
-            .section-container:hover {
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hover shadow effect */
+    /* Badge colors for Event Status */
+    .badge-event-active {
+        background-color: #2ecc71; /* Xanh lá sáng */
+        color: white;
+    }
+
+    .badge-event-inactive {
+        background-color: #215415; /* Xám nhẹ */
+        color: white;
+    }
+
+    /* Badge colors for Registration Status */
+    .badge-registration-approved {
+        background-color: #3498db; /* Xanh dương sáng */
+        color: white;
+    }
+
+    .badge-registration-pending {
+        background-color: #e67e22; /* Cam sáng */
+        color: white;
+    }
+
+    .badge-registration-rejected {
+        background-color: #e74c3c; /* Đỏ nhạt */
+        color: white;
+    }
+
+    .badge-registration-accepted {
+        background-color: #27ae60; /* Xanh lá đậm */
+        color: white;
+    }
+
+    .badge-registration-completed {
+        background-color: #8e44ad; /* Tím */
+        color: white;
+    }
+
+    /* Tabs */
+    .nav-tabs {
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 20px;
+        background-color: #fff4e0; /* Match section-container */
+    }
+
+        .nav-tabs .nav-link {
+            color: #555;
+            font-weight: 500;
+            padding: 10px 20px;
+            border: none;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+            .nav-tabs .nav-link:hover {
+                color: #e85a13; /* Chữ hover */
+                border-bottom: 3px solid #f5a65a; /* Viền cam hover */
             }
 
-        /* Custom badge colors for Event Status */
-        .badge-event-active {
-            background-color: #2ecc71; /* Xanh lá sáng */
-            color: white;
-        }
-
-        .badge-event-inactive {
-            background-color: #215415; /* Xám nhẹ */
-            color: white;
-        }
-
-        /* Custom badge colors for Registration Status */
-        .badge-registration-approved {
-            background-color: #3498db; /* Xanh dương sáng */
-            color: white;
-        }
-
-        .badge-registration-pending {
-            background-color: #e67e22; /* Cam sáng */
-            color: white;
-        }
-
-        .badge-registration-rejected {
-            background-color: #e74c3c; /* Đỏ nhạt */
-            color: white;
-        }
-
-        .badge-registration-accepted {
-            background-color: #27ae60; /* Xanh lá đậm */
-            color: white;
-        }
-
-        .badge-registration-completed {
-            background-color: #3489eb; /* Tím */
-            color: white;
-        }
-
-        /* Tùy chỉnh thanh tab */
-        .nav-tabs {
-            border-bottom: 2px solid #ddd; /* Đường viền dưới của thanh tab */
-            margin-bottom: 20px; /* Khoảng cách dưới */
-            background-color: #fffef0; /* Match section-container background */
-        }
-
-            .nav-tabs .nav-link {
-                color: #555; /* Màu chữ của tab */
-                font-weight: 500; /* Độ đậm chữ */
-                padding: 10px 20px; /* Khoảng đệm cho tab */
-                border: none; /* Xóa viền mặc định */
-                border-bottom: 3px solid transparent; /* Viền dưới trong suốt khi không active */
-                transition: all 0.3s ease; /* Hiệu ứng chuyển đổi mượt */
+            .nav-tabs .nav-link.active {
+                color: #e85a13; /* Chữ active */
+                background-color: transparent;
+                border-bottom: 3px solid #fa8448; /* Viền cam đậm active */
             }
 
-                .nav-tabs .nav-link:hover {
-                    color: #e85a13; /* Màu chữ khi hover (xanh lá sáng) */
-                    border-bottom: 3px solid #2ecc71; /* Viền dưới màu xanh khi hover */
-                }
+    /* Tab content */
+    .tab-content {
+        background-color: #fff4e0; /* Match section container */
+        border-radius: 0 10px 10px 10px;
+        padding: 20px;
+    }
 
-                .nav-tabs .nav-link.active {
-                    color: #e85a13; /* Màu chữ khi tab được chọn */
-                    background-color: transparent; /* Không có nền riêng */
-                    border-bottom: 3px solid #fa8448; /* Viền dưới màu xanh khi active */
-                }
+    /* Table hover effect */
+    .table-hover tbody tr:hover {
+        background-color: #ffe6cc; /* Nhẹ hơn cam nhạt */
+        transition: background-color 0.3s ease;
+    }
 
-        /* Match tab content background to section container */
-        .tab-content {
-            background-color: #fffef0; /* Very light yellow */
-            border-radius: 0 10px 10px 10px; /* Bo góc (trừ góc trên bên trái) */
-            padding: 20px; /* Khoảng đệm bên trong */
+    /* Buttons hover effect */
+    .btn-details, .btn-cancel {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .btn-details:hover, .btn-cancel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Hover effect for table rows */
-        .table-hover tbody tr:hover {
-            background-color: #f1f1f1; /* Light gray on hover for contrast */
-            transition: background-color 0.3s ease; /* Smooth transition */
-        }
+    /* Main content shift for sidebar toggle */
+    .main-content.shifted {
+        margin-left: 60px;
+        transition: margin-left 0.3s ease;
+    }
 
-        /* Hover effect for buttons */
-        .btn-details, .btn-cancel {
-            transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transform and shadow */
-        }
-
-            .btn-details:hover, .btn-cancel:hover {
-                transform: translateY(-2px); /* Slight lift effect */
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow on hover */
-            }
-
-        /* Main content shift for sidebar toggle */
-        .main-content.shifted {
-            margin-left: 60px; /* Adjust based on sidebar collapsed width */
-            transition: margin-left 0.3s ease;
-        }
-
-        /* Badge with count */
-        .tab-badge {
-            background-color: #dc3545;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 0.75rem;
-            margin-left: 5px;
-        }
-    </style>
-</head>
+    /* Badge with count */
+    .tab-badge {
+        background-color: #dc3545;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 0.75rem;
+        margin-left: 5px;
+    }
+</style>
 <body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <div class="logo-container">
-                <img src="~/images/VolunteerIcon.png" alt="Logo" class="navbar-logo" />
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")">DUTERS</a>
+    <div class="section-container">
+        <h5 class="mb-4">Danh sách sự kiện đã đăng ký</h5>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs" id="eventTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">
+                    Tất cả <span class="tab-badge">@allEvents.Count()</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="false">
+                    Chưa được duyệt <span class="tab-badge">@pendingEvents.Count()</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="accepted-tab" data-bs-toggle="tab" data-bs-target="#accepted" type="button" role="tab" aria-controls="accepted" aria-selected="false">
+                    Đang tham gia <span class="tab-badge">@acceptedEvents.Count()</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">
+                    Đã hoàn thành <span class="tab-badge">@completedEvents.Count()</span>
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Contents -->
+        <div class="tab-content" id="eventTabsContent">
+            <!-- Tab All -->
+            <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                @if (allEvents.Any())
+                {
+                    <div class="table-responsive mt-3">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left;">Tên sự kiện</th>
+                                    <th style="text-align: center;">Ngày bắt đầu</th>
+                                    <th style="text-align: center;">Ngày kết thúc</th>
+                                    <th style="text-align: center;">Trạng thái đăng ký</th>
+                                    <th style="text-align: center;">Trạng thái sự kiện</th>
+                                    <th style="text-align: center;">Hoạt động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var registration in allEvents)
+                                {
+                                    <tr>
+                                        <td>@registration.Event.Name</td>
+                                        <td class="text-center">
+                                            @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                        </td>
+                                        <td class="text-center">
+                                            @(registration.Event.DayEnd.HasValue ? registration.Event.DayEnd.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge @(registration.Status == "ACCEPTED" ? "badge-registration-accepted" :
+                                                                  registration.Status == "PENDING" ? "badge-registration-pending" : "badge-registration-rejected")">
+                                                @(registration.Status == "ACCEPTED" ? "Đã duyệt" :
+                                                    registration.Status == "PENDING" ? "Chờ duyệt" : "Bị từ chối")
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            @{
+                                                var eventStatus = "Đang diễn ra";
+                                                var badgeClass = "badge-event-active";
+                                                var currentDate = DateOnly.FromDateTime(DateTime.Now);
+
+                                                if (registration.Evaluations.Any(e => e.IsCompleted))
+                                                {
+                                                    eventStatus = "Đã hoàn thành";
+                                                    badgeClass = "badge-registration-completed";
+                                                }
+                                                else if (registration.Event.DayEnd.HasValue && registration.Event.DayEnd.Value < currentDate)
+                                                {
+                                                    eventStatus = "Đã kết thúc";
+                                                    badgeClass = "badge-event-inactive";
+                                                }
+                                            }
+                                            <span class="badge @badgeClass">@eventStatus</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a href="@Url.Action("Detail_Event", "Home", new { id = registration.EventId })"
+                                                   class="btn btn-sm btn-primary btn-details">
+                                                    <i class="fas fa-info-circle"></i> Chi tiết
+                                                </a>
+                                                @if (registration.Status == "PENDING" || registration.Status == "ACCEPTED")
+                                                {
+                                                    <button class="btn btn-sm btn-light btn-cancel"
+                                                            onclick="confirmCancel('@registration.EventId')">
+                                                        <i class="fas fa-trash"></i> Hủy
+                                                    </button>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-info-circle me-2"></i>Bạn chưa đăng ký sự kiện nào.
+                    </div>
+                }
             </div>
-            <div class="navbar-right">
-                <div class="menu-toggle">
-                    <i class="fa-solid fa-bars"></i>
-                </div>
+
+            <!-- Tab Pending -->
+            <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                @if (pendingEvents.Any())
+                {
+                    <div class="table-responsive mt-3">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tên sự kiện</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th>Trạng thái đăng ký</th>
+                                    <th>Hoạt động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var registration in pendingEvents)
+                                {
+                                    <tr>
+                                        <td>@registration.Event.Name</td>
+                                        <td class="text-center">
+                                            @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                        </td>
+                                        <td class="text-center"><span class="badge badge-registration-pending">Chờ duyệt</span></td>
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a href="@Url.Action("Detail_Event", "Home", new { id = registration.EventId })"
+                                                   class="btn btn-sm btn-primary btn-details">
+                                                    <i class="fas fa-info-circle"></i> Chi tiết
+                                                </a>
+                                                <button class="btn btn-sm btn-light btn-cancel"
+                                                        onclick="confirmCancel('@registration.EventId')">
+                                                    <i class="fas fa-trash"></i> Hủy
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-info-circle me-2"></i>Bạn không có sự kiện nào đang chờ duyệt.
+                    </div>
+                }
             </div>
-        </div>
-    </nav>
 
-    <!-- Sidebar -->
-    <div class="wrapper d-flex">
-        <div class="sidebar" id="sidebar">
-            <a asp-controller="Home" asp-action="IndexUser"><i class="fa-solid fa-house"></i>Trang chủ</a>
-            <div class="sidebar-dropdown">
-                <a href="#"><i class="fa-solid fa-address-card"></i>Hồ sơ</a>
-                <div class="sidebar-dropdown-menu">
-                    <a asp-controller="Profile" asp-action="Update_Infor">
-                        <i class="fa-solid fa-user"></i>Thông Tin Cá Nhân
-                    </a>
-                    <a asp-controller="Profile" asp-action="Contact_Infor">
-                        <i class="fa-solid fa-address-book"></i>Thông Tin Liên Hệ
-                    </a>
-                </div>
+            <!-- Tab Accepted -->
+            <div class="tab-pane fade" id="accepted" role="tabpanel" aria-labelledby="accepted-tab">
+                @if (acceptedEvents.Any())
+                {
+                    <div class="table-responsive mt-3">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tên sự kiện</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th>Trạng thái đăng ký</th>
+                                    <th>Hoạt động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var registration in acceptedEvents)
+                                {
+                                    <tr>
+                                        <td>@registration.Event.Name</td>
+                                        <td class="text-center">
+                                            @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                        </td>
+                                        <td class="text-center"><span class="badge badge-registration-accepted">Đã duyệt</span></td>
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a href="@Url.Action("Detail_Event", "Home", new { id = registration.EventId })"
+                                                   class="btn btn-sm btn-primary btn-details">
+                                                    <i class="fas fa-info-circle"></i> Chi tiết
+                                                </a>
+                                                <button class="btn btn-sm btn-light btn-cancel"
+                                                        onclick="confirmCancel('@registration.EventId')">
+                                                    <i class="fas fa-trash"></i> Hủy
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-info-circle me-2"></i>Bạn không có sự kiện nào đang tham gia.
+                    </div>
+                }
             </div>
-            <a asp-controller="Profile" asp-action="Change_PassWord">
-                <i class="fa-solid fa-lock"></i>Bảo mật
-            </a>
-            <a asp-controller="Manage" asp-action="Registered_Event" class="active">
-                <i class="fa-solid fa-calendar-check"></i>Sự kiện đã đăng ký
-            </a>
-        </div>
 
-        <div class="main-content container mt-5">
-            <div class="section-container">
-                <h5 class="mb-4">Danh sách sự kiện đã đăng ký</h5>
-
-                <!-- Thanh tab với 4 trạng thái -->
-                <ul class="nav nav-tabs" id="eventTabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">
-                            Tất cả
-                            <span class="tab-badge">@allEvents.Count()</span>
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="false">
-                            Chưa được duyệt
-                            <span class="tab-badge">@pendingEvents.Count()</span>
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="accepted-tab" data-bs-toggle="tab" data-bs-target="#accepted" type="button" role="tab" aria-controls="accepted" aria-selected="false">
-                            Đang tham gia
-                            <span class="tab-badge">@acceptedEvents.Count()</span>
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">
-                            Đã hoàn thành
-                            <span class="tab-badge">@completedEvents.Count()</span>
-                        </button>
-                    </li>
-                </ul>
-
-                <!-- Nội dung tab -->
-                <div class="tab-content" id="eventTabsContent">
-                    <!-- Tab 1: Tất cả sự kiện -->
-                    <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-                        @if (allEvents.Any())
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th style="width: 25%; text-align: left;">Tên sự kiện</th>
-                                            <th style="width: 15%; text-align: center;">Ngày bắt đầu</th>
-                                            <th style="width: 15%; text-align: center;">Ngày kết thúc</th>
-                                            <th style="width: 15%; text-align: center;">Trạng thái đăng ký</th>
-                                            <th style="width: 15%; text-align: center;">Trạng thái sự kiện</th>
-                                            <th style="width: 15%; text-align: center;">Hoạt động</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var registration in allEvents)
-                                        {
-                                            <tr>
-                                                <td style="text-align: left;">@registration.Event.Name</td>
-                                                <td style="text-align: center;">
-                                                    @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    @(registration.Event.DayEnd.HasValue ? registration.Event.DayEnd.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <span class="badge @(registration.Status == "ACCEPTED" ? "badge-registration-accepted" :
-                                                          registration.Status == "PENDING" ? "badge-registration-pending" : "badge-registration-rejected")">
-                                                        @(registration.Status == "ACCEPTED" ? "Đã duyệt" :
-                                                            registration.Status == "PENDING" ? "Chờ duyệt" : "Bị từ chối")
-                                                    </span>
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    @{
-                                                        var eventStatus = "Đang diễn ra";
-                                                        var badgeClass = "badge-event-active";
-                                                        var currentDate = DateOnly.FromDateTime(DateTime.Now);
-
-                                                        if (registration.Evaluations.Any(e => e.IsCompleted))
-                                                        {
-                                                            eventStatus = "Đã hoàn thành";
-                                                            badgeClass = "badge-registration-completed";
-                                                        }
-                                                        else if (registration.Event.DayEnd.HasValue && registration.Event.DayEnd.Value < currentDate)
-                                                        {
-                                                            eventStatus = "Đã kết thúc";
-                                                            badgeClass = "badge-event-inactive";
-                                                        }
-                                                    }
-                                                    <span class="badge @badgeClass">
-                                                        @eventStatus
-                                                    </span>
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <div class="d-flex justify-content-center gap-2">
-                                                        <a href="@Url.Action("Detail_Event", "Home", new { id = registration.EventId })"
-                                                           class="btn btn-sm btn-primary btn-details">
-                                                            <i class="fas fa-info-circle"></i> Chi tiết
-                                                        </a>
-                                                        @if (registration.Status == "PENDING" || registration.Status == "ACCEPTED")
-                                                        {
-                                                            <button class="btn btn-sm btn-light btn-cancel"
-                                                                    onclick="confirmCancel('@registration.EventId')"
-                                                                    title="Hủy đăng ký">
-                                                                <i class="fas fa-trash"></i> Hủy
-                                                            </button>
-                                                        }
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>Bạn chưa đăng ký sự kiện nào.
-                            </div>
-                        }
+            <!-- Tab Completed -->
+            <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+                @if (completedEvents.Any())
+                {
+                    <div class="table-responsive mt-3">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tên sự kiện</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th>Ngày kết thúc</th>
+                                    <th>Hoạt động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var registration in completedEvents)
+                                {
+                                    <tr>
+                                        <td>@registration.Event.Name</td>
+                                        <td class="text-center">
+                                            @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                        </td>
+                                        <td class="text-center">
+                                            @(registration.Event.DayEnd.HasValue ? registration.Event.DayEnd.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="@Url.Action("Detail_Event", "Home", new { id = registration.EventId })"
+                                               class="btn btn-sm btn-primary btn-details">
+                                                <i class="fas fa-info-circle"></i> Chi tiết
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-
-                    <!-- Tab 2: Sự kiện chưa được duyệt -->
-                    <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
-                        @if (pendingEvents.Any())
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th style="width: 30%; text-align: left;">Tên sự kiện</th>
-                                            <th style="width: 20%; text-align: center;">Ngày bắt đầu</th>
-                                            <th style="width: 20%; text-align: center;">Trạng thái đăng ký</th>
-                                            <th style="width: 30%; text-align: center;">Hoạt động</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var registration in pendingEvents)
-                                        {
-                                            <tr>
-                                                <td style="text-align: left;">@registration.Event.Name</td>
-                                                <td style="text-align: center;">
-                                                    @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <span class="badge badge-registration-pending">Chờ duyệt</span>
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <div class="d-flex justify-content-center gap-2">
-                                                        <a href="@Url.Action("Detail_Event", "Home", new { id = registration.EventId })"
-                                                           class="btn btn-sm btn-primary btn-details">
-                                                            <i class="fas fa-info-circle"></i> Chi tiết
-                                                        </a>
-                                                        <button class="btn btn-sm btn-light btn-cancel"
-                                                                onclick="confirmCancel('@registration.EventId')"
-                                                                title="Hủy đăng ký">
-                                                            <i class="fas fa-trash"></i> Hủy
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>Bạn không có sự kiện nào đang chờ duyệt.
-                            </div>
-                        }
+                }
+                else
+                {
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-info-circle me-2"></i>Bạn chưa hoàn thành sự kiện nào.
                     </div>
-
-                    <!-- Tab 3: Sự kiện đang tham gia -->
-                    <div class="tab-pane fade" id="accepted" role="tabpanel" aria-labelledby="accepted-tab">
-                        @if (acceptedEvents.Any())
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th style="width: 30%; text-align: left;">Tên sự kiện</th>
-                                            <th style="width: 20%; text-align: center;">Ngày bắt đầu</th>
-                                            <th style="width: 20%; text-align: center;">Trạng thái đăng ký</th>
-                                            <th style="width: 30%; text-align: center;">Hoạt động</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var registration in acceptedEvents)
-                                        {
-                                            <tr>
-                                                <td style="text-align: left;">@registration.Event.Name</td>
-                                                <td style="text-align: center;">
-                                                    @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <span class="badge badge-registration-accepted">Đã duyệt</span>
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <div class="d-flex justify-content-center gap-2">
-                                                        <a href="@Url.Action("Detail_Event", "Home", new { id = registration.EventId })"
-                                                           class="btn btn-sm btn-primary btn-details">
-                                                            <i class="fas fa-info-circle"></i> Chi tiết
-                                                        </a>
-                                                        <button class="btn btn-sm btn-light btn-cancel"
-                                                                onclick="confirmCancel('@registration.EventId')"
-                                                                title="Hủy đăng ký">
-                                                            <i class="fas fa-trash"></i> Hủy
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>Bạn không có sự kiện nào đang tham gia.
-                            </div>
-                        }
-                    </div>
-
-                    <!-- Tab 4: Sự kiện đã hoàn thành -->
-                    <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
-                        @if (completedEvents.Any())
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th style="width: 40%; text-align: left;">Tên sự kiện</th>
-                                            <th style="width: 20%; text-align: center;">Ngày bắt đầu</th>
-                                            <th style="width: 20%; text-align: center;">Ngày kết thúc</th>
-                                            <th style="width: 20%; text-align: center;">Trạng thái</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var registration in completedEvents)
-                                        {
-                                            <tr>
-                                                <td style="text-align: left;">@registration.Event.Name</td>
-                                                <td style="text-align: center;">
-                                                    @(registration.Event.DayBegin.HasValue ? registration.Event.DayBegin.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    @(registration.Event.DayEnd.HasValue ? registration.Event.DayEnd.Value.ToString("dd/MM/yyyy") : "Chưa xác định")
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <span class="badge badge-registration-completed">Đã hoàn thành</span>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>Bạn chưa có sự kiện nào đã hoàn thành.
-                            </div>
-                        }
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
 
-    <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Sidebar toggle
-        const sidebar = document.getElementById("sidebar");
-        const menuToggle = document.querySelector(".menu-toggle");
-        const mainContent = document.querySelector(".main-content");
-
-        menuToggle.addEventListener("click", () => {
-            sidebar.classList.toggle("collapsed");
-            mainContent.classList.toggle("shifted");
-        });
-
-        // Cancel registration confirmation
         function confirmCancel(eventId) {
             Swal.fire({
-                title: 'Xác nhận hủy đăng ký',
-                text: "Bạn có chắc muốn hủy đăng ký sự kiện này?",
+                title: 'Xác nhận hủy?',
+                text: "Bạn có chắc chắn muốn hủy đăng ký sự kiện này?",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#fd7e14',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Đồng ý',
-                cancelButtonText: 'Hủy bỏ'
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Có, hủy!',
+                cancelButtonText: 'Đóng'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch(`/Manage/CancelRegistration?eventId=${eventId}`, {
-                        method: 'POST',
-                        headers: {
-                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                        }
-                    })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Network response was not ok');
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire({
-                                title: 'Thành công!',
-                                text: data.message,
-                                icon: 'success',
-                                confirmButtonColor: '#fd7e14'
-                            }).then(() => {
-                                location.reload();
-                            });
-                        } else {
-                            Swal.fire({
-                                title: 'Lỗi!',
-                                text: data.message,
-                                icon: 'error',
-                                confirmButtonColor: '#fd7e14'
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            title: 'Lỗi!',
-                            text: 'Có lỗi xảy ra khi xử lý yêu cầu: ' + error.message,
-                            icon: 'error',
-                            confirmButtonColor: '#fd7e14'
-                        });
-                    });
+                    window.location.href = '/Home/CancelRegister/' + eventId;
                 }
             });
         }
     </script>
 </body>
-</html>
+

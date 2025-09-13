@@ -40,7 +40,8 @@
 
         <!-- Thanh tìm kiếm -->
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-            <div class="search-container">
+            <!-- Ô tìm kiếm -->
+            <div class="search-container mb-2 mb-md-0">
                 <form asp-action="Index" method="get" class="d-flex align-items-center">
                     <input type="text"
                            name="searchValue"
@@ -50,11 +51,23 @@
                            value="@ViewBag.SearchValue" />
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i> <!-- Font Awesome search icon -->
+                        <i class="fas fa-search"></i>
                     </button>
                 </form>
             </div>
+
+            <!-- Tổng tiền quyên góp -->
+            <div class="bg-light p-3 rounded shadow-sm d-flex align-items-center">
+                <i class="fas fa-donate text-success me-2 fs-4"></i>
+                <div>
+                    <span class="fw-bold">Tổng tiền:</span>
+                    <span class="text-primary fw-bold">
+                        @string.Format("{0:N0} VNĐ", ViewBag.totalDonation ?? 0)
+                    </span>
+                </div>
+            </div>
         </div>
+
 
         <!-- Bảng quyên góp -->
         <div class="table-responsive">

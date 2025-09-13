@@ -11,7 +11,7 @@ using System.Security.Claims;
 namespace Volunteer_website.Areas.Organizations.Controllers
 {
     [Area("Organization")]
-    [Route("[area]/[controller]/[action]")] // Sửa lại route template
+    [Route("[area]/[controller]/[action]")] 
     [Authorize("Org")]
     public class DonationManagerController : Controller
     {
@@ -54,6 +54,10 @@ namespace Volunteer_website.Areas.Organizations.Controllers
                     matchingVolunteerIds.Contains(d.VolunteerId));
             }
 
+
+
+          
+
             var lstDonated = query.OrderBy(x => x.DonationId)
                                   .ToPagedList(pageNumber, pageSize);
 
@@ -70,6 +74,7 @@ namespace Volunteer_website.Areas.Organizations.Controllers
             ViewBag.Volunteers = volunteers;
             ViewBag.Events = events;
             ViewBag.SearchValue = searchValue;
+            ViewBag.totalDonation = _db.Donations.Sum(d => d.Amount);
 
             return View(lstDonated);
         }
@@ -93,6 +98,9 @@ namespace Volunteer_website.Areas.Organizations.Controllers
             };
             return Json(result);
         }
+
+        //Tổng số tiền đã donate
+
     }
 }
 //

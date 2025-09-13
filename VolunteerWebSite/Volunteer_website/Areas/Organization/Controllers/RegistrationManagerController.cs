@@ -61,7 +61,7 @@ namespace Volunteer_website.Areas.Organizations.Controllers
             ViewBag.Volunteers = volunteers;
             ViewBag.Events = events;
             ViewBag.SearchValue = searchValue;
-
+            ViewBag.totalRegistration = _db.Registrations.Count();
             return View(lstRegistered);
         }
 
