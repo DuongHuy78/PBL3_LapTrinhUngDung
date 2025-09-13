@@ -1,6 +1,5 @@
-﻿﻿
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="@(ViewContext.HttpContext.Session.GetString("Culture") ?? "en")">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,22 +9,16 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Volunteer_website.styles.css" asp-append-version="true" />
 
-    <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700"
-          rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700"
-          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet" />
 
     <link rel="stylesheet" href="~/css/open-iconic-bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/animate.css" />
-
     <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
     <link rel="stylesheet" href="~/css/owl.theme.default.min.css" />
     <link rel="stylesheet" href="~/css/magnific-popup.css" />
-
     <link rel="stylesheet" href="~/css/aos.css" />
-
     <link rel="stylesheet" href="~/css/ionicons.min.css" />
-
     <link rel="stylesheet" href="~/css/bootstrap-datepicker.css" />
     <link rel="stylesheet" href="~/css/jquery.timepicker.css" />
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -34,16 +27,15 @@
     <link rel="stylesheet" href="~/css/flaticon.css" />
     <link rel="stylesheet" href="~/css/icomoon.css" />
     <link rel="stylesheet" href="~/css/style.css" />
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="~/css/Footer.css" />
     <link href="~/OrgLayout/assets/css/site.css" rel="stylesheet" />
     <link href="~/OrgLayout/assets/js/alert.js" rel="stylesheet" />
-     <link rel="stylesheet" href="~/OrgLayout/Modern-Aler.css" />
-
+    <link rel="stylesheet" href="~/OrgLayout/Modern-Aler.css" />
 </head>
 <body>
-       @if (TempData.ContainsKey("SuccessMessage"))
+
+    @if (TempData.ContainsKey("SuccessMessage"))
     {
         <div id="customAlertSuccess" class="modern-alert success">
             <div class="alert-icon">
@@ -71,13 +63,11 @@
         </div>
     }
 
-
     @await Html.PartialAsync("Navbar")
     @RenderBody()
     @await Html.PartialAsync("Footer")
 
-
-
+  
 
     <script src="~/js/Navbar_user.js"></script>
     <script src="~/js/Search.js"></script>
@@ -95,7 +85,6 @@
     <script src="~/js/bootstrap-datepicker.js"></script>
     <script src="~/js/jquery.timepicker.min.js"></script>
     <script src="~/js/scrollax.min.js"></script>
-    
     <script src="~/js/google-map.js"></script>
     <script src="~/js/main.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

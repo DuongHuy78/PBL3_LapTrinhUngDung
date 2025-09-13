@@ -546,6 +546,7 @@ namespace Volunteer_website.Areas.Organizations.Controllers
         #endregion
 
 
+        //Tổng số người tham gia 
 
     }
 }

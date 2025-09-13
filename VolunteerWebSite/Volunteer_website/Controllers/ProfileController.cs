@@ -28,20 +28,21 @@ namespace Volunteer_website.Controllers
         {
             return View();
         }
-       
+
         [HttpGet]
         public IActionResult Update_Infor()
         {
             string volunteerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (volunteerId == null)
+            if (string.IsNullOrEmpty(volunteerId))
             {
                 TempData["ErrorMessage"] = "Không tìm thấy người dùng.";
                 return RedirectToAction("Manage");
             }
 
             var volunteer = _context.Volunteers.FirstOrDefault(v => v.VolunteerId == volunteerId);
-            var user = _context.Users.FirstOrDefault(u => u.UserId == volunteerId); 
+            var user = _context.Users.FirstOrDefault(u => u.UserId == volunteerId);
+
             if (volunteer == null)
             {
                 TempData["ErrorMessage"] = "Không tìm thấy dữ liệu người dùng.";
@@ -58,220 +59,90 @@ namespace Volunteer_website.Controllers
                 Address = volunteer.Address,
                 DateOfBirth = volunteer.DateOfBirth,
                 Gender = volunteer.Gender,
-                AvatarPath = volunteer.ImagePath,
-                AvatarFile = null, 
-                
+                AvatarPath = volunteer.ImagePath
             };
-          
+
             return View(model);
         }
-        [HttpPost]
-        public async Task<IActionResult> Update_Infor(Update_ContactModel model, IFormFile avatarFile)
-        {
-            var volunteer = _context.Volunteers.FirstOrDefault(v => v.VolunteerId == model.VolunteerId);
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update_Infor(Update_ContactModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var volunteer = await _context.Volunteers.FirstOrDefaultAsync(v => v.VolunteerId == model.VolunteerId);
             if (volunteer == null)
             {
                 TempData["ErrorMessage"] = "Không tìm thấy tình nguyện viên.";
                 return RedirectToAction("Update_Infor");
             }
-       
-            if (avatarFile != null && avatarFile.Length > 0)
-            {
-                // Kiểm tra kích thước file (5MB)
-                if (avatarFile.Length > 5 * 1024 * 1024)
-                {
-                    ModelState.AddModelError("", "File ảnh không được vượt quá 5MB");
-                    return View(model);
-                }
 
-                // Kiểm tra loại file
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                var extension = Path.GetExtension(avatarFile.FileName).ToLower();
-                if (!allowedExtensions.Contains(extension))
+            // Kiểm tra trùng email & phone
+            var existingPhone = await _context.Volunteers
+                .Where(v => v.VolunteerId != model.VolunteerId && v.PhoneNumber == model.PhoneNumber)
+                .FirstOrDefaultAsync();
+            if (existingPhone != null)
+            {
+                ModelState.AddModelError("PhoneNumber", "Số điện thoại đã được sử dụng.");
+                return View(model);
+            }
+
+            var existingEmail = await _context.Volunteers
+                .Where(v => v.VolunteerId != model.VolunteerId && v.Email == model.Email)
+                .FirstOrDefaultAsync();
+            if (existingEmail != null)
+            {
+                ModelState.AddModelError("Email", "Email đã được sử dụng.");
+                return View(model);
+            }
+
+            // Cập nhật avatar nếu có
+            if (model.AvatarFile != null && model.AvatarFile.Length > 0)
+            {
+                string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+                var ext = Path.GetExtension(model.AvatarFile.FileName).ToLower();
+                if (!allowedExtensions.Contains(ext))
                 {
                     ModelState.AddModelError("", "Chỉ chấp nhận file ảnh (JPG, PNG, GIF)");
                     return View(model);
                 }
+
                 var uploadsFolder = Path.Combine("wwwroot", "uploads");
                 Directory.CreateDirectory(uploadsFolder);
-
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(avatarFile.FileName);
+                var fileName = Guid.NewGuid().ToString() + ext;
                 var filePath = Path.Combine(uploadsFolder, fileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    await avatarFile.CopyToAsync(stream);
+                    await model.AvatarFile.CopyToAsync(stream);
                 }
 
                 volunteer.ImagePath = $"~/uploads/{fileName}";
             }
 
+            // Cập nhật thông tin cá nhân và liên hệ
             volunteer.Name = model.Name;
             volunteer.Gender = model.Gender ?? false;
             volunteer.DateOfBirth = model.DateOfBirth;
+            volunteer.PhoneNumber = model.PhoneNumber;
+            volunteer.Email = model.Email;
+            volunteer.Address = model.Address;
+
             try
             {
-                _context.SaveChanges();
-                TempData["SuccessMessage"] = "Cập nhật thông tin cá nhân thành công!";
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Cập nhật thông tin thành công!";
             }
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = "Đã xảy ra lỗi khi cập nhật: " + ex.Message;
             }
+
             return RedirectToAction("Update_Infor");
         }
-        [HttpGet]
-        public IActionResult Contact_Infor()
-        {
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(userId))
-            {
-                return RedirectToAction("SignIn", "Account");
-            }      
-            var volunteer = _context.Volunteers.FirstOrDefault(v => v.VolunteerId == userId);
-            if (volunteer == null)
-            {
-                return NotFound(); // hoặc Redirect hoặc View thông báo lỗi
-            }
-            var model = new Update_ContactModel
-            {
 
-                Name = volunteer.Name,
-                PhoneNumber = volunteer.PhoneNumber,
-                Email = volunteer.Email,
-                Address = volunteer.Address
-            };
-
-            return View(model);
-        }
-
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken] // Thêm ValidateAntiForgeryToken để bảo vệ form
-        public async Task<IActionResult> Contact_Infor(Update_ContactModel updatedVolunteer)
-        {
-            var addressErrors = ModelState["Address"]?.Errors;
-            var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-            foreach (var error in allErrors)
-            {
-                Console.WriteLine("Lỗi: " + error.ErrorMessage);
-            }
-
-            foreach (var error in addressErrors)
-            {
-                Console.WriteLine("Lỗi Address: " + error.ErrorMessage);
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return View(updatedVolunteer);
-            }
-
-            string volunteerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (string.IsNullOrEmpty(volunteerId))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            try
-            {
-                var volunteer = await _context.Volunteers.FirstOrDefaultAsync(v => v.VolunteerId == volunteerId);
-                if (volunteer == null)
-                {
-                    return NotFound();
-                }
-
-                // Kiểm tra trùng số điện thoại với các tình nguyện viên khác
-                var existingPhoneInVol = await _context.Volunteers
-                    .Where(v => v.VolunteerId != volunteerId && v.PhoneNumber == updatedVolunteer.PhoneNumber)
-                    .FirstOrDefaultAsync();
-                if (existingPhoneInVol != null)
-                {
-                    ModelState.AddModelError("PhoneNumber", "Số điện thoại đã được sử dụng bởi một tình nguyện viên khác.");
-                    return View(updatedVolunteer);
-                }
-
-                // Kiểm tra trùng số điện thoại với các tổ chức khác
-                var existingPhoneInOrg = await _context.Organizations
-                    .Where(o => o.PhoneNumber == updatedVolunteer.PhoneNumber)
-                    .FirstOrDefaultAsync();
-                if (existingPhoneInOrg != null)
-                {
-                    ModelState.AddModelError("PhoneNumber", "Số điện thoại đã được sử dụng bởi một tổ chức.");
-                    return View(updatedVolunteer);
-                }
-
-                // Kiểm tra trùng email với các tình nguyện viên khác
-                var existingEmailInVol = await _context.Volunteers
-                    .Where(v => v.VolunteerId != volunteerId && v.Email == updatedVolunteer.Email)
-                    .FirstOrDefaultAsync();
-                if (existingEmailInVol != null)
-                {
-                    ModelState.AddModelError("Email", "Email đã được sử dụng bởi một tình nguyện viên khác.");
-                    return View(updatedVolunteer);
-                }
-
-                // Kiểm tra trùng email với các tổ chức khác
-                var existingEmailInOrg = await _context.Organizations
-                    .Where(o => o.Email == updatedVolunteer.Email)
-                    .FirstOrDefaultAsync();
-                if (existingEmailInOrg != null)
-                {
-                    ModelState.AddModelError("Email", "Email đã được sử dụng bởi một tổ chức.");
-                    return View(updatedVolunteer);
-                }
-
-                // Cập nhật thông tin
-                volunteer.Name = updatedVolunteer.Name;
-                volunteer.Email = updatedVolunteer.Email;
-                volunteer.PhoneNumber = updatedVolunteer.PhoneNumber;
-                volunteer.Address = updatedVolunteer.Address;
-
-                // Xử lý ảnh đại diện nếu có
-                if (updatedVolunteer.AvatarFile != null && updatedVolunteer.AvatarFile.Length > 0)
-                {
-                    string imagePath = await UpLoadImgService.UploadImg(updatedVolunteer.AvatarFile, "volunteers");
-                    if (imagePath != null)
-                    {
-                        volunteer.ImagePath = imagePath; // Giả định có trường AvatarPath trong Volunteer model
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Tải lên ảnh đại diện thất bại.");
-                        return View(updatedVolunteer);
-                    }
-                }
-
-                _context.Volunteers.Update(volunteer);
-                await _context.SaveChangesAsync(); // Sử dụng await vì có async operations
-
-                TempData["SuccessMessage"] = "Cập nhật thông tin thành công!";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Lỗi khi cập nhật thông tin: " + ex.Message);
-                TempData["ErrorMessage"] = "Đã xảy ra lỗi khi cập nhật.";
-            }
-
-            return RedirectToAction("Contact_Infor", new { id = volunteerId });
-        }
-
-        private string GetLoggedInUserId()
-        {
-            return HttpContext.Session.GetString("VolunteerId");
-        }
-
-        public string HashPassword(string password)
-        {
-                using (SHA256 sha256 = SHA256.Create())
-                {
-                    byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                    return BitConverter.ToString(bytes).Replace("-", "").ToLower();
-                }
-         }
 
         [HttpGet]
         public IActionResult Change_PassWord()
