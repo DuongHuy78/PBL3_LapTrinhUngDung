@@ -47,7 +47,7 @@ namespace Volunteer_website.Areas.Organizations.Controllers
                     matchedVolunteerIds.Contains(r.VolunteerId));
             }
             var lstRegistered = query
-                                .OrderBy(x => x.RegId)
+                                 .OrderByDescending(x => x.RegId)
                                 .ToPagedList(pageNumber, pageSize);
             var volunteerIds = lstRegistered.Select(d => d.VolunteerId).Distinct().ToList();
             var volunteers = _db.Volunteers

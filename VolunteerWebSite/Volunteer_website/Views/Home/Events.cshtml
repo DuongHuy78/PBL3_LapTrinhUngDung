@@ -26,7 +26,8 @@
 
 <section class="ftco-section pt-3">
     <div class="container">
-        <div class="row">
+        <!-- thêm id cho danh sách sự kiện -->
+        <div class="row" id="event-list">
             @{
                 var today = DateOnly.FromDateTime(DateTime.Today);
             }
@@ -94,7 +95,7 @@
                 {
                     var daysLeft = (ev.DayEnd.HasValue ? ev.DayEnd.Value.DayNumber : today.DayNumber) - today.DayNumber;
                     var currentFund = ev.Donations?.Sum(d => d.Amount ?? 0) ?? 0;
-                    var targetFund = ev.TargetFunds ?? 1; // Tránh chia cho 0
+                    var targetFund = ev.TargetFunds ?? 1;
                     var percentFund = targetFund > 0 ? (int)((double)currentFund / targetFund * 100) : 0;
                     var currentMember = ev.Registrations?.Count(r => r.Status == "ACCEPTED") ?? 0;
 
@@ -116,7 +117,7 @@
                     }
                     else
                     {
-                        eventStatus = "ended"; // Nếu không có ngày, coi như đã kết thúc
+                        eventStatus = "ended";
                     }
 
                     <div class="col-md-4 ftco-animate mb-4 event-card"
@@ -165,7 +166,7 @@
                         <li>
                             @if (ViewBag.CurrentPage > 1)
                             {
-                                <a href="@Url.Action("Events", "Home", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize, statusFilter = ViewBag.StatusFilter, eventName = ViewBag.EventName, organization = ViewBag.Organization, startDateFrom = ViewBag.StartDateFrom, startDateTo = ViewBag.StartDateTo, eventType = ViewBag.EventType })">&lt;</a>
+                                <a href="@Url.Action("Events", "Home", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize, statusFilter = ViewBag.StatusFilter, eventName = ViewBag.EventName, organization = ViewBag.Organization, startDateFrom = ViewBag.StartDateFrom, startDateTo = ViewBag.StartDateTo, eventType = ViewBag.EventType })#event-list">&lt;</a>
                             }
                             else
                             {
@@ -197,7 +198,7 @@
                                 }
                                 else
                                 {
-                                    <li><a href="@Url.Action("Events", "Home", new { page = i, pageSize = ViewBag.PageSize, statusFilter = ViewBag.StatusFilter, eventName = ViewBag.EventName, organization = ViewBag.Organization, startDateFrom = ViewBag.StartDateFrom, startDateTo = ViewBag.StartDateTo, eventType = ViewBag.EventType })">@i</a></li>
+                                    <li><a href="@Url.Action("Events", "Home", new { page = i, pageSize = ViewBag.PageSize, statusFilter = ViewBag.StatusFilter, eventName = ViewBag.EventName, organization = ViewBag.Organization, startDateFrom = ViewBag.StartDateFrom, startDateTo = ViewBag.StartDateTo, eventType = ViewBag.EventType })#event-list">@i</a></li>
                                 }
                             }
                         }
@@ -205,7 +206,7 @@
                         <li>
                             @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                             {
-                                <a href="@Url.Action("Events", "Home", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize, statusFilter = ViewBag.StatusFilter, eventName = ViewBag.EventName, organization = ViewBag.Organization, startDateFrom = ViewBag.StartDateFrom, startDateTo = ViewBag.StartDateTo, eventType = ViewBag.EventType })">&gt;</a>
+                                <a href="@Url.Action("Events", "Home", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize, statusFilter = ViewBag.StatusFilter, eventName = ViewBag.EventName, organization = ViewBag.Organization, startDateFrom = ViewBag.StartDateFrom, startDateTo = ViewBag.StartDateTo, eventType = ViewBag.EventType })#event-list">&gt;</a>
                             }
                             else
                             {
@@ -245,8 +246,9 @@
                 eventType: searchInputs.eventType ? searchInputs.eventType.value : ''
             };
 
-            const url = '@Url.Action("Events", "Home")?' + new URLSearchParams(query).toString();
-            window.location.href = url;
+            // thêm anchor #event-list
+            const url = '@Url.Action("Events", "Home")?' + new URLSearchParams(query).toString() + '#event-list';
+            window.location.replace(url); // tránh flicker và reload lên đầu
         }
 
         tabButtons.forEach(button => {
@@ -279,8 +281,19 @@
             tabButtons.forEach(btn => btn.classList.remove('active'));
             activeTab.classList.add('active');
         }
+
+        // ✅ đảm bảo sau khi load lại trang sẽ cuộn tới #event-list
+        if (window.location.hash === "#event-list") {
+            const el = document.getElementById("event-list");
+            if (el) {
+                el.scrollIntoView({ behavior: "instant" }); // hoặc "smooth"
+            }
+        }
     });
 </script>
+
+
+
 
 <style>
     .event-search-container {
